@@ -81,3 +81,6 @@ System umożliwia:
 
 ![Scenariusz Przypadku Użycia](./images/useCaseScenario1.png "Scenariusz 1").
 
+![Scenariusz Przypadku Użycia](./images/useCaseScenario2.png "Scenariusz 2").
+
+![Scenariusz Przypadku Użycia](./images/useCaseScenario3.png "Scenariusz 3").
