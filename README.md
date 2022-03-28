@@ -1,2 +1,2 @@
-# car-rental
-Projekt aplikacji do obsługi wypożyczalni samochodów osobowych.
+# SYSTEM ZARZĄDZANIA WYPOŻYCZALNIĄ SAMOCHODÓW
+## [>> Dokumentacja <<](dokumentacja/Dokumentacja.md)

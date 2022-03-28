@@ -75,6 +75,9 @@ System umożliwia:
 
 5. Diagram przypadków użycia
 
-![Diagram Przypadków użycia](./images/useCaseDiagram.png "Diagram Przypadków użycia").
+![Diagram Przypadków Użycia](./images/useCaseDiagram.png "Diagram Przypadków użycia").
 
-6. Scenariusze przypadków użycia
+6. Scenariusze przypadków użycia!
+
+![Scenariusz Przypadku Użycia](./images/useCaseScenario1.png "Scenariusz 1").
+
