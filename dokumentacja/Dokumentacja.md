@@ -86,4 +86,9 @@ System umożliwia:
 ![Scenariusz Przypadku Użycia](./images/useCaseScenario3.png "Scenariusz 3").
 
 # 4. Model bady danych
+## 4.1 Model logiczny (ERD)
 
+![Model logiczny](images/erd.png)
+
+# 4.2 Model relacyjny
+![Model relacyjny](images/relationalModel.png)
