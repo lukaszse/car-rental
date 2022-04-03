@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head id="headId">
+    <meta charset="UTF-8">
+    <title>Contractor</title>
+</head>
+<body class="p-3 mb-2 bg-dark text-white">
+<div th:replace="~{fragments/menu :: menuFragment}"/>
+
+<div>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-2">
+            </div>
+
+              <div class="col-md-8">
+
+
+                  <form th:action="@{add_contractor}" th:object="${contractor}" method="post">
+                      <p>&nbsp;</p>
+                      <H5 th:if="*{id != null}" align="center">Edit Contractor:</H5>
+
+                      <H5 th:if="*{id == null}" align="center">Add Contractor:</H5>
+                      <p>&nbsp<br></p>
+
+                      <div align="center" class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('all')}" >
+                          <h5>Error. Wrong data format:</h5>
+                          <i th:errors="*{all}">Incorrect date</i>
+                      </div>
+                      <p>&nbsp<br></p>
+
+                      <div th:if="*{id != null}" class="form-group row">
+                          <label for="inputId" class="col-sm-2 col-form-label">Contractor id</label>
+                          <div class="col-sm-10">
+                              <input type="number" class="form-control" id="inputId" th:field="*{id}" readonly>
+                          </div>
+                      </div>
+
+                        <div class="form-group row">
+                            <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputName" th:field="*{name}" th:errorclass="'form-control is-invalid'">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputPhone" class="col-sm-2 col-form-label">Phone</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="inputPhone" th:field="*{phone}" th:errorclass="'form-control is-invalid'">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="inputCity" class="col-sm-2 col-form-label">City</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputCity" th:field="*{city}" th:errorclass="'form-control is-invalid'">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputPost" class="col-sm-2 col-form-label">Post</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputPost" th:field="*{post}" th:errorclass="'form-control is-invalid'">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="inputStreet" class="col-sm-2 col-form-label">Street</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputStreet" th:field="*{street}" th:errorclass="'form-control is-invalid'">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputProperty" class="col-sm-2 col-form-label">Property</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="inputProperty" th:field="*{property}" th:errorclass="'form-control is-invalid'">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputCountry" class="col-sm-2 col-form-label">Country</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputCountry" th:field="*{country}" th:errorclass="'form-control is-invalid'">
+                            </div>
+                        </div>
+
+                        <div align="center">
+                            <input type="submit" class="btn btn-light " value="Submit">
+                            <input type="reset" class="btn btn-light" value="Reset">
+                        </div>
+
+                    </form>
+
+
+                </div>
+
+            <div class="col-md-2">
+            </div>
+
+        </div>
+    </div>
+<div align="center">
+    <footer id="footerId">this is a footer</footer>
+</div>
+
+</body>
+
+</html>
