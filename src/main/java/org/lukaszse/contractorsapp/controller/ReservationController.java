@@ -2,7 +2,7 @@ package org.lukaszse.contractorsapp.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.lukaszse.contractorsapp.model.Order;
+import org.lukaszse.contractorsapp.model.Reservation;
 import org.lukaszse.contractorsapp.model.dto.OrderDto;
 import org.lukaszse.contractorsapp.model.dto.OrderViewDto;
 import org.lukaszse.contractorsapp.service.CarService;
@@ -57,7 +57,7 @@ public class ReservationController {
     public String orderListView(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
                                 @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
                                 final Model model) {
-        Page<Order> orderPage = reservationService.getPaginated(PageRequest.of(pageNumber - 1, pageSize));
+        Page<Reservation> orderPage = reservationService.getPaginated(PageRequest.of(pageNumber - 1, pageSize));
         model.addAttribute(AttributeNames.ORDER_PAGE, orderPage);
         Stream.of(orderPage.getTotalPages())
                 .filter(totalPages -> totalPages > 0)

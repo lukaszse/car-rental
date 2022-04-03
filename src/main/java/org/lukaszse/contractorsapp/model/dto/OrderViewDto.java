@@ -1,7 +1,7 @@
 package org.lukaszse.contractorsapp.model.dto;
 
-import org.lukaszse.contractorsapp.model.Contractor;
-import org.lukaszse.contractorsapp.model.Order;
+import org.lukaszse.contractorsapp.model.Car;
+import org.lukaszse.contractorsapp.model.Reservation;
 
 import java.time.LocalDate;
 
@@ -11,22 +11,22 @@ public class OrderViewDto {
     private Integer id;
     private LocalDate orderDate;
     private Integer contractorId;
-    private Contractor contractor;
+    private Car car;
     private String price;
     private String orderName;
     private String orderDescription;
     public OrderViewDto() {
     }
 
-    public OrderViewDto(Order order) {
-        if(order != null) {
-            this.id = order.getId();
-            this.orderDate = order.getOrderDate();
-            this.contractorId = order.getContractor().getId();
-            this.contractor = order.getContractor();
-            this.price = String.format("%.2f", order.getPrice());
-            this.orderName = order.getOrderName();
-            this.orderDescription = order.getOrderDescription();
+    public OrderViewDto(Reservation reservation) {
+        if(reservation != null) {
+            this.id = reservation.getId();
+            this.orderDate = reservation.getOrderDate();
+            this.contractorId = reservation.getCar().getId();
+            this.car = reservation.getCar();
+            this.price = String.format("%.2f", reservation.getPrice());
+            this.orderName = reservation.getOrderName();
+            this.orderDescription = reservation.getOrderDescription();
         } else {
             throw new IllegalArgumentException("Order object must not be null");
         }
@@ -39,11 +39,11 @@ public class OrderViewDto {
     public void setId(Integer id) {
         this.id = id;
     }
-    public Contractor getContractor() {
-        return contractor;
+    public Car getContractor() {
+        return car;
     }
-    public void setContractor(Contractor contractor) {
-        this.contractor = contractor;
+    public void setContractor(Car car) {
+        this.car = car;
     }
     public Integer getContractorId() {
         return contractorId;

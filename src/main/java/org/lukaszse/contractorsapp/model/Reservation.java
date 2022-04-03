@@ -17,8 +17,8 @@ import java.time.LocalDate;
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @Entity
-@Table(name = "orders")
-public class Order {
+@Table(name = "reservation")
+public class Reservation {
 
     @Id
     @GeneratedValue(generator = "inc")
@@ -28,8 +28,8 @@ public class Order {
     private LocalDate orderDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "contractor_id")
-    private Contractor contractor;
+    @JoinColumn(name = "car_id")
+    private Car car;
 
     @NotNull(message = "Field Price must not be null")
     @Digits(integer = 10, fraction = 2)
@@ -44,9 +44,9 @@ public class Order {
     @Column(name = "order_description")
     private String orderDescription;
 
-    public Order(Contractor contractor, BigDecimal price, String orderName, String orderDescription) {
+    public Reservation(Car car, BigDecimal price, String orderName, String orderDescription) {
         this.orderDate = LocalDate.now();
-        this.contractor = contractor;
+        this.car = car;
         this.price = price;
         this.orderName = orderName;
         this.orderDescription = orderDescription;

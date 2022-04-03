@@ -1,7 +1,7 @@
 package org.lukaszse.contractorsapp.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.lukaszse.contractorsapp.model.Contractor;
+import org.lukaszse.contractorsapp.model.Car;
 import org.lukaszse.contractorsapp.service.CarService;
 import org.lukaszse.contractorsapp.util.AttributeNames;
 import org.lukaszse.contractorsapp.util.Mappings;
@@ -38,7 +38,7 @@ public class CarController {
     public String userListView(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
                                @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
                                final Model model) {
-        Page<Contractor> usersPage = carService.getPaginated(PageRequest.of(pageNumber - 1, pageSize));
+        Page<Car> usersPage = carService.getPaginated(PageRequest.of(pageNumber - 1, pageSize));
         model.addAttribute(AttributeNames.CAR_PAGE, usersPage);
         Stream.of(usersPage.getTotalPages())
                 .filter(totalPages -> totalPages > 0)
@@ -57,7 +57,7 @@ public class CarController {
 
     @GetMapping(Mappings.ADD_CAR)
     public String addContractor(Model model) {
-        model.addAttribute(AttributeNames.CAR, new Contractor());
+        model.addAttribute(AttributeNames.CAR, new Car());
         return ViewNames.ADD_CAR;
     }
 
@@ -70,13 +70,13 @@ public class CarController {
     @Transactional
     @PostMapping(Mappings.ADD_CAR)
     public String processAddOrEditContractor(
-            @ModelAttribute(AttributeNames.CAR) @Valid Contractor contractor,
+            @ModelAttribute(AttributeNames.CAR) @Valid Car car,
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return ViewNames.ADD_CAR;
         }
-        carService.addEditContractor(contractor);
+        carService.addEditContractor(car);
         return "redirect:/" + Mappings.CARS;
     }
 

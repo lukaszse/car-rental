@@ -22,11 +22,11 @@
             <th scope="col"></th>
         </tr>
 
-    <h1 th:each="contractor : ${contractor_page}">
+    <h1 th:each="car : ${contractor_page}">
         <tr>
-            <td th:text="${contractor.id}"/>
-            <td th:text="${contractor.name}" />
-            <td th:text="${contractor.phone}"/>
+            <td th:text="${car.id}"/>
+            <td th:text="${car.name}" />
+            <td th:text="${car.phone}"/>
             <td align="center"><a id="contractorId" class="btn btn-light btn-sm" role="button" aria-pressed="true">View Details</a></td>
             <td align="center"><a id="editContractorId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Edit</a></td>
             <td align="center"><a id="deleteContractorId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Delete</a></td>

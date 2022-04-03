@@ -17,8 +17,8 @@ import java.util.Set;
 @EqualsAndHashCode(of = "id")
 @Entity
 @NoArgsConstructor
-@Table(name = "contractors")
-public class Contractor {
+@Table(name = "car")
+public class Car {
 
     @Id
     @GeneratedValue(generator = "inc")

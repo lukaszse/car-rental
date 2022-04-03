@@ -23,9 +23,9 @@
 <div th:replace="~{fragments/menu :: menuFragment}"/>
 <p>&nbsp;</p>
 
-<div id="order" class="container-md" align="center">
+<div id="reservation" class="container-md" align="center">
 
-    <h5>Details about contractor:</h5>
+    <h5>Details about car:</h5>
     <p><br></p>
     <table id="table" class="table table-striped table-dark" border="2" cellpadding="10">
             <tr>
@@ -35,13 +35,13 @@
                 <th>Adress</th>
             </tr>
             <tr>
-                <td th:text="${contractor.id}" />
-                <td th:text="${contractor.name}" />
-                <td th:text="${contractor.phone}"/>
+                <td th:text="${car.id}" />
+                <td th:text="${car.name}" />
+                <td th:text="${car.phone}"/>
                 <td>
-                        <p th:text="${contractor.street}+' '+${contractor.property}"/>
-                        <p th:text="${contractor.post}+' '+${contractor.city}"/>
-                        <p th:text="${contractor.country}"/>
+                        <p th:text="${car.street}+' '+${car.property}"/>
+                        <p th:text="${car.post}+' '+${car.city}"/>
+                        <p th:text="${car.country}"/>
                 </td>
             </tr>
     </table>

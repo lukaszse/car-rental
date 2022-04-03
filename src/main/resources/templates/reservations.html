@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <td>Filters:</td>
-            <td><input id="contractorFilter" type="text" name="contractor" value=""></td>
+            <td><input id="contractorFilter" type="text" name="car" value=""></td>
             <td><input id="orderNameFilter" type="text" name="orderName" value=""></td>
             <td></td>
             <td></td>
@@ -65,24 +65,24 @@
 
     function filter() {
         const orderName = orderNameFilter.value;
-        const contractor = contractorFilter.value;
-        loadDoc(orderName, contractor)
+        const car = contractorFilter.value;
+        loadDoc(orderName, car)
     }
 
-    function loadDoc(orderName, contractor, pageNumber) {
+    function loadDoc(orderName, car, pageNumber) {
 
         if (orderName == null) {
             orderName = "";
         }
-        if (contractor == null) {
-            contractor = "";
+        if (car == null) {
+            car = "";
         }
 
         if (pageNumber == null) {
             pageNumber = 1;
         }
 
-        get(`/orders/findOrders?orderName=${orderName}&contractor=${contractor}&pageNumber=${pageNumber}`, function (err, response) {
+        get(`/orders/findOrders?orderName=${orderName}&car=${car}&pageNumber=${pageNumber}`, function (err, response) {
             if (err != null) {
                 console.error(err);
             } else {
@@ -100,7 +100,7 @@
         for (const element of array) {
             var row = document.createElement("tr");
             addTextCell(element.id, row);
-            addTextCell(element.contractor.name, row);
+            addTextCell(element.car.name, row);
             addTextCell(element.orderName, row);
             addLinkCell('View Details', `view_order?id=${element.id}`, row);
             addLinkCell('Edit', `edit_order?id=${element.id}`, row);

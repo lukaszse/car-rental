@@ -2,7 +2,7 @@ package org.lukaszse.contractorsapp.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.lukaszse.contractorsapp.model.Order;
+import org.lukaszse.contractorsapp.model.Reservation;
 import org.lukaszse.contractorsapp.model.dto.OrderDto;
 import org.lukaszse.contractorsapp.repository.OrderRepository;
 import org.lukaszse.contractorsapp.repository.OrderSearchRepository;
@@ -21,16 +21,16 @@ public class ReservationService {
     private final OrderSearchRepository orderSearchRepository;
     private final CarService carService;
 
-    public Order getOrder(Integer id) {
+    public Reservation getOrder(Integer id) {
         return orderRepository.getById(id);
     }
 
-    public Page<Order> getPaginated(final Pageable pageable) {
+    public Page<Reservation> getPaginated(final Pageable pageable) {
         return orderSearchRepository.findAll(pageable);
     }
 
-    public Page<Order> findOrders(final String orderName, final String contractor, final Pageable pageable) {
-        return orderSearchRepository.findOrdersByOrderNameContainsAndContractor_NameContainsIgnoreCase(orderName, contractor, pageable);
+    public Page<Reservation> findOrders(final String orderName, final String contractor, final Pageable pageable) {
+        return orderSearchRepository.findReservationByOrderNameContainsAndCar_NameContainsIgnoreCase(orderName, contractor, pageable);
     }
 
     public void addEditOrder(OrderDto orderDto) {
@@ -41,26 +41,26 @@ public class ReservationService {
         orderRepository.deleteById(id);
     }
 
-    private Order createOrderOrGetOrderForUpdate(final OrderDto orderDto) {
+    private Reservation createOrderOrGetOrderForUpdate(final OrderDto orderDto) {
         return orderDto.getId() == null ?
                 createOrder(orderDto) :
                 findOrderAndPrepareForUpdate(orderDto);
     }
 
-    private Order createOrder(final OrderDto orderDto) {
-        return new Order(carService.getContractor(orderDto.getContractorId()),
+    private Reservation createOrder(final OrderDto orderDto) {
+        return new Reservation(carService.getContractor(orderDto.getContractorId()),
                 new BigDecimal(orderDto.getPrice().replace(",", ".")),
                 orderDto.getOrderName(),
                 orderDto.getOrderDescription());
     }
 
-    private Order findOrderAndPrepareForUpdate(final OrderDto orderDto) {
-        Order order = getOrder(orderDto.getId());
-        order.setContractor(carService.getContractor(orderDto.getContractorId()));
-        order.setPrice(new BigDecimal(orderDto.getPrice().replace(",", ".")));
-        order.setOrderName(orderDto.getOrderName());
-        order.setOrderDescription(orderDto.getOrderDescription());
-        return order;
+    private Reservation findOrderAndPrepareForUpdate(final OrderDto orderDto) {
+        Reservation reservation = getOrder(orderDto.getId());
+        reservation.setCar(carService.getContractor(orderDto.getContractorId()));
+        reservation.setPrice(new BigDecimal(orderDto.getPrice().replace(",", ".")));
+        reservation.setOrderName(orderDto.getOrderName());
+        reservation.setOrderDescription(orderDto.getOrderDescription());
+        return reservation;
     }
 
 }

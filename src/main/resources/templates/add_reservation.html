@@ -14,7 +14,7 @@
         <div class="col-md-8">
             <div>
 
-                <form th:action="@{add_order}" th:object="${order}" method="post">
+                <form th:action="@{add_order}" th:object="${reservation}" method="post">
 
                     <p>&nbsp;</p>
                     <H5 th:if="*{id != null}" align="center">Edit Order:</H5>

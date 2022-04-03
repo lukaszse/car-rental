@@ -14,9 +14,9 @@
         function genPDF() {
             var doc = new jsPDF();
             var principal = document.querySelector('#principal');
-            var contractor = document.querySelector('#contractor');
+            var car = document.querySelector('#car');
             doc.fromHTML(principal, 15,15)
-            doc.fromHTML(contractor, 110,70)
+            doc.fromHTML(car, 110,70)
             doc.autoTable({
                 startY: 130,
                 html: '#table' })
@@ -40,7 +40,7 @@
                 +' '+${settingsSet.city}
                 +'<br \>'+${settingsSet.country}">ulica<br \>Miasto<br \>Kraj</p>
 
-        <h4 th:text="'Order no: '+${order.id}">Order number</h4>
+        <h4 th:text="'Order no: '+${reservation.id}">Order number</h4>
     </div>
 
     <div class="container">
@@ -51,10 +51,10 @@
 
             <div class="col-md-4" align="left">
                     <p>Contractor:</p>
-                    <h3 th:text="${order.contractor.name}">Contractor Name</h3>
-                    <p th:utext="${order.contractor.name}+' '+${order.contractor.property}
-                    +'<br \>'+${order.contractor.post}+' '+${order.contractor.city}
-                    +'<br \>'+${order.contractor.country}">ulica<br \>Miasto<br \>Kraj</p>
+                    <h3 th:text="${reservation.car.name}">Contractor Name</h3>
+                    <p th:utext="${reservation.car.name}+' '+${reservation.car.property}
+                    +'<br \>'+${reservation.car.post}+' '+${reservation.car.city}
+                    +'<br \>'+${reservation.car.country}">ulica<br \>Miasto<br \>Kraj</p>
             </div>
 
             <div class="col-md-1">
@@ -72,10 +72,10 @@
             </tr>
         <h1>
             <tr>
-                <td th:text="${order.orderDate}" />
-                <td th:text="${order.price}" />
-                <td th:text="${order.orderName}" />
-                <td th:text="${order.orderDescription}"/>
+                <td th:text="${reservation.orderDate}" />
+                <td th:text="${reservation.price}" />
+                <td th:text="${reservation.orderName}" />
+                <td th:text="${reservation.orderDescription}"/>
             </tr>
         </h1>
     </table>
