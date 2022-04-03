@@ -1,6 +1,5 @@
 create table users
 (
-
     user_name  varchar(20) primary key,
     first_name varchar(100),
     last_name  varchar(100),

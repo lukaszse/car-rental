@@ -1,5 +1,5 @@
 create table reservation (
-                id int unsigned auto_increment,
+                id int auto_increment,
                 reservation_date date,
                 car_id int not null,
                 price decimal not null,

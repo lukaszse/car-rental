@@ -1,6 +1,6 @@
 create table settings (
 
-    id int unsigned primary key auto_increment,
+    id int primary key auto_increment,
     company_name varchar(100),
     street varchar(100),
     property int,

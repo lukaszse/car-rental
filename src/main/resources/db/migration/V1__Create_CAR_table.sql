@@ -1,5 +1,5 @@
 create table car (
-                id int unsigned primary key auto_increment,
+                id int primary key auto_increment,
                 name varchar(100) not null ,
                 street varchar(50) not null ,
                 property int not null ,
