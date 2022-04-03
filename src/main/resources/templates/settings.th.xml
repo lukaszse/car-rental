@@ -4,7 +4,7 @@
     <attr sel="#footerId"
           th:replace="~{fragments/footer :: footerFragment}"/>
     <attr sel="#home"
-          th:href="@{__${T(org.lukaszse.contractorsapp.util.Mappings).HOME}__}"/>
+          th:href="@{__${T(org.lukaszse.carRental.util.Mappings).HOME}__}"/>
     <attr sel="#orderListId"
-          th:href="@{__${T(org.lukaszse.contractorsapp.util.Mappings).RESERVATIONS}__}"/>
+          th:href="@{__${T(org.lukaszse.carRental.util.Mappings).RESERVATIONS}__}"/>
 </thlogic>
