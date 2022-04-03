@@ -25,7 +25,7 @@ public class Reservation {
     @GenericGenerator(name = "inc", strategy = "increment")
     private Integer id;
 
-    private LocalDate orderDate;
+    private LocalDate reservationDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_id")
@@ -37,18 +37,18 @@ public class Reservation {
     private BigDecimal price;
 
     @NotBlank(message = "Field Order Name must not be empty")
-    @Column(name = "order_name")
-    private String orderName;
+    @Column(name = "reservation_name")
+    private String reservationName;
 
     @NotBlank(message = "Field Order Description must not be empty")
-    @Column(name = "order_description")
-    private String orderDescription;
+    @Column(name = "reservation_description")
+    private String reservationDescription;
 
-    public Reservation(Car car, BigDecimal price, String orderName, String orderDescription) {
-        this.orderDate = LocalDate.now();
+    public Reservation(Car car, BigDecimal price, String reservationName, String reservationDescription) {
+        this.reservationDate = LocalDate.now();
         this.car = car;
         this.price = price;
-        this.orderName = orderName;
-        this.orderDescription = orderDescription;
+        this.reservationName = reservationName;
+        this.reservationDescription = reservationDescription;
     }
 }

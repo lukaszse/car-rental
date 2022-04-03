@@ -21,12 +21,12 @@ public class OrderViewDto {
     public OrderViewDto(Reservation reservation) {
         if(reservation != null) {
             this.id = reservation.getId();
-            this.orderDate = reservation.getOrderDate();
+            this.orderDate = reservation.getReservationDate();
             this.contractorId = reservation.getCar().getId();
             this.car = reservation.getCar();
             this.price = String.format("%.2f", reservation.getPrice());
-            this.orderName = reservation.getOrderName();
-            this.orderDescription = reservation.getOrderDescription();
+            this.orderName = reservation.getReservationName();
+            this.orderDescription = reservation.getReservationDescription();
         } else {
             throw new IllegalArgumentException("Order object must not be null");
         }

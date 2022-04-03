@@ -30,7 +30,7 @@ public class ReservationService {
     }
 
     public Page<Reservation> findOrders(final String orderName, final String contractor, final Pageable pageable) {
-        return orderSearchRepository.findReservationByOrderNameContainsAndCar_NameContainsIgnoreCase(orderName, contractor, pageable);
+        return orderSearchRepository.findReservationByReservationNameContainsAndCar_NameContainsIgnoreCase(orderName, contractor, pageable);
     }
 
     public void addEditOrder(OrderDto orderDto) {
@@ -58,8 +58,8 @@ public class ReservationService {
         Reservation reservation = getOrder(orderDto.getId());
         reservation.setCar(carService.getContractor(orderDto.getContractorId()));
         reservation.setPrice(new BigDecimal(orderDto.getPrice().replace(",", ".")));
-        reservation.setOrderName(orderDto.getOrderName());
-        reservation.setOrderDescription(orderDto.getOrderDescription());
+        reservation.setReservationName(orderDto.getOrderName());
+        reservation.setReservationDescription(orderDto.getOrderDescription());
         return reservation;
     }
 
