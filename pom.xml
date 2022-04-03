@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.6</version>
+		<version>2.6.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>org.lukaszse</groupId>
-	<artifactId>contractors</artifactId>
+	<groupId>com.lukaszse</groupId>
+	<artifactId>carRental</artifactId>
 	<version>0.0.3-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>contractors</name>
-	<description>Contractor selection card</description>
-
+	<name>Car Rental</name>
+	<description>Car rentap application</description>
 	<properties>
-		<java.version>15</java.version>
-		<xhtml.render.version>9.1.20</xhtml.render.version>
-		<maven.compiler.target>15</maven.compiler.target>
-		<maven.compiler.source>15</maven.compiler.source>
+		<java.version>17</java.version>
+		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
-
 	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -103,7 +100,6 @@
 			<artifactId>jstl</artifactId>
 		</dependency>
 
-
 	</dependencies>
 
 	<build>
@@ -114,5 +110,25 @@
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 
 </project>
