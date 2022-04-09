@@ -9,9 +9,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
 
 @Data
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "registrationNo")
 @Entity
 @NoArgsConstructor
 @Table(name = "car")
@@ -22,26 +23,33 @@ public class Car {
     @GenericGenerator(name = "inc", strategy = "increment")
     private Integer id;
 
-    @NotBlank(message = "Field Name must not be empty.")
-    private String name;
+    @NotBlank(message = "Field model must not be empty.")
+    private String registrationNo;
 
-    @NotBlank(message = "Field Street must not be empty.")
-    private String street;
+    @NotBlank(message = "Field manufacturer must not be empty.")
+    private String manufacturer;
 
-    @Positive(message = "Property Value must be positive")
+    @NotBlank(message = "Field model must not be empty.")
+    private String model;
+
+    @NotBlank(message = "Field fuelType must not be empty.")
+    private String fuelType;
+
+    @NotBlank(message = "Field type must not be empty.")
+    private String type;
+
+    @Positive(message = "Capacity Value must be positive")
     @NotNull(message = "Field Property must not be empty")
-    private Integer property;
+    private Integer engineCapacity;
 
-    @NotBlank(message = "Field Post must not be empty.")
-    private String post;
+    @Positive(message = "Passenger number must be positive number")
+    @NotNull(message = "Field Phone must not be empty")
+    private Integer passengerNumber;
 
     @NotBlank(message = "Field City must not be empty.")
-    private String city;
+    private String description;
 
-    @NotBlank(message = "Field Country must not be empty.")
-    private String country;
-
-    @Positive(message = "Phone must be positive number")
-    @NotNull(message = "Field Phone must not be empty")
-    private Long phone;
+    @Positive(message = "Cost per day must be positive number")
+    @NotNull(message = "Cost per day not be empty.")
+    private BigDecimal costPerDay;
 }

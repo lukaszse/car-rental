@@ -30,7 +30,7 @@ public class ReservationService {
     }
 
     public Page<Reservation> findOrders(final String orderName, final String contractor, final Pageable pageable) {
-        return orderSearchRepository.findReservationByReservationNameContainsAndCar_NameContainsIgnoreCase(orderName, contractor, pageable);
+        return orderSearchRepository.findReservationByReservationNameContainsAndCar_ModelContainsIgnoreCase(orderName, contractor, pageable);
     }
 
     public void addEditOrder(OrderDto orderDto) {

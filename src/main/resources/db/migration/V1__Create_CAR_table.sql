@@ -1,10 +1,12 @@
 create table car (
                 id int primary key auto_increment,
-                name varchar(100) not null ,
-                street varchar(50) not null ,
-                property int not null ,
-                post varchar(6) not null ,
-                city varchar(50) not null ,
-                country varchar(50) not null ,
-                phone long
+                registration_no varchar(10),
+                manufacturer varchar(50) not null,
+                model varchar(100) not null ,
+                fuel_type varchar(50) not null ,
+                type varchar(50) not null ,
+                engine_capacity int not null ,
+                passenger_number int not null ,
+                description varchar(200) not null,
+                cost_per_day numeric(19,2) not null
 );

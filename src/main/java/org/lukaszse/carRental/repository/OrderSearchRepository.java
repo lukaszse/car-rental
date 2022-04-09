@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderSearchRepository extends PagingAndSortingRepository<Reservation, Integer> {
 
-    Page<Reservation> findReservationByReservationNameContainsAndCar_NameContainsIgnoreCase(final String orderName, final String contractor, final Pageable pageable);
+    Page<Reservation> findReservationByReservationNameContainsAndCar_ModelContainsIgnoreCase(final String orderName, final String contractor, final Pageable pageable);
 }

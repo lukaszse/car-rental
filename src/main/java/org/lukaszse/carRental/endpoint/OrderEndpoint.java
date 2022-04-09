@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/reservations")
 @RequiredArgsConstructor
 public class OrderEndpoint {
 
     private final ReservationService ordersService;
 
-    @GetMapping("/findOrders")
+    @GetMapping("/findReservations")
     public ResponseEntity<Page<Reservation>> findOrders(@RequestParam final String orderName,
                                                         @RequestParam final String contractor,
                                                         @RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,

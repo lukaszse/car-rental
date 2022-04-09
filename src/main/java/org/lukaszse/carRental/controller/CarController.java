@@ -34,10 +34,10 @@ public class CarController {
     }
 
 
-    @GetMapping(Mappings.CARS)
-    public String userListView(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
-                               @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
-                               final Model model) {
+    @GetMapping(Mappings.MANAGEMENT_CARS)
+    public String cars(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
+                       @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
+                       final Model model) {
         Page<Car> usersPage = carService.getPaginated(PageRequest.of(pageNumber - 1, pageSize));
         model.addAttribute(AttributeNames.CAR_PAGE, usersPage);
         Stream.of(usersPage.getTotalPages())
@@ -46,30 +46,30 @@ public class CarController {
                         .boxed()
                         .collect(Collectors.toList()))
                 .forEach(pageNumbers -> model.addAttribute(AttributeNames.PAGE_NUMBERS, pageNumbers));
-        return ViewNames.CARS;
+        return ViewNames.MANAGEMENT_CARS;
     }
 
-    @GetMapping(Mappings.CAR)
-    public String viewContractor(@RequestParam Integer id, Model model) {
+    @GetMapping(Mappings.MANAGEMENT_CAR)
+    public String car(@RequestParam Integer id, Model model) {
         model.addAttribute(AttributeNames.CAR, carService.getContractor(id));
-        return ViewNames.CAR;
+        return ViewNames.MANAGEMENT_CAR;
     }
 
     @GetMapping(Mappings.ADD_CAR)
-    public String addContractor(Model model) {
+    public String addCar(Model model) {
         model.addAttribute(AttributeNames.CAR, new Car());
         return ViewNames.ADD_CAR;
     }
 
     @GetMapping(Mappings.EDIT_CAR)
-    public String addContractor(@RequestParam Integer id, Model model) {
+    public String addCar(@RequestParam Integer id, Model model) {
         model.addAttribute(AttributeNames.CAR, carService.getContractor(id));
         return ViewNames.ADD_CAR;
     }
 
     @Transactional
     @PostMapping(Mappings.ADD_CAR)
-    public String processAddOrEditContractor(
+    public String processAddEditCar(
             @ModelAttribute(AttributeNames.CAR) @Valid Car car,
             BindingResult bindingResult) {
 
@@ -77,12 +77,12 @@ public class CarController {
             return ViewNames.ADD_CAR;
         }
         carService.addEditContractor(car);
-        return "redirect:/" + Mappings.CARS;
+        return "redirect:/" + Mappings.MANAGEMENT_CARS;
     }
 
     @GetMapping(Mappings.DELETE_CAR)
     public String deleteContractor(@RequestParam Integer id) {
         carService.deleteContractor(id);
-        return "redirect:/" + Mappings.CARS;
+        return "redirect:/" + Mappings.MANAGEMENT_CARS;
     }
 }

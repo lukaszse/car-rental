@@ -21,8 +21,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class CarService {
 
-    public static final String CONTRACTOR_CONFLICT_ERROR_MESSAGE = "Contractor with given id=%s already exist.";
-    public static final String CONTRACTOR_NOT_FOUND_ERROR_MESSAGE = "Contractor with id=%s has not been found.";
+    public static final String CAR_NOT_FOUND_ERROR_MESSAGE = "Car with registrationNo=%s has not been found.";
     private final CarRepository repository;
 
 
@@ -49,7 +48,7 @@ public class CarService {
 
     public void editContractor(Car car) {
         if(!repository.existsById(car.getId())) {
-            throw new NotFoundException(CONTRACTOR_NOT_FOUND_ERROR_MESSAGE.formatted(car.getId()));
+            throw new NotFoundException(CAR_NOT_FOUND_ERROR_MESSAGE.formatted(car.getId()));
         }
         repository.save(car);
     }

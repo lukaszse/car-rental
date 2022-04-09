@@ -15,18 +15,24 @@
 
         <tr>
             <th scope="col">Id</th>
-            <th scope="col">Contractor Name</th>
-            <th scope="col">Phone number</th>
+            <th scope="col">Manufacturer</th>
+            <th scope="col">Model</th>
+            <th scope="col">Passengers capacity</th>
+            <th scope="col">Fuel</th>
+            <th scope="col">Cost per day PLN</th>
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
         </tr>
 
-    <h1 th:each="car : ${contractor_page}">
+    <h1 th:each="car : ${car_page}">
         <tr>
             <td th:text="${car.id}"/>
-            <td th:text="${car.name}" />
-            <td th:text="${car.phone}"/>
+            <td th:text="${car.model}" />
+            <td th:text="${car.manufacturer}" />
+            <td th:text="${car.passengerNumber}"/>
+            <td th:text="${car.fuelType}"/>
+            <td th:text="${#numbers.formatDecimal(car.costPerDay, 0, 'COMMA', 2, 'POINT')}"/>
             <td align="center"><a id="contractorId" class="btn btn-light btn-sm" role="button" aria-pressed="true">View Details</a></td>
             <td align="center"><a id="editContractorId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Edit</a></td>
             <td align="center"><a id="deleteContractorId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Delete</a></td>
@@ -37,8 +43,8 @@
 
     <nav aria-label="...">
         <ul class="pagination pagination-sm">
-            <li class="page-item" th:each="pageNumber : ${page_numbers}" th:classappend="${pageNumber==contractor_page.number + 1} ? active">
-                <a class="page-link" th:href="@{/contractor_list(pageSize=${contractor_page.size}, pageNumber=${pageNumber})}" th:text="${pageNumber}"></a>
+            <li class="page-item" th:each="pageNumber : ${page_numbers}" th:classappend="${pageNumber==car_page.number + 1} ? active">
+                <a class="page-link" th:href="@{/cars(pageSize=${car_page.size}, pageNumber=${pageNumber})}" th:text="${pageNumber}"></a>
             </li>
         </ul>
     </nav>
