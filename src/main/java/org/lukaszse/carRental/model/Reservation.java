@@ -36,13 +36,12 @@ public class Reservation {
     @JoinColumn(name = "car_id")
     private Car car;
 
-    @NotBlank(message = "Field Reservation Date must not be empty")
     private LocalDate reservationDate;
 
-    @NotBlank(message = "Field Date From must not be empty")
+    @NotNull(message = "Field Date From must not be empty")
     private LocalDate dateFrom;
 
-    @NotBlank(message = "Field Date To must not be empty")
+    @NotNull(message = "Field Date To must not be empty")
     private LocalDate dateTo;
 
     @NotNull(message = "Field Price must not be null")

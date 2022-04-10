@@ -16,17 +16,16 @@ public class ReservationDto {
 
     private Integer id;
 
-    @NotNull(message = "Field must not be empty")
+    @NotBlank(message = "Field must not be empty")
     private String userName;
 
     @NotNull(message = "Field must not be empty")
     private Integer carId;
 
-    @NotBlank(message = "Field Date From must not be empty")
+    @NotNull(message = "Field Date From must not be empty")
     private LocalDate dateFrom;
 
-    @NotBlank(message = "Field Date To must not be empty")
+    @NotNull(message = "Field Date To must not be empty")
     private LocalDate dateTo;
 
-    private Boolean rented;
-}
+    private Boolean rented;}

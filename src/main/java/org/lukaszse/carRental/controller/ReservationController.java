@@ -7,7 +7,7 @@ import org.lukaszse.carRental.model.dto.ReservationDto;
 import org.lukaszse.carRental.model.dto.ReservationViewDto;
 import org.lukaszse.carRental.service.CarService;
 import org.lukaszse.carRental.service.ReservationService;
-import org.lukaszse.carRental.service.SettingService;
+import org.lukaszse.carRental.service.UserService;
 import org.lukaszse.carRental.util.AttributeNames;
 import org.lukaszse.carRental.util.Mappings;
 import org.lukaszse.carRental.util.ViewNames;
@@ -34,29 +34,13 @@ public class ReservationController {
 
     private final ReservationService reservationService;
     private final CarService carService;
-    private final SettingService settingService;
+    private final UserService userService;
 
-
-    @GetMapping(Mappings.ADD_RESERVATION)
-    public String addOrderView(final Model model) {
-        model.addAttribute(AttributeNames.RESERVATION, new ReservationViewDto());
-        model.addAttribute(AttributeNames.CARS, carService.findAll());
-        return ViewNames.ADD_RESERVATION;
-    }
-
-    @GetMapping(Mappings.EDIT_RESERVATION)
-    public String editOrderView(@RequestParam final Integer id, Model model) {
-        var reservation = reservationService.getReservation(id);
-        var reservationReader = ReservationViewDto.of(reservation);
-        model.addAttribute(AttributeNames.RESERVATION, reservationReader);
-        model.addAttribute(AttributeNames.CARS, carService.findAll());
-        return ViewNames.ADD_RESERVATION;
-    }
 
     @GetMapping(Mappings.RESERVATIONS)
-    public String orderListView(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
-                                @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
-                                final Model model) {
+    public String ReservationsView(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
+                                   @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
+                                   final Model model) {
         Page<Reservation> orderPage = reservationService.getAllReservations(PageRequest.of(pageNumber - 1, pageSize));
         model.addAttribute(AttributeNames.ORDER_PAGE, orderPage);
         Stream.of(orderPage.getTotalPages())
@@ -68,32 +52,38 @@ public class ReservationController {
         return ViewNames.RESERVATIONS;
     }
 
-    @PostMapping(Mappings.ADD_RESERVATION)
-    public String addOrder(
-            @ModelAttribute(AttributeNames.RESERVATION) @Valid final ReservationDto submittedOrder,
-            final BindingResult bindingResult, final Model model) {
+    @GetMapping(Mappings.RESERVATION)
+    public String reservationView(@RequestParam final Integer id, final Model model) {
+        var reservationViewDto = ReservationViewDto.of(reservationService.getReservation(id));
+        model.addAttribute(AttributeNames.RESERVATION, reservationViewDto);
+        return ViewNames.RESERVATION;
+    }
+
+    @GetMapping(Mappings.EDIT_RESERVATION)
+    public String editReservationView(@RequestParam final Integer id, Model model) {
+        var reservationViewDto = ReservationViewDto.of(reservationService.getReservation(id));
+        model.addAttribute(AttributeNames.RESERVATION, reservationViewDto);
+        model.addAttribute(AttributeNames.CARS, carService.findAll());
+        model.addAttribute(AttributeNames.USERS, userService.findAll());
+        return ViewNames.EDIT_RESERVATION;
+    }
+
+    @PostMapping(Mappings.EDIT_RESERVATION)
+    public String editReservation(@ModelAttribute(AttributeNames.RESERVATION) @Valid final ReservationDto submittedReservation,
+                                  final BindingResult bindingResult, final Model model) {
         if (!bindingResult.hasErrors()) {
-            reservationService.addEditReservation(submittedOrder);
+            reservationService.addEditReservation(submittedReservation);
             return "redirect:/" + Mappings.RESERVATIONS;
         }
         model.addAttribute(Map.of(
-                AttributeNames.RESERVATION, submittedOrder,
+                AttributeNames.RESERVATION, submittedReservation,
                 AttributeNames.CARS, carService.findAll()));
-        return ViewNames.ADD_RESERVATION;
+        return ViewNames.EDIT_RESERVATION;
     }
 
     @GetMapping(Mappings.DELETE_RESERVATION)
-    public String deleteOrder(@RequestParam final Integer id) {
+    public String deleteReservation(@RequestParam final Integer id) {
         reservationService.deleteReservation(id);
         return "redirect:/" + Mappings.RESERVATIONS;
-    }
-
-    @GetMapping(Mappings.VIEW_ORDER)
-    public String orderView(@RequestParam final Integer id, final Model model) {
-        var reservationReader = ReservationViewDto.of(reservationService.getReservation(id));
-        model.addAllAttributes(Map.of(
-                AttributeNames.RESERVATION, reservationReader,
-                "settingsSet", settingService.getCurrentSettings()));
-        return ViewNames.RESERVATION;
     }
 }

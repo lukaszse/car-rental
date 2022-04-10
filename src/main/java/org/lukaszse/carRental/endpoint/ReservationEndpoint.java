@@ -23,11 +23,10 @@ public class ReservationEndpoint {
 
     @GetMapping("/findReservations")
     public ResponseEntity<Page<Reservation>> findOrders(@RequestParam final String userName,
-                                                        @RequestParam final String registrationNo,
                                                         @RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
                                                         @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize) {
 
-        var reservation = ordersService.findReservations(userName, registrationNo, PageRequest.of(pageNumber - 1, pageSize, Sort.by("id")));
+        var reservation = ordersService.findReservations(userName, PageRequest.of(pageNumber - 1, pageSize, Sort.by("id")));
         return ResponseEntity.ok(reservation);
     }
 }

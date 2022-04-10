@@ -34,8 +34,8 @@ public class ReservationService {
         return reservationSearchRepository.findAll(pageable);
     }
 
-    public Page<Reservation> findReservations(final String userName, final String registrationNo, final Pageable pageable) {
-        return reservationSearchRepository.findByUser_UserNameContainsIgnoreCaseAndCar_RegistrationNoContainsIgnoreCase(userName, registrationNo, pageable);
+    public Page<Reservation> findReservations(final String userName, final Pageable pageable) {
+        return reservationSearchRepository.findByUser_UserNameContainsIgnoreCase(userName, pageable);
     }
 
     public void addEditReservation(ReservationDto reservationDto) {

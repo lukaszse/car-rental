@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,6 +35,10 @@ public class UserService {
     @PostConstruct
     private void postConstruct() {
         passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     public User getUser(final String userName) {
