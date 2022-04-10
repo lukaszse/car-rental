@@ -7,6 +7,9 @@ import org.lukaszse.carRental.model.Car;
 import org.lukaszse.carRental.model.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -21,6 +24,8 @@ public class ReservationViewDto {
     private LocalDate reservationDate;
     private LocalDate dateFrom;
     private LocalDate dateTo;
+    @Digits(integer = 10, fraction = 2)
+    @DecimalMin(value = "0.0", inclusive = true)
     private BigDecimal totalCost;
     private Boolean rented;
 

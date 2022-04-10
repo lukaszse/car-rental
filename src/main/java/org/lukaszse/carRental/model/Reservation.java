@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Data
 @Entity
 @EqualsAndHashCode(of = "id")
-@Table(name = "car_reservation")
+@Table(name = "reservation")
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
 public class Reservation {

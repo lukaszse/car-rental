@@ -27,7 +27,7 @@ public class ReservationEndpoint {
                                                         @RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
                                                         @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize) {
 
-        var orders = ordersService.findReservations(userName, registrationNo, PageRequest.of(pageNumber - 1, pageSize, Sort.by("id")));
-        return ResponseEntity.ok(orders);
+        var reservation = ordersService.findReservations(userName, registrationNo, PageRequest.of(pageNumber - 1, pageSize, Sort.by("id")));
+        return ResponseEntity.ok(reservation);
     }
 }
