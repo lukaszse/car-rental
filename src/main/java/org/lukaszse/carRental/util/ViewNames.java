@@ -3,8 +3,8 @@ package org.lukaszse.carRental.util;
 public class ViewNames {
 
     public static final String HOME = "home";
-    public static final String MANAGEMENT_CARS = "cars";
-    public static final String MANAGEMENT_CAR = "car";
+    public static final String CARS = "cars";
+    public static final String CAR = "car";
     public static final String ADD_CAR = "add_car";
     public static final String RESERVATIONS = "reservations";
     public static final String USER_ADMINISTRATION = "user_administration";

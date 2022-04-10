@@ -17,17 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/reservations")
 @RequiredArgsConstructor
-public class OrderEndpoint {
+public class ReservationEndpoint {
 
     private final ReservationService ordersService;
 
     @GetMapping("/findReservations")
-    public ResponseEntity<Page<Reservation>> findOrders(@RequestParam final String orderName,
-                                                        @RequestParam final String contractor,
+    public ResponseEntity<Page<Reservation>> findOrders(@RequestParam final String userName,
+                                                        @RequestParam final String car,
                                                         @RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
                                                         @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize) {
 
-        var orders = ordersService.findOrders(orderName, contractor, PageRequest.of(pageNumber - 1, pageSize, Sort.by("id")));
+        var orders = ordersService.findOrders(userName, car, PageRequest.of(pageNumber - 1, pageSize, Sort.by("id")));
         return ResponseEntity.ok(orders);
     }
 }

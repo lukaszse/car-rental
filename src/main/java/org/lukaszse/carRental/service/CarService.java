@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.lukaszse.carRental.exceptions.NotFoundException;
 import org.lukaszse.carRental.model.Car;
+import org.lukaszse.carRental.model.TimePeriod;
 import org.lukaszse.carRental.repository.CarRepository;
+import org.lukaszse.carRental.repository.CarSearchRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -22,15 +24,16 @@ import java.util.stream.Stream;
 public class CarService {
 
     public static final String CAR_NOT_FOUND_ERROR_MESSAGE = "Car with registrationNo=%s has not been found.";
-    private final CarRepository repository;
+    private final CarRepository carRepository;
+    private final CarSearchRepository carSearchRepository;
 
 
     public List<Car> findAll() {
-        return repository.findAll();
+        return carRepository.findAll();
     }
 
     public Car getContractor(Integer id) {
-            return repository.findById(id)
+            return carRepository.findById(id)
                     .orElse(null);
     }
 
@@ -43,24 +46,24 @@ public class CarService {
     }
 
     public void addContractor(Car car) {
-        repository.save(car);
+        carRepository.save(car);
     }
 
     public void editContractor(Car car) {
-        if(!repository.existsById(car.getId())) {
+        if(!carRepository.existsById(car.getId())) {
             throw new NotFoundException(CAR_NOT_FOUND_ERROR_MESSAGE.formatted(car.getId()));
         }
-        repository.save(car);
+        carRepository.save(car);
     }
 
     public void deleteContractor(Integer Contractorid) {
-        repository.deleteById(Contractorid);
+        carRepository.deleteById(Contractorid);
     }
 
     public Page<Car> getPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
-        var users = repository.findAll();
+        var users = carRepository.findAll();
         var contractorsPage = Stream.of(users)
                 .filter(orderList -> !orderList.isEmpty())
                 .flatMap(Collection::stream)
@@ -68,5 +71,9 @@ public class CarService {
                 .limit(pageSize)
                 .collect(Collectors.toList());
         return new PageImpl<Car>(contractorsPage, PageRequest.of(currentPage, pageSize), users.size());
+    }
+
+    public Page<Car> findCars(final String manufacturer, final String model, final TimePeriod period, final Pageable pageable) {
+        return carSearchRepository.findCarByManufacturerContainsIgnoreCaseAndModelContainsIgnoreCase(manufacturer, model, pageable);
     }
 }

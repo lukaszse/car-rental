@@ -46,13 +46,13 @@ public class CarController {
                         .boxed()
                         .collect(Collectors.toList()))
                 .forEach(pageNumbers -> model.addAttribute(AttributeNames.PAGE_NUMBERS, pageNumbers));
-        return ViewNames.MANAGEMENT_CARS;
+        return ViewNames.CARS;
     }
 
     @GetMapping(Mappings.MANAGEMENT_CAR)
     public String car(@RequestParam Integer id, Model model) {
         model.addAttribute(AttributeNames.CAR, carService.getContractor(id));
-        return ViewNames.MANAGEMENT_CAR;
+        return ViewNames.CAR;
     }
 
     @GetMapping(Mappings.ADD_CAR)
