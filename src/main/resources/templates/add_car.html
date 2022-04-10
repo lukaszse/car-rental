@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head id="headId">
+    <meta charset="UTF-8">
+    <title>Contractor</title>
+</head>
+<body class="p-3 mb-2 bg-dark text-white">
+<div th:replace="~{fragments/menu :: menuFragment}"/>
+
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <form th:action="@{add_car}" th:object="${car}" method="post">
+                    <p>&nbsp;</p>
+                    <H5 th:if="*{id != null}" align="center">Edit car:</H5>
+
+                    <H5 th:if="*{id == null}" align="center">Add car:</H5>
+                    <p>&nbsp<br></p>
+
+                    <div align="center" class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('all')}">
+                        <h5>Error. Wrong data format:</h5>
+                        <i th:errors="*{all}">Incorrect data</i>
+                    </div>
+                    <p>&nbsp<br></p>
+
+                    <div th:if="*{id != null}" class="form-group row">
+                        <label for="inputId" class="col-sm-2 col-form-label">Car id</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="inputId" th:field="*{id}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputRegistrationNo" class="col-sm-2 col-form-label">Registration number</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputRegistrationNo" th:field="*{registrationNo}"
+                                   th:errorclass="'form-control is-invalid'">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputmanufacturer" class="col-sm-2 col-form-label">Manufacturer</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputmanufacturer" th:field="*{manufacturer}"
+                                   th:errorclass="'form-control is-invalid'">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputModel" class="col-sm-2 col-form-label">Model</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputModel" th:field="*{model}"
+                                   th:errorclass="'form-control is-invalid'">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputFuelType" class="col-sm-2 col-form-label">Fuel type</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputFuelType" th:field="*{fuelType}"
+                                   th:errorclass="'form-control is-invalid'">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label for="inputType" class="col-sm-2 col-form-label">type</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputType" th:field="*{type}"
+                                   th:errorclass="'form-control is-invalid'">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputEngineCapacity" class="col-sm-2 col-form-label">Engine capacity</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="inputEngineCapacity" th:field="*{engineCapacity}"
+                                   th:errorclass="'form-control is-invalid'">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputPassengerNumber" class="col-sm-2 col-form-label">Passenger capacity</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="inputPassengerNumber" th:field="*{passengerNumber}"
+                                   th:errorclass="'form-control is-invalid'">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputDescription" class="col-sm-2 col-form-label">Desrciption</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputDescription" th:field="*{description}"
+                                   th:errorclass="'form-control is-invalid'">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputCostPerDay" class="col-sm-2 col-form-label">Cost per day PLN</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="inputCostPerDay" th:field="*{costPerDay}"
+                                   th:errorclass="'form-control is-invalid'">
+                        </div>
+                    </div>
+
+                    <div align="center">
+                        <input type="submit" class="btn btn-light " value="Submit">
+                        <input type="reset" class="btn btn-light" value="Reset">
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="col-md-2">
+            </div>
+
+        </div>
+    </div>
+    <div align="center">
+        <footer id="footerId">this is a footer</footer>
+    </div>
+</div>
+</body>
+</html>
