@@ -3,8 +3,8 @@ package org.lukaszse.carRental.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.lukaszse.carRental.model.Reservation;
-import org.lukaszse.carRental.model.dto.OrderDto;
-import org.lukaszse.carRental.model.dto.OrderViewDto;
+import org.lukaszse.carRental.model.dto.ReservationDto;
+import org.lukaszse.carRental.model.dto.ReservationViewDto;
 import org.lukaszse.carRental.service.CarService;
 import org.lukaszse.carRental.service.ReservationService;
 import org.lukaszse.carRental.service.SettingService;
@@ -39,16 +39,16 @@ public class ReservationController {
 
     @GetMapping(Mappings.ADD_RESERVATION)
     public String addOrderView(final Model model) {
-        model.addAttribute(AttributeNames.RESERVATION, new OrderViewDto());
+        model.addAttribute(AttributeNames.RESERVATION, new ReservationViewDto());
         model.addAttribute(AttributeNames.CARS, carService.findAll());
         return ViewNames.ADD_RESERVATION;
     }
 
     @GetMapping(Mappings.EDIT_RESERVATION)
     public String editOrderView(@RequestParam final Integer id, Model model) {
-        var order = reservationService.getOrder(id);
-        var orderReader = new OrderViewDto(order);
-        model.addAttribute(AttributeNames.RESERVATION, orderReader);
+        var reservation = reservationService.getReservation(id);
+        var reservationReader = ReservationViewDto.of(reservation);
+        model.addAttribute(AttributeNames.RESERVATION, reservationReader);
         model.addAttribute(AttributeNames.CARS, carService.findAll());
         return ViewNames.ADD_RESERVATION;
     }
@@ -57,7 +57,7 @@ public class ReservationController {
     public String orderListView(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
                                 @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
                                 final Model model) {
-        Page<Reservation> orderPage = reservationService.getPaginated(PageRequest.of(pageNumber - 1, pageSize));
+        Page<Reservation> orderPage = reservationService.getAllReservations(PageRequest.of(pageNumber - 1, pageSize));
         model.addAttribute(AttributeNames.ORDER_PAGE, orderPage);
         Stream.of(orderPage.getTotalPages())
                 .filter(totalPages -> totalPages > 0)
@@ -70,10 +70,10 @@ public class ReservationController {
 
     @PostMapping(Mappings.ADD_RESERVATION)
     public String addOrder(
-            @ModelAttribute(AttributeNames.RESERVATION) @Valid final OrderDto submittedOrder,
+            @ModelAttribute(AttributeNames.RESERVATION) @Valid final ReservationDto submittedOrder,
             final BindingResult bindingResult, final Model model) {
         if (!bindingResult.hasErrors()) {
-            reservationService.addEditOrder(submittedOrder);
+            reservationService.addEditReservation(submittedOrder);
             return "redirect:/" + Mappings.RESERVATIONS;
         }
         model.addAttribute(Map.of(
@@ -84,17 +84,16 @@ public class ReservationController {
 
     @GetMapping(Mappings.DELETE_RESERVATION)
     public String deleteOrder(@RequestParam final Integer id) {
-        reservationService.deleteOrder(id);
+        reservationService.deleteReservation(id);
         return "redirect:/" + Mappings.RESERVATIONS;
     }
 
     @GetMapping(Mappings.VIEW_ORDER)
     public String orderView(@RequestParam final Integer id, final Model model) {
-        var orderReader = new OrderViewDto(reservationService.getOrder(id));
+        var reservationReader = ReservationViewDto.of(reservationService.getReservation(id));
         model.addAllAttributes(Map.of(
-                AttributeNames.RESERVATION, orderReader,
+                AttributeNames.RESERVATION, reservationReader,
                 "settingsSet", settingService.getCurrentSettings()));
-        log.info("Order description: " + orderReader.getOrderDescription() + " price after processing " + orderReader.getPrice());
         return ViewNames.RESERVATION;
     }
 }

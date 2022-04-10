@@ -32,7 +32,7 @@ public class CarService {
         return carRepository.findAll();
     }
 
-    public Car getContractor(Integer id) {
+    public Car getCar(Integer id) {
             return carRepository.findById(id)
                     .orElse(null);
     }

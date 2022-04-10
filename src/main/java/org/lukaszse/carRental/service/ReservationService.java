@@ -2,65 +2,85 @@ package org.lukaszse.carRental.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.lukaszse.carRental.model.Car;
 import org.lukaszse.carRental.model.Reservation;
-import org.lukaszse.carRental.model.dto.OrderDto;
-import org.lukaszse.carRental.repository.OrderRepository;
-import org.lukaszse.carRental.repository.OrderSearchRepository;
+import org.lukaszse.carRental.model.User;
+import org.lukaszse.carRental.model.dto.ReservationDto;
+import org.lukaszse.carRental.repository.ReservationRepository;
+import org.lukaszse.carRental.repository.ReservationSearchRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
 
-    private final OrderRepository orderRepository;
-    private final OrderSearchRepository orderSearchRepository;
+    private final ReservationRepository reservationRepository;
+    private final ReservationSearchRepository reservationSearchRepository;
     private final CarService carService;
+    private final UserService userService;
 
-    public Reservation getOrder(Integer id) {
-        return orderRepository.getById(id);
+    public Reservation getReservation(Integer id) {
+        return reservationRepository.getById(id);
     }
 
-    public Page<Reservation> getPaginated(final Pageable pageable) {
-        return orderSearchRepository.findAll(pageable);
+    public Page<Reservation> getAllReservations(final Pageable pageable) {
+        return reservationSearchRepository.findAll(pageable);
     }
 
-    public Page<Reservation> findOrders(final String orderName, final String contractor, final Pageable pageable) {
-        return orderSearchRepository.findReservationByReservationNameContainsAndCar_ModelContainsIgnoreCase(orderName, contractor, pageable);
+    public Page<Reservation> findReservations(final String userName, final String registrationNo, final Pageable pageable) {
+        return reservationSearchRepository.findByUser_UserNameContainsIgnoreCaseAndCar_RegistrationNoContainsIgnoreCase(userName, registrationNo, pageable);
     }
 
-    public void addEditOrder(OrderDto orderDto) {
-        orderRepository.save(createOrderOrGetOrderForUpdate(orderDto));
+    public void addEditReservation(ReservationDto reservationDto) {
+        reservationRepository.save(createOrderOrGetOrderForUpdate(reservationDto));
     }
 
-    public void deleteOrder(Integer id) {
-        orderRepository.deleteById(id);
+    public void deleteReservation(Integer id) {
+        reservationRepository.deleteById(id);
     }
 
-    private Reservation createOrderOrGetOrderForUpdate(final OrderDto orderDto) {
-        return orderDto.getId() == null ?
-                createOrder(orderDto) :
-                findOrderAndPrepareForUpdate(orderDto);
+    private Reservation createOrderOrGetOrderForUpdate(final ReservationDto reservationDto) {
+        var user = userService.getUser(reservationDto.getUserName());
+        var car = carService.getCar(reservationDto.getCarId());
+        var totalCost = calculateTotalCost(reservationDto.getDateFrom(), reservationDto.getDateTo(), car.getCostPerDay());
+        return reservationDto.getId() == null ?
+                createReservation(reservationDto, user, car, totalCost) :
+                getAndUpdateReservation(reservationDto, user, car, totalCost);
     }
 
-    private Reservation createOrder(final OrderDto orderDto) {
-        return new Reservation(carService.getContractor(orderDto.getContractorId()),
-                new BigDecimal(orderDto.getPrice().replace(",", ".")),
-                orderDto.getOrderName(),
-                orderDto.getOrderDescription());
+    private Reservation createReservation(final ReservationDto reservationDto,
+                                          final User user,
+                                          final Car car,
+                                          final BigDecimal totalCost) {
+        return new Reservation(
+                user, car, reservationDto.getDateFrom(), reservationDto.getDateTo(), totalCost);
     }
 
-    private Reservation findOrderAndPrepareForUpdate(final OrderDto orderDto) {
-        Reservation reservation = getOrder(orderDto.getId());
-        reservation.setCar(carService.getContractor(orderDto.getContractorId()));
-        reservation.setPrice(new BigDecimal(orderDto.getPrice().replace(",", ".")));
-        reservation.setReservationName(orderDto.getOrderName());
-        reservation.setReservationDescription(orderDto.getOrderDescription());
-        return reservation;
+    private Reservation getAndUpdateReservation(final ReservationDto reservationDto,
+                                                final User user,
+                                                final Car car,
+                                                final BigDecimal totalCost) {
+        Reservation reservation = getReservation(reservationDto.getId());
+        return Reservation.of(
+                reservation.getId(),
+                user,
+                car,
+                LocalDate.now(),
+                reservationDto.getDateFrom(),
+                reservationDto.getDateTo(),
+                totalCost,
+                reservationDto.getRented());
     }
 
+    private BigDecimal calculateTotalCost(final LocalDate dateFrom, final LocalDate dateTo, final BigDecimal costPerDay) {
+        var daysDiff = ChronoUnit.DAYS.between(dateFrom, dateTo);
+        return costPerDay.multiply(BigDecimal.valueOf(daysDiff));
+    }
 }

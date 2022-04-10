@@ -1,5 +1,6 @@
 package org.lukaszse.carRental.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,11 +14,13 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+
 @Data
-@EqualsAndHashCode(of = "id")
-@NoArgsConstructor
 @Entity
-@Table(name = "reservation")
+@EqualsAndHashCode(of = "id")
+@Table(name = "car_reservation")
+@NoArgsConstructor
+@AllArgsConstructor(staticName = "of")
 public class Reservation {
 
     @Id
@@ -25,30 +28,40 @@ public class Reservation {
     @GenericGenerator(name = "inc", strategy = "increment")
     private Integer id;
 
-    private LocalDate reservationDate;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_name")
+    private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_id")
     private Car car;
 
+    @NotBlank(message = "Field Reservation Date must not be empty")
+    private LocalDate reservationDate;
+
+    @NotBlank(message = "Field Date From must not be empty")
+    private LocalDate dateFrom;
+
+    @NotBlank(message = "Field Date To must not be empty")
+    private LocalDate dateTo;
+
     @NotNull(message = "Field Price must not be null")
     @Digits(integer = 10, fraction = 2)
     @DecimalMin(value = "0.0", inclusive = true)
-    private BigDecimal price;
+    private BigDecimal totalCost;
 
-    @NotBlank(message = "Field Order Name must not be empty")
-    @Column(name = "reservation_name")
-    private String reservationName;
+    private Boolean rented;
 
-    @NotBlank(message = "Field Order Description must not be empty")
-    @Column(name = "reservation_description")
-    private String reservationDescription;
-
-    public Reservation(Car car, BigDecimal price, String reservationName, String reservationDescription) {
-        this.reservationDate = LocalDate.now();
+    public Reservation(final User user,
+                       final Car car,
+                       final LocalDate dateFrom,
+                       final LocalDate dateTo,
+                       final BigDecimal totalCost) {
+        this.user = user;
         this.car = car;
-        this.price = price;
-        this.reservationName = reservationName;
-        this.reservationDescription = reservationDescription;
+        this.reservationDate = LocalDate.now();
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.totalCost = totalCost;
     }
 }
