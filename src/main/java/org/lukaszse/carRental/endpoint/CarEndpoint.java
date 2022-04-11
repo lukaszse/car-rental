@@ -9,10 +9,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.NotNull;
 
 @Slf4j
 @RestController
@@ -25,7 +28,7 @@ public class CarEndpoint {
     @GetMapping("/findCars")
     public ResponseEntity<Page<Car>> findCars(@RequestParam final String manufacturer,
                                               @RequestParam final String model,
-                                              final TimePeriod timePeriod,
+                                              @Nullable final TimePeriod timePeriod,
                                               @RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
                                               @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize) {
 
