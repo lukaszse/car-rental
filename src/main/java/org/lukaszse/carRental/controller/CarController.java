@@ -51,7 +51,7 @@ public class CarController {
 
     @GetMapping(Mappings.MANAGEMENT_CAR)
     public String car(@RequestParam Integer id, Model model) {
-        model.addAttribute(AttributeNames.CAR, carService.getContractor(id));
+        model.addAttribute(AttributeNames.CAR, carService.getCar(id));
         return ViewNames.CAR;
     }
 
@@ -63,7 +63,7 @@ public class CarController {
 
     @GetMapping(Mappings.EDIT_CAR)
     public String addCar(@RequestParam Integer id, Model model) {
-        model.addAttribute(AttributeNames.CAR, carService.getContractor(id));
+        model.addAttribute(AttributeNames.CAR, carService.getCar(id));
         return ViewNames.ADD_CAR;
     }
 

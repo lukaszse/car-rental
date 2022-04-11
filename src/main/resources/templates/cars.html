@@ -8,17 +8,18 @@
 
 <div th:replace="~{fragments/menu :: menuFragment}"/>
 
-<div class="container-md" align="center">
+<div class="container-md">
     <p>&nbsp;</p>
-    <h5>Available cars:</h5>
+    <h5 class="text-center">Available cars:</h5>
     <p>&nbsp;</p>
-    <table class="table table-striped table-dark" border="2" cellpadding="10">
+
+    <h6 class="text-left">Date from: <input id="dateFromFilter" type="date" name="dateFrom" value="">  Date to: <input id="dateToFilter" type="date" name="dateTo" value=""></h6>
+    <table class="table table-striped table-dark" border="2" cellpadding="2">
         <thead>
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Manufacturer</th>
             <th scope="col">Model</th>
-            <th scope="col">Period</th>
             <th scope="col">Cost per day</th>
             <th scope="col"></th>
             <th scope="col"></th>
@@ -28,7 +29,6 @@
             <td>Filters:</td>
             <td><input id="manufacturerFilter" type="text" name="manufacturer" value=""></td>
             <td><input id="modelFilter" type="text" name="model" value=""></td>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -43,7 +43,8 @@
         </ul>
     </nav>
 
-    <a id="addCarId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Add New Car</a>
+    <div class="col text-center"><a id="addCarId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Add New Car</a></div>
+
 </div>
 <div align="center">
     <footer id="footerId">this is a footer</footer>
@@ -52,7 +53,8 @@
 <script>
     let modelFilter = document.getElementById("modelFilter");
     let manufacturerFilter = document.getElementById("manufacturerFilter");
-
+    let dateFromFilter = document.getElementById("dateFromFilter");
+    let dateToFilter = document.getElementById("dateToFilter");
 
     window.onload = function () {
         loadDoc();
@@ -60,24 +62,32 @@
     modelFilter.addEventListener("keyup", function (event) {
         if(event.key === 'Enter') {
             event.preventDefault();
-            filter()
+            filter();
         }
     });
 ``
     manufacturerFilter.addEventListener("keyup", function (event) {
         if(event.key === 'Enter') {
             event.preventDefault();
-            filter()
+            filter();
         }
     });
 
+    dateFromFilter.addEventListener("change", function (event) {
+        event.preventDefault();
+        filter();
+    });
+
+    dateToFilter.addEventListener("change", function (event) {
+        event.preventDefault();
+        filter();
+    });
+
     function filter() {
-        const manufacturer = manufacturerFilter.value;
-        const model = modelFilter.value;
-        loadDoc(manufacturer, model)
+        loadDoc(manufacturerFilter.value, modelFilter.value, dateFromFilter.value, dateToFilter.value)
     }
 
-    function loadDoc(manufacturer, model, pageNumber) {
+    function loadDoc(manufacturer, model, dateFrom, dateTo, pageNumber) {
 
         if (manufacturer == null) {
             manufacturer = "";
@@ -86,11 +96,19 @@
             model = "";
         }
 
+        if (dateFrom == null) {
+            dateFrom = "";
+        }
+
+        if (dateTo == null) {
+            dateTo = "";
+        }
+
         if (pageNumber == null) {
             pageNumber = 1;
         }
 
-        get(`/cars/findCars?manufacturer=${manufacturer}&model=${model}&pageNumber=${pageNumber}`, function (err, response) {
+        get(`/cars/findCars?manufacturer=${manufacturer}&model=${model}&dateFrom=${dateFrom}&dateTo=${dateTo}&pageNumber=${pageNumber}`, function (err, response) {
             if (err != null) {
                 console.error(err);
             } else {
@@ -109,7 +127,6 @@
             addTextCell(element.id, row);
             addTextCell(element.manufacturer, row);
             addTextCell(element.model, row);
-            addTextCell("", row);
             addTextCell(currencyFormatPLN(element.costPerDay), row);
             addLinkCell('View Details', `car?id=${element.id}`, row);
             addLinkCell('Edit', `edit_car?id=${element.id}`, row);
@@ -158,7 +175,7 @@
             a.appendChild(document.createTextNode(i))
             a.className = "page-link";
             a.onclick = function () {
-                loadDoc(manufacturerFilter.value, modelFilter.value, i)
+                loadDoc(manufacturerFilter.value, modelFilter.value, dateFromFilter.value, dateToFilter.value, i)
             }
             a.title = i
             li.appendChild(a);

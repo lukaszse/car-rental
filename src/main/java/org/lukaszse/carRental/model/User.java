@@ -16,7 +16,7 @@ import javax.validation.constraints.Pattern;
 @EqualsAndHashCode(of = "userName")
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "app_user")
 public class User {
 
     @Id
@@ -32,6 +32,8 @@ public class User {
     @Column(name = "last_name")
     @NotBlank(message = "Last name cannot be blank")
     private String lastName;
+
+    private String userRole;
 
     @NotBlank(message = "Password cannot be blank")
     @Pattern(regexp = "^.{6,}", message = "Password must contain at least 6 characters")

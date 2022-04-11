@@ -17,5 +17,5 @@
           th:with="home=${T(org.lukaszse.carRental.util.Mappings).HOME}"/>
     <attr sel="#viewOrder"
           th:href="${viewOrder}+'?id='+${reservation.id}"
-          th:with="viewOrder=${T(org.lukaszse.carRental.util.Mappings).VIEW_ORDER}"/>
+          th:with="viewOrder=${T(org.lukaszse.carRental.util.Mappings).RESERVATION}"/>
 </thlogic>

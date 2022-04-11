@@ -6,7 +6,4 @@
     <attr sel="#home"
           th:href="${home}"
           th:with="home=${T(org.lukaszse.carRental.util.Mappings).HOME}"/>
-    <attr sel="#orderListId"
-          th:href="${orderList}"
-          th:with="orderList=${T(org.lukaszse.carRental.util.Mappings).RESERVATIONS}"/>
 </thlogic>

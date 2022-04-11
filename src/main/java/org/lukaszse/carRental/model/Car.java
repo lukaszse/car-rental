@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Data
@@ -49,7 +47,8 @@ public class Car {
     @NotBlank(message = "Field City must not be empty.")
     private String description;
 
-    @Positive(message = "Cost per day must be positive number")
     @NotNull(message = "Cost per day not be empty.")
+    @Digits(integer = 10, fraction = 2)
+    @DecimalMin(value = "0.0", inclusive = true)
     private BigDecimal costPerDay;
 }
