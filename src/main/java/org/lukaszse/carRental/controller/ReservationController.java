@@ -2,7 +2,10 @@ package org.lukaszse.carRental.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.lukaszse.carRental.model.Car;
 import org.lukaszse.carRental.model.Reservation;
+import org.lukaszse.carRental.model.TimePeriod;
+import org.lukaszse.carRental.model.User;
 import org.lukaszse.carRental.model.dto.ReservationDto;
 import org.lukaszse.carRental.model.dto.ReservationViewDto;
 import org.lukaszse.carRental.service.CarService;
@@ -38,9 +41,9 @@ public class ReservationController {
 
 
     @GetMapping(Mappings.RESERVATIONS)
-    public String ReservationsView(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
-                                   @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
-                                   final Model model) {
+    public String reservations(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
+                               @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
+                               final Model model) {
         Page<Reservation> orderPage = reservationService.getAllReservations(PageRequest.of(pageNumber - 1, pageSize));
         model.addAttribute(AttributeNames.ORDER_PAGE, orderPage);
         Stream.of(orderPage.getTotalPages())
@@ -53,14 +56,24 @@ public class ReservationController {
     }
 
     @GetMapping(Mappings.RESERVATION)
-    public String reservationView(@RequestParam final Integer id, final Model model) {
+    public String reservation(@RequestParam final Integer id, final Model model) {
         var reservationViewDto = ReservationViewDto.of(reservationService.getReservation(id));
         model.addAttribute(AttributeNames.RESERVATION, reservationViewDto);
         return ViewNames.RESERVATION;
     }
 
+    @GetMapping(Mappings.ADD_RESERVATION)
+    public String addReservation(@RequestParam final String userName,
+                                  @RequestParam final int carId,
+                                  final TimePeriod timePeriod,
+                                  final Model model) {
+        final ReservationViewDto reservationViedDto = reservationService.prepareReservationViewDto(userName, carId, timePeriod);
+        model.addAttribute(AttributeNames.RESERVATION, reservationViedDto);
+        return ViewNames.ADD_RESERVATION;
+    }
+
     @GetMapping(Mappings.EDIT_RESERVATION)
-    public String editReservationView(@RequestParam final Integer id, Model model) {
+    public String editReservation(@RequestParam final Integer id, final Model model) {
         var reservationViewDto = ReservationViewDto.of(reservationService.getReservation(id));
         model.addAttribute(AttributeNames.RESERVATION, reservationViewDto);
         model.addAttribute(AttributeNames.CARS, carService.findAll());
@@ -69,8 +82,8 @@ public class ReservationController {
     }
 
     @PostMapping(Mappings.EDIT_RESERVATION)
-    public String editReservation(@ModelAttribute(AttributeNames.RESERVATION) @Valid final ReservationDto submittedReservation,
-                                  final BindingResult bindingResult, final Model model) {
+    public String processEditReservation(@ModelAttribute(AttributeNames.RESERVATION) @Valid final ReservationDto submittedReservation,
+                                         final BindingResult bindingResult, final Model model) {
         if (!bindingResult.hasErrors()) {
             reservationService.addEditReservation(submittedReservation);
             return "redirect:/" + Mappings.RESERVATIONS;

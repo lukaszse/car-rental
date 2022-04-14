@@ -9,6 +9,7 @@ public class ViewNames {
     public static final String RESERVATIONS = "reservations";
     public static final String USER_ADMINISTRATION = "user_administration";
     public static final String RESERVATION = "reservation";
+    public static final String ADD_RESERVATION = "add_reservation";
     public static final String EDIT_RESERVATION = "edit_reservation";
     public static final String ADD_USER = "add_user";
     public static final String EDIT_USER = "edit_user";

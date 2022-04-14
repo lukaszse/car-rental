@@ -7,6 +7,7 @@ import org.lukaszse.carRental.model.Reservation;
 import org.lukaszse.carRental.model.TimePeriod;
 import org.lukaszse.carRental.model.User;
 import org.lukaszse.carRental.model.dto.ReservationDto;
+import org.lukaszse.carRental.model.dto.ReservationViewDto;
 import org.lukaszse.carRental.repository.ReservationRepository;
 import org.lukaszse.carRental.repository.ReservationSearchRepository;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -52,6 +54,35 @@ public class ReservationService {
         reservationRepository.deleteById(id);
     }
 
+    public static boolean checkIfPeriodOverlap(final TimePeriod timePeriod1, TimePeriod timePeriod2) {
+        final LocalDate s1 = timePeriod1.getDateFrom();
+        final LocalDate e1 = timePeriod1.getDateTo();
+        final LocalDate s2 = timePeriod2.getDateFrom();
+        final LocalDate e2 = timePeriod2.getDateTo();
+
+        if(s1 == null || e1 == null || s2 == null || e2 == null) {
+            return false;
+        }
+
+        if(s1.compareTo(s2)<0 && e1.compareTo(s2)>0 ||
+                s1.compareTo(e2)<0 && e1.compareTo(e2)>0 ||
+                s1.compareTo(s2)<0 && e1.compareTo(e2)>0 ||
+                s1.compareTo(s2)>0 && e1.compareTo(e2)<0 )
+        {
+            log.info("Periods overlap! Period 1: {}, Period2: {}", timePeriod1, timePeriod2);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public ReservationViewDto prepareReservationViewDto(final String userName, final int carId, final TimePeriod timePeriod) {
+        final Car car = carService.getCar(carId);
+        final BigDecimal totalCost = calculateTotalCost(timePeriod, car.getCostPerDay());
+        return ReservationViewDto.of(userName, carId, car, timePeriod, totalCost);
+    }
+
     private Reservation createOrderOrGetOrderForUpdate(final ReservationDto reservationDto) {
         var user = userService.getUser(reservationDto.getUserName());
         var car = carService.getCar(reservationDto.getCarId());
@@ -84,32 +115,12 @@ public class ReservationService {
                 totalCost,
                 reservationDto.getRented());
     }
-
     private static BigDecimal calculateTotalCost(final LocalDate dateFrom, final LocalDate dateTo, final BigDecimal costPerDay) {
         var daysDiff = ChronoUnit.DAYS.between(dateFrom, dateTo);
         return costPerDay.multiply(BigDecimal.valueOf(daysDiff));
     }
 
-    public static boolean checkIfPeriodOverlap(final TimePeriod timePeriod1, TimePeriod timePeriod2) {
-        final LocalDate s1 = timePeriod1.getDateFrom();
-        final LocalDate e1 = timePeriod1.getDateTo();
-        final LocalDate s2 = timePeriod2.getDateFrom();
-        final LocalDate e2 = timePeriod2.getDateTo();
-
-        if(s1 == null || e1 == null || s2 == null || e2 == null) {
-            return false;
-        }
-
-        if(s1.compareTo(s2)<0 && e1.compareTo(s2)>0 ||
-                s1.compareTo(e2)<0 && e1.compareTo(e2)>0 ||
-                s1.compareTo(s2)<0 && e1.compareTo(e2)>0 ||
-                s1.compareTo(s2)>0 && e1.compareTo(e2)<0 )
-        {
-            log.info("Periods overlap! Period 1: {}, Period2: {}", timePeriod1, timePeriod2);
-            return true;
-        }
-        else {
-            return false;
-        }
+    private static BigDecimal calculateTotalCost(final TimePeriod timePeriod, final BigDecimal costPerDay) {
+        return calculateTotalCost(timePeriod.getDateFrom(), timePeriod.getDateTo(), costPerDay);
     }
 }

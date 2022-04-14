@@ -2,12 +2,13 @@ package org.lukaszse.carRental.util;
 
 public class Mappings {
 
-    public static final String MANAGEMENT_CARS = "cars";
-    public static final String MANAGEMENT_CAR = "car";
+    public static final String CARS = "cars";
+    public static final String CAR = "car";
     public static final String ADD_CAR = "add_car";
     public static final String EDIT_CAR = "edit_car";
     public static final String DELETE_CAR = "delete_car";
     public static final String RESERVATIONS = "reservations";
+    public static final String ADD_RESERVATION = "add_reservation";
     public static final String EDIT_RESERVATION = "edit_reservation";
     public static final String DELETE_RESERVATION = "delete_reservation";
     public static final String USER_ADMINISTRATION = "user_administration";
