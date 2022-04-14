@@ -5,7 +5,7 @@
           th:replace="~{fragments/footer :: footerFragment}"/>
     <attr sel="#carId"
           th:href="${viewCar}+'?id='+${car.id}"
-          th:with="viewCar=${T(org.lukaszse.carRental.util.Mappings).MANAGEMENT_CAR}"
+          th:with="viewCar=${T(org.lukaszse.carRental.util.Mappings).CAR}"
     />
     <attr sel="#addCarId"
           th:href="${addCar}"

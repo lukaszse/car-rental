@@ -34,7 +34,7 @@ public class CarController {
     }
 
 
-    @GetMapping(Mappings.MANAGEMENT_CARS)
+    @GetMapping(Mappings.CARS)
     public String cars(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
                        @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
                        final Model model) {
@@ -49,40 +49,39 @@ public class CarController {
         return ViewNames.CARS;
     }
 
-    @GetMapping(Mappings.MANAGEMENT_CAR)
-    public String car(@RequestParam Integer id, Model model) {
+    @GetMapping(Mappings.CAR)
+    public String car(@RequestParam final Integer id, final Model model) {
         model.addAttribute(AttributeNames.CAR, carService.getCar(id));
         return ViewNames.CAR;
     }
 
     @GetMapping(Mappings.ADD_CAR)
-    public String addCar(Model model) {
+    public String addCar(final Model model) {
         model.addAttribute(AttributeNames.CAR, new Car());
         return ViewNames.ADD_CAR;
     }
 
     @GetMapping(Mappings.EDIT_CAR)
-    public String addCar(@RequestParam Integer id, Model model) {
+    public String editCar(@RequestParam final Integer id, final Model model) {
         model.addAttribute(AttributeNames.CAR, carService.getCar(id));
         return ViewNames.ADD_CAR;
     }
 
     @Transactional
     @PostMapping(Mappings.ADD_CAR)
-    public String processAddEditCar(
-            @ModelAttribute(AttributeNames.CAR) @Valid Car car,
-            BindingResult bindingResult) {
+    public String processAddEditCar(@ModelAttribute(AttributeNames.CAR) @Valid final Car car,
+                                    final BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return ViewNames.ADD_CAR;
         }
         carService.addEditContractor(car);
-        return "redirect:/" + Mappings.MANAGEMENT_CARS;
+        return "redirect:/" + Mappings.CARS;
     }
 
     @GetMapping(Mappings.DELETE_CAR)
-    public String deleteContractor(@RequestParam Integer id) {
+    public String deleteContractor(@RequestParam final Integer id) {
         carService.deleteContractor(id);
-        return "redirect:/" + Mappings.MANAGEMENT_CARS;
+        return "redirect:/" + Mappings.CARS;
     }
 }
