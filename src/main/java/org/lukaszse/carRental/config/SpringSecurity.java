@@ -11,20 +11,22 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .anyRequest()
-                .permitAll();
-//                .antMatchers("/", "/css/*", "/images/logo.png", "/reservations/*", "/console", "console/**")
-//                .permitAll()
-//                .antMatchers("/settings").hasRole("ADMIN")
-//                .antMatchers("/*").hasAnyRole("USER", "ADMIN")
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
+        http
+            .csrf().disable()
+            .cors().disable()
+            .authorizeRequests()
+            .antMatchers("/", "/css/**", "/images/logo.png", "/reservations/*", "/console", "console/**")
+            .permitAll()
+            .antMatchers("/settings").hasRole("ADMIN")
+            .antMatchers("/*").hasAnyRole("USER", "ADMIN")
+            .anyRequest().authenticated()
+            .and()
+            .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/home", true)
+            .permitAll()
+            .and()
+            .logout()
+            .permitAll();
     }
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.Map;
 
 @Slf4j
@@ -46,11 +47,11 @@ public class ReservationController {
     }
 
     @GetMapping(Mappings.ADD_RESERVATION)
-    public String addReservation(@RequestParam final String userName,
-                                  @RequestParam final int carId,
-                                  final TimePeriod timePeriod,
-                                  final Model model) {
-        final ReservationDto reservationViedDto = reservationService.prepareReservationViewDto(userName, carId, timePeriod);
+    public String addReservation(final Principal principal,
+                                 @RequestParam final int carId,
+                                 final TimePeriod timePeriod,
+                                 final Model model) {
+        final ReservationDto reservationViedDto = reservationService.prepareReservationViewDto(principal.getName(), carId, timePeriod);
         model.addAttribute(AttributeNames.RESERVATION, reservationViedDto);
         return ViewNames.ADD_RESERVATION;
     }

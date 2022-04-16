@@ -140,7 +140,7 @@
             addTextCell(element.manufacturer, row);
             addTextCell(element.model, row);
             addTextCell(currencyFormatPLN(element.costPerDay), row);
-            addBookButton(element.id, dateFromFilter.value, dateToFilter.value, "user", row)
+            addBookButton(element.id, dateFromFilter.value, dateToFilter.value, row)
             addLinkCell('View Details', `car?id=${element.id}`, row);
             addLinkCell('Edit', `edit_car?id=${element.id}`, row);
             addLinkCell('Delete', `delete_car?id=${element.id}`, row);
@@ -149,9 +149,9 @@
         document.getElementById("tbody").replaceWith(tbody);
     }
 
-    function addBookButton(carId, dateFrom, dateTo, userName, row) {
+    function addBookButton(carId, dateFrom, dateTo, row) {
         if (dateFrom !== "" || dateTo !== "") {
-            addLinkCell('Book', `add_reservation?userName=${userName}&carId=${carId}&dateFrom=${dateFrom}&dateTo=${dateTo}`, row)
+            addLinkCell('Book', `add_reservation?carId=${carId}&dateFrom=${dateFrom}&dateTo=${dateTo}`, row)
         } else {
             addButtonCell('Book', 'Select rental period first!', row)
         }
