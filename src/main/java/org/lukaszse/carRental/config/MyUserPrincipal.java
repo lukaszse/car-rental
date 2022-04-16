@@ -1,4 +1,4 @@
-package org.lukaszse.carRental.model.dto;
+package org.lukaszse.carRental.config;
 
 import lombok.RequiredArgsConstructor;
 import org.lukaszse.carRental.model.User;
@@ -17,9 +17,13 @@ public class MyUserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return "admin".equals(user.getUserName()) ?
-                List.of(new SimpleGrantedAuthority("ROLE_ADMIN")) :
-                List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if("admin".equals(user.getUserRole())) {
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        } else if ("user".equals(user.getUserRole())) {
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        } else {
+            return List.of(new SimpleGrantedAuthority("GUEST"));
+        }
     }
 
     @Override

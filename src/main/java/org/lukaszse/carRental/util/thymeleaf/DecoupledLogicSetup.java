@@ -1,9 +1,10 @@
 package org.lukaszse.carRental.util.thymeleaf;
 
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+
+import javax.annotation.PostConstruct;
 
 @Slf4j
 @Component

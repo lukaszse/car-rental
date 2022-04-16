@@ -1,6 +1,6 @@
 package org.lukaszse.carRental.controller;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.lukaszse.carRental.model.Car;
 import org.lukaszse.carRental.service.CarService;

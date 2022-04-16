@@ -1,6 +1,6 @@
 package org.lukaszse.carRental.service;
 
-import jakarta.annotation.PostConstruct;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.lukaszse.carRental.exceptions.ConflictException;
 import org.lukaszse.carRental.exceptions.NotFoundException;

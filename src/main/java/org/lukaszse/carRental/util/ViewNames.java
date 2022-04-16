@@ -7,6 +7,7 @@ public class ViewNames {
     public static final String CAR = "car";
     public static final String ADD_CAR = "add_car";
     public static final String RESERVATIONS = "reservations";
+    public static final String USER_RESERVATIONS = "user_reservations";
     public static final String USER_ADMINISTRATION = "user_administration";
     public static final String RESERVATION = "reservation";
     public static final String ADD_RESERVATION = "add_reservation";

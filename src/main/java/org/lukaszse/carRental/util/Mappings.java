@@ -8,6 +8,7 @@ public class Mappings {
     public static final String EDIT_CAR = "edit_car";
     public static final String DELETE_CAR = "delete_car";
     public static final String RESERVATIONS = "reservations";
+    public static final String USER_RESERVATIONS = "user_reservations";
     public static final String ADD_RESERVATION = "add_reservation";
     public static final String EDIT_RESERVATION = "edit_reservation";
     public static final String DELETE_RESERVATION = "delete_reservation";

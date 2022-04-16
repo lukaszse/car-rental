@@ -1,6 +1,6 @@
 package org.lukaszse.carRental.controller;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.lukaszse.carRental.model.TimePeriod;
@@ -37,6 +37,13 @@ public class ReservationController {
                                @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize) {
         // supported by ajax separate call to ReservationEndpoint
         return ViewNames.RESERVATIONS;
+    }
+
+    @GetMapping(Mappings.USER_RESERVATIONS)
+    public String useReservations(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
+                               @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize) {
+        // supported by ajax separate call to ReservationEndpoint
+        return ViewNames.USER_RESERVATIONS;
     }
 
     @GetMapping(Mappings.RESERVATION)
