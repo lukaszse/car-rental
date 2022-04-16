@@ -1,34 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <title> == Contractors ==</title>
-
-    <script type="text/javascript" th:src="@{/js/lib/jspdf.min.inc.js}"></script>
-    <script type="text/javascript" th:src="@{/js/lib/jspdf.plugin.autotable.js}"></script>
-    <script type="text/javascript">
-        function genPDF() {
-            var doc = new jsPDF();
-            var principal = document.querySelector('#principal');
-            var car = document.querySelector('#car');
-            doc.fromHTML(principal, 15, 15)
-            doc.fromHTML(car, 110, 70)
-            doc.autoTable({
-                startY: 130,
-                html: '#table'
-            })
-            doc.save('Test.pdf');
-        }
-    </script>
-</head>
+<head id="headId"></head>
 <body class="p-3 mb-2 bg-dark text-white">
 <div th:replace="~{fragments/menu :: menuFragment}"/>
-
 <div class="container-md" align="center">
     <p>&nbsp;</p>
     <H5>Reservation detail:</H5>
@@ -68,4 +42,20 @@
 
 </body>
 
+<script type="text/javascript" th:src="@{/js/lib/jspdf.min.inc.js}"></script>
+<script type="text/javascript" th:src="@{/js/lib/jspdf.plugin.autotable.js}"></script>
+<script type="text/javascript">
+    function genPDF() {
+        var doc = new jsPDF();
+        var principal = document.querySelector('#principal');
+        var car = document.querySelector('#car');
+        doc.fromHTML(principal, 15, 15)
+        doc.fromHTML(car, 110, 70)
+        doc.autoTable({
+            startY: 130,
+            html: '#table'
+        })
+        doc.save('Test.pdf');
+    }
+</script>
 </html>
