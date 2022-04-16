@@ -6,7 +6,6 @@ import org.lukaszse.carRental.model.Car;
 import org.lukaszse.carRental.model.Reservation;
 import org.lukaszse.carRental.model.TimePeriod;
 import org.lukaszse.carRental.model.User;
-import org.lukaszse.carRental.model.dto.ReservationDto;
 import org.lukaszse.carRental.model.dto.ReservationViewDto;
 import org.lukaszse.carRental.repository.ReservationRepository;
 import org.lukaszse.carRental.repository.ReservationSearchRepository;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -46,7 +44,7 @@ public class ReservationService {
         return reservationSearchRepository.findByCar_Id(carId);
     }
 
-    public void addEditReservation(ReservationDto reservationDto) {
+    public void addEditReservation(ReservationViewDto reservationDto) {
         reservationRepository.save(createOrderOrGetOrderForUpdate(reservationDto));
     }
 
@@ -83,7 +81,10 @@ public class ReservationService {
         return ReservationViewDto.of(userName, carId, car, timePeriod, totalCost);
     }
 
-    private Reservation createOrderOrGetOrderForUpdate(final ReservationDto reservationDto) {
+    private Reservation createOrderOrGetOrderForUpdate(final ReservationViewDto reservationDto) {
+        if(reservationDto.getCarId() == null) {
+            reservationDto.setCarId(reservationDto.getCar().getId());
+        }
         var user = userService.getUser(reservationDto.getUserName());
         var car = carService.getCar(reservationDto.getCarId());
         var totalCost = calculateTotalCost(reservationDto.getDateFrom(), reservationDto.getDateTo(), car.getCostPerDay());
@@ -92,7 +93,7 @@ public class ReservationService {
                 getAndUpdateReservation(reservationDto, user, car, totalCost);
     }
 
-    private Reservation createReservation(final ReservationDto reservationDto,
+    private Reservation createReservation(final ReservationViewDto reservationDto,
                                           final User user,
                                           final Car car,
                                           final BigDecimal totalCost) {
@@ -100,7 +101,7 @@ public class ReservationService {
                 user, car, reservationDto.getDateFrom(), reservationDto.getDateTo(), totalCost);
     }
 
-    private Reservation getAndUpdateReservation(final ReservationDto reservationDto,
+    private Reservation getAndUpdateReservation(final ReservationViewDto reservationDto,
                                                 final User user,
                                                 final Car car,
                                                 final BigDecimal totalCost) {

@@ -129,7 +129,7 @@
             addTextCell(element.manufacturer, row);
             addTextCell(element.model, row);
             addTextCell(currencyFormatPLN(element.costPerDay), row);
-            addBookButton(element.id, dateFromFilter.value, dateToFilter.value, "userName", row)
+            addBookButton(element.id, dateFromFilter.value, dateToFilter.value, "user", row)
             addLinkCell('View Details', `car?id=${element.id}`, row);
             addLinkCell('Edit', `edit_car?id=${element.id}`, row);
             addLinkCell('Delete', `delete_car?id=${element.id}`, row);

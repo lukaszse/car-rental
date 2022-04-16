@@ -2,11 +2,8 @@ package org.lukaszse.carRental.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.lukaszse.carRental.model.Car;
 import org.lukaszse.carRental.model.Reservation;
 import org.lukaszse.carRental.model.TimePeriod;
-import org.lukaszse.carRental.model.User;
-import org.lukaszse.carRental.model.dto.ReservationDto;
 import org.lukaszse.carRental.model.dto.ReservationViewDto;
 import org.lukaszse.carRental.service.CarService;
 import org.lukaszse.carRental.service.ReservationService;
@@ -45,13 +42,13 @@ public class ReservationController {
                                @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
                                final Model model) {
         Page<Reservation> orderPage = reservationService.getAllReservations(PageRequest.of(pageNumber - 1, pageSize));
-        model.addAttribute(AttributeNames.ORDER_PAGE, orderPage);
         Stream.of(orderPage.getTotalPages())
                 .filter(totalPages -> totalPages > 0)
                 .map(totalPages -> IntStream.rangeClosed(1, totalPages)
                         .boxed()
                         .collect(Collectors.toList()))
                 .forEach(pageNumbers -> model.addAttribute(AttributeNames.PAGE_NUMBERS, pageNumbers));
+        model.addAttribute(AttributeNames.ORDER_PAGE, orderPage);
         return ViewNames.RESERVATIONS;
     }
 
@@ -81,8 +78,19 @@ public class ReservationController {
         return ViewNames.EDIT_RESERVATION;
     }
 
+    @PostMapping(Mappings.ADD_RESERVATION)
+    public String processAddReservation(@ModelAttribute(AttributeNames.RESERVATION) @Valid final ReservationViewDto submittedReservation,
+                                         final BindingResult bindingResult, final Model model) {
+        if (!bindingResult.hasErrors()) {
+            reservationService.addEditReservation(submittedReservation);
+            return "redirect:/" + Mappings.CARS;
+        }
+        model.addAttribute(AttributeNames.RESERVATION, submittedReservation);
+        return ViewNames.ADD_RESERVATION;
+    }
+
     @PostMapping(Mappings.EDIT_RESERVATION)
-    public String processEditReservation(@ModelAttribute(AttributeNames.RESERVATION) @Valid final ReservationDto submittedReservation,
+    public String processEditReservation(@ModelAttribute(AttributeNames.RESERVATION) @Valid final ReservationViewDto submittedReservation,
                                          final BindingResult bindingResult, final Model model) {
         if (!bindingResult.hasErrors()) {
             reservationService.addEditReservation(submittedReservation);

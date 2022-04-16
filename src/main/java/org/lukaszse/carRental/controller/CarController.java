@@ -38,14 +38,14 @@ public class CarController {
     public String cars(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
                        @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
                        final Model model) {
-        Page<Car> usersPage = carService.getPaginated(PageRequest.of(pageNumber - 1, pageSize));
-        model.addAttribute(AttributeNames.CAR_PAGE, usersPage);
-        Stream.of(usersPage.getTotalPages())
+        Page<Car> carsPage = carService.getPaginated(PageRequest.of(pageNumber - 1, pageSize));
+        Stream.of(carsPage.getTotalPages())
                 .filter(totalPages -> totalPages > 0)
                 .map(totalPages -> IntStream.rangeClosed(1, totalPages)
                         .boxed()
                         .collect(Collectors.toList()))
                 .forEach(pageNumbers -> model.addAttribute(AttributeNames.PAGE_NUMBERS, pageNumbers));
+        model.addAttribute(AttributeNames.CAR_PAGE, carsPage);
         return ViewNames.CARS;
     }
 
