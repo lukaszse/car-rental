@@ -14,6 +14,8 @@ public class AttributeNames {
     public static final String USER_PAGE = "user_page";
     public static final String CAR_PAGE = "car_page";
     public static final String MESSAGE = "message";
+    public static final String SUCCESS_MESSAGE = "success_message";
+    public static final String FAIL_MESSAGE = "fail_message";
     public static final String CURRENCY = "currency_rates";
 
 }

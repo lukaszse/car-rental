@@ -1,10 +1,10 @@
 package org.lukaszse.carRental.model.dto;
 
+import jakarta.persistence.Embedded;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Embedded;
 import java.util.List;
 
 @Data

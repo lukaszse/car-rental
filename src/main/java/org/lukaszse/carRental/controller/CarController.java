@@ -1,5 +1,6 @@
 package org.lukaszse.carRental.controller;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.lukaszse.carRental.model.Car;
 import org.lukaszse.carRental.service.CarService;
@@ -7,8 +8,6 @@ import org.lukaszse.carRental.util.AttributeNames;
 import org.lukaszse.carRental.util.Mappings;
 import org.lukaszse.carRental.util.ViewNames;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -18,10 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @Slf4j
 @Controller
@@ -38,14 +33,7 @@ public class CarController {
     public String cars(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
                        @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
                        final Model model) {
-        Page<Car> carsPage = carService.getPaginated(PageRequest.of(pageNumber - 1, pageSize));
-        Stream.of(carsPage.getTotalPages())
-                .filter(totalPages -> totalPages > 0)
-                .map(totalPages -> IntStream.rangeClosed(1, totalPages)
-                        .boxed()
-                        .collect(Collectors.toList()))
-                .forEach(pageNumbers -> model.addAttribute(AttributeNames.PAGE_NUMBERS, pageNumbers));
-        model.addAttribute(AttributeNames.CAR_PAGE, carsPage);
+        // supported by ajax separate call to reservation CarEndpoint
         return ViewNames.CARS;
     }
 

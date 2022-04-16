@@ -1,5 +1,6 @@
 package org.lukaszse.carRental.service;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.lukaszse.carRental.exceptions.ConflictException;
 import org.lukaszse.carRental.exceptions.NotFoundException;
@@ -16,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;

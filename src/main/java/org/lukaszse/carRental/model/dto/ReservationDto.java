@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Data
 @Builder
 @AllArgsConstructor(staticName = "of")
-public class ReservationViewDto {
+public class ReservationDto {
 
     private Integer id;
     private String userName;
@@ -27,7 +27,7 @@ public class ReservationViewDto {
     private BigDecimal totalCost;
     private Boolean rented;
 
-    public static ReservationViewDto of(final Reservation reservation) {
+    public static ReservationDto of(final Reservation reservation) {
         return of(reservation.getId(),
                 reservation.getUser().getUserName(),
                 reservation.getUser(),
@@ -40,12 +40,12 @@ public class ReservationViewDto {
                 reservation.getRented());
     }
 
-    public static ReservationViewDto of(final String userName,
-                                        final int carId,
-                                        final Car car,
-                                        final TimePeriod timePeriod,
-                                        final BigDecimal totalCost) {
-        return ReservationViewDto.builder()
+    public static ReservationDto of(final String userName,
+                                    final int carId,
+                                    final Car car,
+                                    final TimePeriod timePeriod,
+                                    final BigDecimal totalCost) {
+        return ReservationDto.builder()
                 .userName(userName)
                 .carId(carId)
                 .car(car)
