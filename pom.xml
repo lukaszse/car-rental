@@ -10,8 +10,8 @@
 	</parent>
 	<groupId>com.lukaszse</groupId>
 	<artifactId>carRental</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<version>0.0.9</version>
+	<packaging>jar</packaging>
 	<name>Car Rental</name>
 	<description>Car rentap application</description>
 	<properties>
