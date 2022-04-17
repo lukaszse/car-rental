@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head id="headId"></head>
 <body class="p-3 mb-2 bg-dark text-white">
@@ -32,7 +34,7 @@
             <th scope="col">Cost per day</th>
             <th scope="col"></th>
             <th scope="col"></th>
-            <th scope="col"></th>
+            <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col"></th>
             <th scope="col"></th>
         </tr>
         <tr>
@@ -42,7 +44,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')"></td>
             <td></td>
         </tr>
         </thead>
@@ -60,7 +62,11 @@
 </div>
 <div align="center">
     <footer id="footerId">this is a footer</footer>
-</div>
+
+
+<script th:inline="javascript">
+    var userRoles = /*[[${#authentication.authorities}]]*/ "Guest";
+</script>
 
 <script>
     let modelFilter = document.getElementById("modelFilter");
@@ -142,7 +148,9 @@
             addTextCell(currencyFormatPLN(element.costPerDay), row);
             addBookButton(element.id, dateFromFilter.value, dateToFilter.value, row)
             addLinkCell('View Details', `car?id=${element.id}`, row);
-            addLinkCell('Edit', `edit_car?id=${element.id}`, row);
+            if(userRoles.includes("ADMIN")) {
+                addLinkCell('Edit', `edit_car?id=${element.id}`, row);
+            }
             addLinkCell('Delete', `delete_car?id=${element.id}`, row);
             tbody.appendChild(row);
         }

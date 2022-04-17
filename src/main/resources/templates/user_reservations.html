@@ -22,10 +22,8 @@
             <th scope="col">Total cost</th>
             <th></th>
             <th></th>
-            <th></th>
         </tr>
         <tr>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -83,7 +81,6 @@
             addTextCell(element.dateTo, row);
             addTextCell(currencyFormatPLN(element.totalCost), row);
             addLinkCell('View Details', `reservation?id=${element.id}`, row);
-            addLinkCell('Edit', `edit_reservation?id=${element.id}`, row);
             addLinkCell('Delete', `delete_reservation?id=${element.id}`, row);
             tbody.appendChild(row);
         }

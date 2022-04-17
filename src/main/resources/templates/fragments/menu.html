@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:fragment="menuFragment">
     <div class="container">
         <div class="row">
@@ -35,20 +38,27 @@
                                    th:with="reservations=${T(org.lukaszse.carRental.util.Mappings).USER_RESERVATIONS}">Reservations</a>
                             </li>
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSettings" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="password_change">Password change</a>
-                                    <div class="dropdown-divider"></div>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownSettings">
                                     <a class="dropdown-item" href="settings">Administration Settings</a>
                                     <a class="dropdown-item" href="user_administration">User Administration</a>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                   th:href="${logout}"
-                                   th:with="logout=${T(org.lukaszse.carRental.util.Mappings).LOGOUT}">Logout</a>
+
+                            <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUser" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Logged user: <span th:text="${#authentication.name}"></span></a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownUser">
+                                    <a class="dropdown-item"
+                                       th:href="${logout}"
+                                       th:with="logout=${T(org.lukaszse.carRental.util.Mappings).LOGOUT}">Logout</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item"
+                                       th:href="${password_change}"
+                                       th:with="password_change=${T(org.lukaszse.carRental.util.Mappings).PASSWORD_CHANGE}">Password change</a>
+                                </div>
                             </li>
                         </ul>
                     </div>
