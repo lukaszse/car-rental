@@ -20,6 +20,8 @@ public class Mappings {
     public static final String RESERVATION = "reservation";
     public static final String LOGOUT = "login?logout";
     public static final String LOGIN = "login";
+
+    public static final String SIGN_UP = "sign-up";
     public static final String SETTINGS = "settings";
     public static final String PASSWORD_CHANGE = "password_change";
 }
