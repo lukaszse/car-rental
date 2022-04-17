@@ -7,7 +7,7 @@ create table app_user (
 );
 
 insert into app_user (user_name, first_name, last_name, user_role, password)
-values ('admin', 'John', 'Doe', 'admin', '{bcrypt}$2a$12$rvC3VtPFdeubVO0pOeMBa.yYdygRBm2NT.lK7y4PC2FI4Mu88FLIK');
+values ('admin', 'John', 'Doe', 'ADMIN', '{bcrypt}$2a$12$rvC3VtPFdeubVO0pOeMBa.yYdygRBm2NT.lK7y4PC2FI4Mu88FLIK');
 
 insert into app_user (user_name, first_name, last_name, user_role, password)
-values ('user', 'James', 'Smith' ,'user' , '{bcrypt}$2a$12$feoSS.Dx/rRdQWfWHeWYZu8txsYcy8Dxt89MWd9U3O8r4CaAKKY3S');
+values ('user', 'James', 'Smith' ,'USER' , '{bcrypt}$2a$12$feoSS.Dx/rRdQWfWHeWYZu8txsYcy8Dxt89MWd9U3O8r4CaAKKY3S');

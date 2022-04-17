@@ -1,8 +1,10 @@
 package org.lukaszse.carRental.controller;
 
 import javax.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.lukaszse.carRental.enums.SecurityRole;
 import org.lukaszse.carRental.model.User;
 import org.lukaszse.carRental.model.dto.PasswordChangeDto;
 import org.lukaszse.carRental.service.UserService;
@@ -25,11 +27,14 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static org.lukaszse.carRental.enums.SecurityRole.*;
+
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 public class UserController {
 
+    public static final String ACCOUNT_CREATED_MESSAGE = "Account for user with name: %s has been created. Please log in!";
     private final UserService userService;
 
 
@@ -50,7 +55,10 @@ public class UserController {
 
     @GetMapping(Mappings.ADD_USER)
     public String addUserView(final Model model) {
+        var userRoles = roles();
+        userRoles.removeIf(role -> role.equals(ROLE_GUEST.getShortName()));
         model.addAttribute(AttributeNames.USER, new User());
+        model.addAttribute(AttributeNames.USER_ROLES, userRoles);
         return ViewNames.ADD_USER;
     }
 
@@ -63,16 +71,21 @@ public class UserController {
     }
 
     @PostMapping(Mappings.ADD_USER)
-    public String addUser(
-            @ModelAttribute(AttributeNames.USER) @Valid final User user,
-            final BindingResult bindingResult,
-            final Model model) {
-        if (!bindingResult.hasErrors()) {
-            userService.addUser(user);
-            return "redirect:/" + Mappings.USER_ADMINISTRATION;
+    public String performAddUser(@ModelAttribute(AttributeNames.USER) @Valid final User user,
+                                 final BindingResult bindingResult,
+                                 final Model model,
+                                 final Principal principal) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute(AttributeNames.USER, user);
+            return ViewNames.ADD_USER;
         }
-        model.addAttribute(AttributeNames.USER, user);
-        return ViewNames.ADD_USER;
+        if(user.getUserRole() == null) {
+            user.setUserRole(ROLE_USER.getShortName());
+            model.addAttribute(AttributeNames.MESSAGE, ACCOUNT_CREATED_MESSAGE.formatted(user.getUserName()));
+            return ViewNames.LOGIN;
+        }
+        userService.addUser(user);
+        return "redirect:/" + Mappings.USER_ADMINISTRATION;
     }
 
     @PostMapping(Mappings.EDIT_USER)

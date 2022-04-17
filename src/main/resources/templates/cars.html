@@ -56,16 +56,17 @@
         </ul>
     </nav>
 
-    <div class="col text-center"><a id="addCarId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Add New
+    <div sec:authorize="hasRole('ROLE_ADMIN')" class="col text-center"><a id="addCarId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Add New
         Car</a></div>
 
 </div>
 <div align="center">
     <footer id="footerId">this is a footer</footer>
-
+</div>
 
 <script th:inline="javascript">
     var userRoles = /*[[${#authentication.authorities}]]*/ "Guest";
+    var userRole = userRoles[0].authority;
 </script>
 
 <script>
@@ -148,7 +149,7 @@
             addTextCell(currencyFormatPLN(element.costPerDay), row);
             addBookButton(element.id, dateFromFilter.value, dateToFilter.value, row)
             addLinkCell('View Details', `car?id=${element.id}`, row);
-            if(userRoles.includes("ADMIN")) {
+            if(userRole === "ROLE_ADMIN") {
                 addLinkCell('Edit', `edit_car?id=${element.id}`, row);
             }
             addLinkCell('Delete', `delete_car?id=${element.id}`, row);

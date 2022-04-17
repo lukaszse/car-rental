@@ -1,5 +1,6 @@
 package org.lukaszse.carRental.controller;
 
+import org.lukaszse.carRental.enums.SecurityRole;
 import org.lukaszse.carRental.model.dto.UserDto;
 import org.lukaszse.carRental.util.AttributeNames;
 import org.lukaszse.carRental.util.Mappings;
@@ -13,9 +14,14 @@ import java.security.Principal;
 @Controller
 public class HomeController {
 
+    @GetMapping
+    public String home() {
+        return "redirect:/" + ViewNames.HOME;
+    }
+
     @GetMapping(Mappings.HOME)
     public String goHome(final Principal principal, final Model model) {
-        var user = UserDto.of(principal.getName());
+        var user = principal != null ? UserDto.of(principal.getName()) : UserDto.of("Guest");
         model.addAttribute(AttributeNames.USER, user);
         return ViewNames.HOME;
     }

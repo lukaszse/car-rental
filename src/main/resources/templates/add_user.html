@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head id="headId">
     <meta charset="UTF-8">
     <title>Contractor</title>
@@ -43,6 +44,19 @@
                         <label for="inputLastName" class="col-sm-2 col-form-label">Last Name</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="inputLastName" th:field="*{lastName}" th:errorclass="'form-control is-invalid'">
+                        </div>
+                    </div>
+
+                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="form-group row">
+                        <label for="selectCar" class="col-sm-2 col-form-label">Role</label>
+                        <div class="col-sm-10">
+                            <select id="selectCar" class="form-control" th:field="*{userRole}"
+                                    th:errorclass="'form-control is-invalid'">
+                                <option th:each="userRole : ${user_roles}"
+                                        th:value="${userRole}"
+                                        th:text="${userRole}">
+                                </option>
+                            </select>
                         </div>
                     </div>
 

@@ -60,6 +60,20 @@
                                        th:with="password_change=${T(org.lukaszse.carRental.util.Mappings).PASSWORD_CHANGE}">Password change</a>
                                 </div>
                             </li>
+
+                            <li sec:authorize="!isAuthenticated()" class="nav-item">
+                                <a class="nav-link"
+                                   th:href="${login}"
+                                   th:with="login=${T(org.lukaszse.carRental.util.Mappings).LOGIN}">Sign In</a>
+                            </li>
+
+                            <li sec:authorize="!isAuthenticated()" class="nav-item">
+                                <a class="nav-link"
+                                   th:href="${signup}"
+                                   th:with="signup=${T(org.lukaszse.carRental.util.Mappings).ADD_USER}">Sign Up</a>
+                            </li>
+
+
                         </ul>
                     </div>
                 </nav>
