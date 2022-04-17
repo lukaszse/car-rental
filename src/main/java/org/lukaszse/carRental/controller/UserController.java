@@ -3,6 +3,7 @@ package org.lukaszse.carRental.controller;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.lukaszse.carRental.enums.SecurityRole;
 import org.lukaszse.carRental.model.User;
 import org.lukaszse.carRental.model.dto.PasswordChangeDto;
 import org.lukaszse.carRental.service.UserService;
@@ -50,7 +51,9 @@ public class UserController {
 
     @GetMapping(Mappings.ADD_USER)
     public String addUserView(final Model model) {
+        var userRoles = SecurityRole.roles();
         model.addAttribute(AttributeNames.USER, new User());
+        model.addAttribute(AttributeNames.USER_ROLES, userRoles);
         return ViewNames.ADD_USER;
     }
 
@@ -63,7 +66,7 @@ public class UserController {
     }
 
     @PostMapping(Mappings.ADD_USER)
-    public String addUser(
+    public String performAddUser(
             @ModelAttribute(AttributeNames.USER) @Valid final User user,
             final BindingResult bindingResult,
             final Model model) {

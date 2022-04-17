@@ -66,6 +66,7 @@
 
 <script th:inline="javascript">
     var userRoles = /*[[${#authentication.authorities}]]*/ "Guest";
+    var userRole = userRoles[0].authority;
 </script>
 
 <script>
@@ -148,7 +149,7 @@
             addTextCell(currencyFormatPLN(element.costPerDay), row);
             addBookButton(element.id, dateFromFilter.value, dateToFilter.value, row)
             addLinkCell('View Details', `car?id=${element.id}`, row);
-            if(userRoles.includes("ADMIN")) {
+            if(userRole === "ROLE_ADMIN") {
                 addLinkCell('Edit', `edit_car?id=${element.id}`, row);
             }
             addLinkCell('Delete', `delete_car?id=${element.id}`, row);
