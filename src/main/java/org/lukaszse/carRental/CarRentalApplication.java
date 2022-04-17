@@ -13,9 +13,4 @@ public class CarRentalApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(CarRentalApplication.class, args);
 	}
-
-	@Bean
-	public SpringSecurityDialect securityDialect() {
-		return new SpringSecurityDialect();
-	}
 }
