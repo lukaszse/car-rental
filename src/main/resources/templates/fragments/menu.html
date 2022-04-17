@@ -1,12 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:fragment="menuFragment">
-
-
     <div class="container">
         <div class="row">
             <div class="col-md-2">
             </div>
             <div class="col-md-8">
-
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                     <a class="navbar-brand" href="#">|| Car Rental App || </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -26,49 +26,46 @@
                                    th:href="${cars}"
                                    th:with="cars=${T(org.lukaszse.carRental.util.Mappings).CARS}">Cars</a>
                             </li>
-                            <li class="nav-item">
+                            <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
                                 <a class="nav-link"
                                    th:href="${reservations}"
                                    th:with="reservations=${T(org.lukaszse.carRental.util.Mappings).RESERVATIONS}">Reservations</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+
+                            <li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
+                                <a class="nav-link"
+                                   th:href="${reservations}"
+                                   th:with="reservations=${T(org.lukaszse.carRental.util.Mappings).USER_RESERVATIONS}">Reservations</a>
+                            </li>
+
+                            <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSettings" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="password_change">Password change</a>
-                                    <div class="dropdown-divider"></div>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownSettings">
                                     <a class="dropdown-item" href="settings">Administration Settings</a>
                                     <a class="dropdown-item" href="user_administration">User Administration</a>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                   th:href="${logout}"
-                                   th:with="logout=${T(org.lukaszse.carRental.util.Mappings).LOGOUT}">Logout</a>
+
+                            <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUser" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Logged user: <span th:text="${#authentication.name}"></span></a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownUser">
+                                    <a class="dropdown-item"
+                                       th:href="${logout}"
+                                       th:with="logout=${T(org.lukaszse.carRental.util.Mappings).LOGOUT}">Logout</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item"
+                                       th:href="${password_change}"
+                                       th:with="password_change=${T(org.lukaszse.carRental.util.Mappings).PASSWORD_CHANGE}">Password change</a>
+                                </div>
                             </li>
                         </ul>
                     </div>
                 </nav>
-
-
             </div>
             <div class="col-md-2">
-
             </div>
         </div>
-
-
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-                crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                crossorigin="anonymous"></script>
-
     </div>
 </div>

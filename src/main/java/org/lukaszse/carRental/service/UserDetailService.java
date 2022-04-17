@@ -2,7 +2,7 @@ package org.lukaszse.carRental.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.lukaszse.carRental.model.dto.MyUserPrincipal;
+import org.lukaszse.carRental.config.MyUserPrincipal;
 import org.lukaszse.carRental.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

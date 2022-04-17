@@ -7,7 +7,6 @@ import org.lukaszse.carRental.model.Car;
 import org.lukaszse.carRental.model.TimePeriod;
 import org.lukaszse.carRental.repository.CarRepository;
 import org.lukaszse.carRental.repository.CarSearchRepository;
-import org.lukaszse.carRental.repository.ReservationSearchRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -19,8 +18,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.lukaszse.carRental.service.ReservationService.*;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -29,8 +26,7 @@ public class CarService {
     public static final String CAR_NOT_FOUND_ERROR_MESSAGE = "Car with registrationNo=%s has not been found.";
     private final CarRepository carRepository;
     private final CarSearchRepository carSearchRepository;
-    private final ReservationSearchRepository reservationSearchRepository;
-
+    private final AvailabilityService availabilityService;
 
     public List<Car> findAll() {
         return carRepository.findAll();
@@ -78,19 +74,17 @@ public class CarService {
     }
 
     public Page<Car> findCars(final String manufacturer, final String model, final TimePeriod timePeriod, final Pageable pageable) {
-        var cars = carSearchRepository.findCarByManufacturerContainsIgnoreCaseAndModelContainsIgnoreCase(manufacturer, model, pageable);
+        var cars = carSearchRepository.findCars(manufacturer, model);
         var availableCars = cars.stream()
-                .filter(car -> isCarAvailable(car.getId(), timePeriod))
+                .filter(car -> availabilityService.isCarAvailable(car.getId(), timePeriod))
                 .collect(Collectors.toList());
-        return new PageImpl<>(availableCars, pageable, availableCars.size());
+        return pageOf(availableCars, pageable);
     }
 
-    private boolean isCarAvailable(final Integer carId, final TimePeriod timePeriod) {
-        if(timePeriod.getDateFrom() == null && timePeriod.getDateTo() == null) {
-            return true;
-        }
-        return reservationSearchRepository.findByCar_Id(carId).stream()
-                .map(reservation -> TimePeriod.of(reservation.getDateFrom(), reservation.getDateTo()))
-                .noneMatch(reservationPeriod -> checkIfPeriodOverlap(timePeriod, reservationPeriod));
+
+    public Page<Car> pageOf(final List<Car> cars, final Pageable pageable) {
+        final int start = (int)pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), cars.size());
+        return new PageImpl<>(cars.subList(start, end), pageable, cars.size());
     }
 }

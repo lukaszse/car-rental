@@ -13,20 +13,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 @Slf4j
 @RestController
 @RequestMapping("/reservations")
 @RequiredArgsConstructor
 public class ReservationEndpoint {
 
-    private final ReservationService ordersService;
+    private final ReservationService reservationService;
 
     @GetMapping("/findReservations")
     public ResponseEntity<Page<Reservation>> findOrders(@RequestParam final String userName,
                                                         @RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
                                                         @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize) {
 
-        var reservation = ordersService.findReservations(userName, PageRequest.of(pageNumber - 1, pageSize, Sort.by("id")));
-        return ResponseEntity.ok(reservation);
+        var reservationsPage = reservationService
+                .findReservations(userName, PageRequest.of(pageNumber - 1, pageSize, Sort.by("id")));
+        return ResponseEntity.ok(reservationsPage);
+    }
+
+    @GetMapping("/findReservationsForLoggedUser")
+    public ResponseEntity<Page<Reservation>> findReservations(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
+                                                              @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
+                                                              final Principal principal) {
+        var reservationsPage = reservationService
+                .findReservations(principal.getName(), PageRequest.of(pageNumber - 1, pageSize, Sort.by("id")));
+        return ResponseEntity.ok(reservationsPage);
     }
 }

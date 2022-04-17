@@ -1,10 +1,9 @@
 package org.lukaszse.carRental.model.dto;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor

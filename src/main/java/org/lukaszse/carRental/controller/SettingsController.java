@@ -1,5 +1,6 @@
 package org.lukaszse.carRental.controller;
 
+import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.lukaszse.carRental.model.dto.CurrencyRates;
 import org.lukaszse.carRental.model.dto.SettingsUpdateDto;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j

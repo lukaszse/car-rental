@@ -1,5 +1,6 @@
 package org.lukaszse.carRental.service;
 
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.lukaszse.carRental.model.Car;
@@ -7,7 +8,6 @@ import org.lukaszse.carRental.model.Reservation;
 import org.lukaszse.carRental.model.TimePeriod;
 import org.lukaszse.carRental.model.User;
 import org.lukaszse.carRental.model.dto.ReservationDto;
-import org.lukaszse.carRental.model.dto.ReservationViewDto;
 import org.lukaszse.carRental.repository.ReservationRepository;
 import org.lukaszse.carRental.repository.ReservationSearchRepository;
 import org.springframework.data.domain.Page;
@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -29,6 +28,7 @@ public class ReservationService {
     private final ReservationSearchRepository reservationSearchRepository;
     private final CarService carService;
     private final UserService userService;
+    private final AvailabilityService availabilityService;
 
     public Reservation getReservation(Integer id) {
         return reservationRepository.getById(id);
@@ -46,46 +46,41 @@ public class ReservationService {
         return reservationSearchRepository.findByCar_Id(carId);
     }
 
-    public void addEditReservation(ReservationDto reservationDto) {
-        reservationRepository.save(createOrderOrGetOrderForUpdate(reservationDto));
+    @Transactional
+    public boolean addReservation(ReservationDto reservationDto) {
+        final Reservation newReservation = createOrderOrGetReservationForUpdate(reservationDto);
+        final boolean isCarAvailable = availabilityService.isCarAvailable(reservationDto.getCarId(),
+                TimePeriod.of(reservationDto.getDateFrom(), reservationDto.getDateTo()));
+        if(isCarAvailable) {
+            reservationRepository.save(newReservation);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    @Transactional
+    public void updateReservation(ReservationDto reservationDto) {
+        final Reservation reservationToUpdate = createOrderOrGetReservationForUpdate(reservationDto);
+        reservationRepository.save(reservationToUpdate);
     }
 
     public void deleteReservation(Integer id) {
         reservationRepository.deleteById(id);
     }
 
-    public static boolean checkIfPeriodOverlap(final TimePeriod timePeriod1, TimePeriod timePeriod2) {
-        final LocalDate s1 = timePeriod1.getDateFrom();
-        final LocalDate e1 = timePeriod1.getDateTo();
-        final LocalDate s2 = timePeriod2.getDateFrom();
-        final LocalDate e2 = timePeriod2.getDateTo();
-
-        if(s1 == null || e1 == null || s2 == null || e2 == null) {
-            return false;
-        }
-
-        if(s1.compareTo(s2)<0 && e1.compareTo(s2)>0 ||
-                s1.compareTo(e2)<0 && e1.compareTo(e2)>0 ||
-                s1.compareTo(s2)<0 && e1.compareTo(e2)>0 ||
-                s1.compareTo(s2)>0 && e1.compareTo(e2)<0 )
-        {
-            log.info("Periods overlap! Period 1: {}, Period2: {}", timePeriod1, timePeriod2);
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    public ReservationViewDto prepareReservationViewDto(final String userName, final int carId, final TimePeriod timePeriod) {
+    public ReservationDto prepareReservationViewDto(final String userName, final int carId, final TimePeriod timePeriod) {
         final Car car = carService.getCar(carId);
         final BigDecimal totalCost = calculateTotalCost(timePeriod, car.getCostPerDay());
-        return ReservationViewDto.of(userName, carId, car, timePeriod, totalCost);
+        return ReservationDto.of(userName, carId, car, timePeriod, totalCost);
     }
 
-    private Reservation createOrderOrGetOrderForUpdate(final ReservationDto reservationDto) {
+    private Reservation createOrderOrGetReservationForUpdate(final ReservationDto reservationDto) {
+        if (reservationDto.getCarId() == null) {
+            reservationDto.setCarId(reservationDto.getCar().getId());
+        }
         var user = userService.getUser(reservationDto.getUserName());
         var car = carService.getCar(reservationDto.getCarId());
+        final TimePeriod timePeriod = TimePeriod.of(reservationDto.getDateFrom(), reservationDto.getDateTo());
         var totalCost = calculateTotalCost(reservationDto.getDateFrom(), reservationDto.getDateTo(), car.getCostPerDay());
         return reservationDto.getId() == null ?
                 createReservation(reservationDto, user, car, totalCost) :
@@ -115,6 +110,7 @@ public class ReservationService {
                 totalCost,
                 reservationDto.getRented());
     }
+
     private static BigDecimal calculateTotalCost(final LocalDate dateFrom, final LocalDate dateTo, final BigDecimal costPerDay) {
         var daysDiff = ChronoUnit.DAYS.between(dateFrom, dateTo);
         return costPerDay.multiply(BigDecimal.valueOf(daysDiff));
