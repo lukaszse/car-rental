@@ -21,4 +21,6 @@ aby pobrać obraz, a następnie:
 
 ` docker run -d --restart unless-stopped -p 8101:8101 llseremak/car-rental`
 
-
+## 2.3. Dodatkowa konfiguracja z wykrzystaniem NGINX
+Przy pomocy NGINX można skonfigurowac przekierowanie z portu na którym działa aplikacja do okreslonego adresu url.
+Dokumentacja NGINX: http://nginx.org/en/docs/
