@@ -19,7 +19,9 @@ Aby ściągnąć obraz Dockera zawierający aplikację należy użyć kolejno ko
 `docker pull llseremak/car-rental`
 aby pobrać obraz, a następnie:
 
-` docker run -d --restart unless-stopped -p 8101:8101 llseremak/car-rental`
+` docker run -d --restart unless-stopped -p 8101:8080 llseremak/car-rental`
+
+gdzie pierwszy port 8101 to port pod którym aplikacja będzie dostępna z zewnątrz kontenera.
 
 ## 2.3. Dodatkowa konfiguracja z wykrzystaniem NGINX
 Przy pomocy NGINX można skonfigurowac przekierowanie z portu na którym działa aplikacja do okreslonego adresu url.
