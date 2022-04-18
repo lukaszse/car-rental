@@ -16,4 +16,5 @@ public class AttributeNames {
     public static final String SUCCESS_MESSAGE = "success_message";
     public static final String FAIL_MESSAGE = "fail_message";
     public static final String CURRENCY = "currency_rates";
+    public static final String MESSAGES = "messages";
 }

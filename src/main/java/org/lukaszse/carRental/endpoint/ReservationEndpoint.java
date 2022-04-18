@@ -24,9 +24,9 @@ public class ReservationEndpoint {
     private final ReservationService reservationService;
 
     @GetMapping("/findReservations")
-    public ResponseEntity<Page<Reservation>> findOrders(@RequestParam final String userName,
-                                                        @RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
-                                                        @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize) {
+    public ResponseEntity<Page<Reservation>> findReservations(@RequestParam final String userName,
+                                                              @RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
+                                                              @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize) {
 
         var reservationsPage = reservationService
                 .findReservations(userName, PageRequest.of(pageNumber - 1, pageSize, Sort.by("id")));

@@ -18,4 +18,5 @@ public class ViewNames {
     public static final String LOGIN = "login";
     public static final String SETTINGS = "settings";
     public static final String PASSWORD_CHANGE = "password_change";
+    public static final String MESSAGES = "messages";
 }
