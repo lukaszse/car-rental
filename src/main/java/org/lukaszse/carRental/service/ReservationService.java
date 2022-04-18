@@ -34,16 +34,8 @@ public class ReservationService {
         return reservationRepository.getById(id);
     }
 
-    public Page<Reservation> getAllReservations(final Pageable pageable) {
-        return reservationSearchRepository.findAll(pageable);
-    }
-
     public Page<Reservation> findReservations(final String userName, final Pageable pageable) {
         return reservationSearchRepository.findByUser_UserNameContainsIgnoreCase(userName, pageable);
-    }
-
-    public List<Reservation> findReservations(final int carId) {
-        return reservationSearchRepository.findByCar_Id(carId);
     }
 
     @Transactional
