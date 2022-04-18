@@ -35,40 +35,27 @@ public class CarService {
                     .orElse(null);
     }
 
-    public void addEditContractor(final Car car) {
+    public void addEditCar(final Car car) {
         if(car.getId() == null) {
-            addContractor(car);
+            addCar(car);
         } else {
-            editContractor(car);
+            editCar(car);
         }
     }
 
-    public void addContractor(Car car) {
+    public void addCar(Car car) {
         carRepository.save(car);
     }
 
-    public void editContractor(Car car) {
+    public void editCar(final Car car) {
         if(!carRepository.existsById(car.getId())) {
             throw new NotFoundException(CAR_NOT_FOUND_ERROR_MESSAGE.formatted(car.getId()));
         }
         carRepository.save(car);
     }
 
-    public void deleteContractor(Integer Contractorid) {
-        carRepository.deleteById(Contractorid);
-    }
-
-    public Page<Car> getPaginated(Pageable pageable) {
-        int pageSize = pageable.getPageSize();
-        int currentPage = pageable.getPageNumber();
-        var users = carRepository.findAll();
-        var contractorsPage = Stream.of(users)
-                .filter(orderList -> !orderList.isEmpty())
-                .flatMap(Collection::stream)
-                .skip((long) currentPage * pageSize)
-                .limit(pageSize)
-                .collect(Collectors.toList());
-        return new PageImpl<Car>(contractorsPage, PageRequest.of(currentPage, pageSize), users.size());
+    public void deleteCar(final Integer carId) {
+        carRepository.deleteById(carId);
     }
 
     public Page<Car> findCars(final String manufacturer, final String model, final TimePeriod timePeriod, final Pageable pageable) {
@@ -78,7 +65,6 @@ public class CarService {
                 .collect(Collectors.toList());
         return pageOf(availableCars, pageable);
     }
-
 
     public Page<Car> pageOf(final List<Car> cars, final Pageable pageable) {
         final int start = (int)pageable.getOffset();

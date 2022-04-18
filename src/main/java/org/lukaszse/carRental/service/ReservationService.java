@@ -48,7 +48,7 @@ public class ReservationService {
 
     @Transactional
     public boolean addReservation(ReservationDto reservationDto) {
-        final Reservation newReservation = createOrderOrGetReservationForUpdate(reservationDto);
+        final Reservation newReservation = createReservationOrGetReservationForUpdate(reservationDto);
         final boolean isCarAvailable = availabilityService.isCarAvailable(reservationDto.getCarId(),
                 TimePeriod.of(reservationDto.getDateFrom(), reservationDto.getDateTo()));
         if(isCarAvailable) {
@@ -60,7 +60,7 @@ public class ReservationService {
     }
     @Transactional
     public void updateReservation(ReservationDto reservationDto) {
-        final Reservation reservationToUpdate = createOrderOrGetReservationForUpdate(reservationDto);
+        final Reservation reservationToUpdate = createReservationOrGetReservationForUpdate(reservationDto);
         reservationRepository.save(reservationToUpdate);
     }
 
@@ -74,7 +74,7 @@ public class ReservationService {
         return ReservationDto.of(userName, carId, car, timePeriod, totalCost);
     }
 
-    private Reservation createOrderOrGetReservationForUpdate(final ReservationDto reservationDto) {
+    private Reservation createReservationOrGetReservationForUpdate(final ReservationDto reservationDto) {
         if (reservationDto.getCarId() == null) {
             reservationDto.setCarId(reservationDto.getCar().getId());
         }

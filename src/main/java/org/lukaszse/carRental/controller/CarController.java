@@ -61,13 +61,13 @@ public class CarController {
         if (bindingResult.hasErrors()) {
             return ViewNames.ADD_CAR;
         }
-        carService.addEditContractor(car);
+        carService.addEditCar(car);
         return "redirect:/" + Mappings.CARS;
     }
 
     @GetMapping(Mappings.DELETE_CAR)
-    public String deleteContractor(@RequestParam final Integer id) {
-        carService.deleteContractor(id);
+    public String deleteCar(@RequestParam final Integer id) {
+        carService.deleteCar(id);
         return "redirect:/" + Mappings.CARS;
     }
 }

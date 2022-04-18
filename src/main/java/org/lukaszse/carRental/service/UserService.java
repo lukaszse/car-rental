@@ -51,7 +51,7 @@ public class UserService {
         int currentPage = pageable.getPageNumber();
         var users = userRepository.findAll();
         var usersPage = Stream.of(users)
-                .filter(orderList -> !orderList.isEmpty())
+                .filter(userList -> !userList.isEmpty())
                 .flatMap(Collection::stream)
                 .skip((long) currentPage * pageSize)
                 .limit(pageSize)

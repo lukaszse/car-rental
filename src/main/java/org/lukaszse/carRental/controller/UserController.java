@@ -4,7 +4,6 @@ import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.lukaszse.carRental.enums.SecurityRole;
 import org.lukaszse.carRental.model.User;
 import org.lukaszse.carRental.model.dto.PasswordChangeDto;
 import org.lukaszse.carRental.service.UserService;
@@ -125,7 +124,7 @@ public class UserController {
     }
 
     @GetMapping(Mappings.DELETE_USER)
-    public String deleteOrder(@RequestParam final String userName) {
+    public String deleteUser(@RequestParam final String userName) {
         userService.delete(userName);
         return "redirect:/" + Mappings.USER_ADMINISTRATION;
     }
