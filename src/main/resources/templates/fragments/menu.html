@@ -41,10 +41,23 @@
                                    th:with="reservations=${T(org.lukaszse.carRental.util.Mappings).USER_RESERVATIONS}">Reservations</a>
                             </li>
 
-                            <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+                            <li sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_GUEST')" class="nav-item">
                                 <a class="nav-link"
-                                   th:href="${messages}"
-                                   th:with="messages=${T(org.lukaszse.carRental.util.Mappings).MESSAGES}">Messages</a>
+                                   th:href="${message}"
+                                   th:with="message=${T(org.lukaszse.carRental.util.Mappings).SEND_MESSAGE}">Send Message</a>
+                            </li>
+
+                            <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMassages" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Messages</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMessages">
+                                    <a class="dropdown-item"
+                                       th:href="${message}"
+                                       th:with="message=${T(org.lukaszse.carRental.util.Mappings).SEND_MESSAGE}">Send Message</a>
+                                    <a class="dropdown-item"
+                                       th:href="${messages}"
+                                       th:with="messages=${T(org.lukaszse.carRental.util.Mappings).MESSAGES}">View Messages</a>
+                                </div>
                             </li>
 
                             <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item dropdown">

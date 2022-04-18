@@ -23,4 +23,5 @@ public class Mappings {
     public static final String SETTINGS = "settings";
     public static final String PASSWORD_CHANGE = "password_change";
     public static final String MESSAGES = "messages";
+    public static final String SEND_MESSAGE = "send_message";
 }
