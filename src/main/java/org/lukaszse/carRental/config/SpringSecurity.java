@@ -17,7 +17,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/cars", "/add_user", "/css/**", "/js/**", "/images/logo.png", "/cars/*", "/console", "console/**")
+                .antMatchers("/", "/home", "/cars", "/send_message", "/add_user", "/css/**", "/js/**", "/images/logo.png", "/cars/*", "/console", "console/**")
                 .permitAll()
                 .antMatchers("/settings", "/user_administration").hasRole(ROLE_ADMIN.getShortName())
                 .antMatchers("/reservations").hasAnyRole(ROLE_USER.getShortName(), ROLE_ADMIN.getShortName())

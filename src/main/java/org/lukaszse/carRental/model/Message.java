@@ -1,9 +1,6 @@
 package org.lukaszse.carRental.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
@@ -11,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
@@ -18,7 +16,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode(of = "id")
 @Table(name = "message")
 @NoArgsConstructor
-@AllArgsConstructor(staticName = "of")
+@AllArgsConstructor
 public class Message {
 
     @Id
@@ -26,7 +24,6 @@ public class Message {
     @GenericGenerator(name = "inc", strategy = "increment")
     private Integer id;
 
-    @NotBlank(message = "UserName cannot be empty")
     private String userName;
 
     @NotBlank(message = "Subject cannot be empty")
@@ -35,8 +32,11 @@ public class Message {
     @NotBlank(message = "Message cannot be empty")
     private String content;
 
-    @NotBlank(message = "Date cannot be empty")
     private LocalDate sentDate;
 
     private Boolean isRead;
+
+    public static Message of(final Message message, @NotBlank final String userName, @NotNull final LocalDate sentDate) {
+        return new Message(message.getId(), userName, message.getSubject(), message.getContent(), sentDate, false);
+    }
 }
