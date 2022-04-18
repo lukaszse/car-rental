@@ -5,6 +5,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+
 server:
   port: 8101
 
+google:
+  recaptcha:
+    key:
+      site: '6Lf8j4EfAAAAACpAlC2q6oka4bZobAzkMc2vi-N6'
+      secret: '6Lf8j4EfAAAAAC2pDmscifexX5n-vGEmuoYUbh-u'

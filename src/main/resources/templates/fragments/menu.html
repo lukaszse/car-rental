@@ -16,16 +16,19 @@
                     </button>
                     <div align="center" class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
+
                             <li class="nav-item">
                                 <a class="nav-link"
                                    th:href="${home}"
                                    th:with="home=${T(org.lukaszse.carRental.util.Mappings).HOME}">Home </a>
                             </li>
+
                             <li class="nav-item">
                                 <a class="nav-link"
                                    th:href="${cars}"
                                    th:with="cars=${T(org.lukaszse.carRental.util.Mappings).CARS}">Cars</a>
                             </li>
+
                             <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
                                 <a class="nav-link"
                                    th:href="${reservations}"
@@ -36,6 +39,25 @@
                                 <a class="nav-link"
                                    th:href="${reservations}"
                                    th:with="reservations=${T(org.lukaszse.carRental.util.Mappings).USER_RESERVATIONS}">Reservations</a>
+                            </li>
+
+                            <li sec:authorize="!hasRole('ROLE_ADMIN')" class="nav-item">
+                                <a class="nav-link"
+                                   th:href="${message}"
+                                   th:with="message=${T(org.lukaszse.carRental.util.Mappings).SEND_MESSAGE}">Send Message</a>
+                            </li>
+
+                            <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMassages" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Messages</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMessages">
+                                    <a class="dropdown-item"
+                                       th:href="${message}"
+                                       th:with="message=${T(org.lukaszse.carRental.util.Mappings).SEND_MESSAGE}">Send Message</a>
+                                    <a class="dropdown-item"
+                                       th:href="${messages}"
+                                       th:with="messages=${T(org.lukaszse.carRental.util.Mappings).MESSAGES}">View Messages</a>
+                                </div>
                             </li>
 
                             <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item dropdown">

@@ -6,7 +6,6 @@ import org.lukaszse.carRental.exceptions.NotFoundException;
 import org.lukaszse.carRental.model.Car;
 import org.lukaszse.carRental.model.TimePeriod;
 import org.lukaszse.carRental.repository.CarRepository;
-import org.lukaszse.carRental.repository.CarSearchRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +24,6 @@ public class CarService {
 
     public static final String CAR_NOT_FOUND_ERROR_MESSAGE = "Car with registrationNo=%s has not been found.";
     private final CarRepository carRepository;
-    private final CarSearchRepository carSearchRepository;
     private final AvailabilityService availabilityService;
 
     public List<Car> findAll() {
@@ -74,7 +72,7 @@ public class CarService {
     }
 
     public Page<Car> findCars(final String manufacturer, final String model, final TimePeriod timePeriod, final Pageable pageable) {
-        var cars = carSearchRepository.findCars(manufacturer, model);
+        var cars = carRepository.findCars(manufacturer, model);
         var availableCars = cars.stream()
                 .filter(car -> availabilityService.isCarAvailable(car.getId(), timePeriod))
                 .collect(Collectors.toList());

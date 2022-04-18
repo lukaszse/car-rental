@@ -1,6 +1,5 @@
 package org.lukaszse.carRental.repository;
 
-import com.sun.istack.NotNull;
 import org.lukaszse.carRental.model.Reservation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

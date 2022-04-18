@@ -30,9 +30,7 @@ public class CarController {
 
 
     @GetMapping(Mappings.CARS)
-    public String cars(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
-                       @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
-                       final Model model) {
+    public String cars() {
         // supported by ajax separate call to reservation CarEndpoint
         return ViewNames.CARS;
     }
