@@ -7,6 +7,8 @@
 </head>
 <body class="p-3 mb-2 bg-dark text-white">
 <div th:replace="~{fragments/menu :: menuFragment}"/>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 
 <div class="container">
     <div class="row">
@@ -16,18 +18,24 @@
 
         <div class="col-md-8">
 
-            <div th:if="${success_message != null}">
-                <br><br>
-                <div class="alert alert-success" role="alert">
-                    <H5 align="center" class="text" th:text="${success_message}"></H5>
-                </div>
-            </div>
-
             <div>
                 <form th:action="@{send_message}" th:object="${message}" method="post">
-                    <br>
+                    <br><br>
                     <H5  align="center">Send message:</H5>
                     <br>
+                    <div th:if="${success_message != null}">
+                        <br><br>
+                        <div class="alert alert-success" role="alert">
+                            <H5 align="center" class="text" th:text="${success_message}"></H5>
+                        </div>
+                    </div>
+
+                    <div th:if="${fail_message != null}">
+                        <br><br>
+                        <div class="alert alert-danger" role="alert">
+                            <H5 align="center" class="text" th:text="${fail_message}"></H5>
+                        </div>
+                    </div>
                     <div align="center" class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('all')}" >
                         <h5>Error. Wrong data format:</h5>
                         <i th:errors="*{all}">Incorrect data</i>
@@ -55,7 +63,18 @@
                         </div>
                     </div>
 
-                    <div align="center">
+                    <div sec:authorize="!isAuthenticated()" class="row">
+                        <div class="col-2">
+                            <label>Verify</label>
+                        </div>
+                        <div class="col-4">
+                            <div class="g-recaptcha"
+                                 data-sitekey="6Lf8j4EfAAAAACpAlC2q6oka4bZobAzkMc2vi-N6">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="text-center">
                         <input type="submit" class="btn btn-light " value="Submit">
                         <input type="reset" class="btn btn-light" value="Reset">
                     </div>
