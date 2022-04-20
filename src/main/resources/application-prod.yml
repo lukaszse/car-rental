@@ -6,11 +6,21 @@ spring:
     hibernate:
       ddl-auto: validate
 
-#server:
-#  port: 8101
-
 google:
   recaptcha:
     key:
       site: '6Lf8j4EfAAAAACpAlC2q6oka4bZobAzkMc2vi-N6'
       secret: '6Lf8j4EfAAAAAC2pDmscifexX5n-vGEmuoYUbh-u'
+
+
+## HTTPS config
+server:
+  port: 443
+  ssl:
+    key-password: 123456
+    key-store-password: 123456
+    key-store: 'src/main/resources/https/keystore.jks'
+  servlet:
+    context-path: '/car-rental'
+
+
