@@ -35,7 +35,7 @@
             <th scope="col"></th>
             <th scope="col"></th>
             <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col"></th>
-            <th scope="col"></th>
+            <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col"></th>
         </tr>
         <tr>
             <td>Filters:</td>
@@ -45,7 +45,7 @@
             <td></td>
             <td></td>
             <td sec:authorize="hasRole('ROLE_ADMIN')"></td>
-            <td></td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')"></td>
         </tr>
         </thead>
         <tbody id="tbody">
@@ -127,7 +127,7 @@
             pageNumber = 1;
         }
 
-        get(`/cars/findCars?manufacturer=${manufacturer}&model=${model}&dateFrom=${dateFrom}&dateTo=${dateTo}&pageNumber=${pageNumber}`, function (err, response) {
+        get(`/car-rental/cars/findCars?manufacturer=${manufacturer}&model=${model}&dateFrom=${dateFrom}&dateTo=${dateTo}&pageNumber=${pageNumber}`, function (err, response) {
             if (err != null) {
                 console.error(err);
             } else {
@@ -151,8 +151,8 @@
             addLinkCell('View Details', `car?id=${element.id}`, row);
             if(userRole === "ROLE_ADMIN") {
                 addLinkCell('Edit', `edit_car?id=${element.id}`, row);
+                addLinkCell('Delete', `delete_car?id=${element.id}`, row);
             }
-            addLinkCell('Delete', `delete_car?id=${element.id}`, row);
             tbody.appendChild(row);
         }
         document.getElementById("tbody").replaceWith(tbody);

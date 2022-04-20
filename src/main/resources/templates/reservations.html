@@ -76,7 +76,7 @@
             pageNumber = 1;
         }
 
-        get(`/reservations/findReservations?userName=${userName}&pageNumber=${pageNumber}`, function (err, response) {
+        get(`/car-rental/reservations/findReservations?userName=${userName}&pageNumber=${pageNumber}`, function (err, response) {
             if (err != null) {
                 console.error(err);
             } else {
