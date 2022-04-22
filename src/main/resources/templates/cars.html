@@ -127,7 +127,7 @@
             pageNumber = 1;
         }
 
-        get(`/car-rental/cars/findCars?manufacturer=${manufacturer}&model=${model}&dateFrom=${dateFrom}&dateTo=${dateTo}&pageNumber=${pageNumber}`, function (err, response) {
+        get(`/cars/findCars?manufacturer=${manufacturer}&model=${model}&dateFrom=${dateFrom}&dateTo=${dateTo}&pageNumber=${pageNumber}`, function (err, response) {
             if (err != null) {
                 console.error(err);
             } else {
