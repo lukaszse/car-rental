@@ -22,10 +22,10 @@ public class AvailabilityService {
         }
         return reservationSearchRepository.findByCar_Id(carId).stream()
                 .map(reservation -> TimePeriod.of(reservation.getDateFrom(), reservation.getDateTo()))
-                .noneMatch(reservationPeriod -> checkIfPeriodOverlap(timePeriod, reservationPeriod));
+                .noneMatch(reservedPeriod -> checkIfPeriodsOverlap(timePeriod, reservedPeriod));
     }
 
-    private static boolean checkIfPeriodOverlap(final TimePeriod timePeriod1, TimePeriod timePeriod2) {
+    private static boolean checkIfPeriodsOverlap(final TimePeriod timePeriod1, final TimePeriod timePeriod2) {
         final LocalDate s1 = timePeriod1.getDateFrom();
         final LocalDate e1 = timePeriod1.getDateTo();
         final LocalDate s2 = timePeriod2.getDateFrom();

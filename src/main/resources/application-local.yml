@@ -13,3 +13,7 @@ google:
       secret: '6Lf8j4EfAAAAAC2pDmscifexX5n-vGEmuoYUbh-u'
 
 ## HTTPS config
+
+server:
+  servlet:
+    context-path: '/car-rental'
