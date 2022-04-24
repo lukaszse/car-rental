@@ -19,8 +19,8 @@ server:
   ssl:
     key-password: 123456
     key-store-password: 123456
-    key-store: 'src/main/resources/https/keystore.jks'
-#  servlet:
-#    context-path: '/car-rental'
+    key-store: 'classpath:keystore.jks'
+  servlet:
+    context-path: '/car-rental'
 
 
