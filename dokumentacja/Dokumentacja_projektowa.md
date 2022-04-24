@@ -9,15 +9,13 @@ Po przez informatyzację wszystkich procesów obsługi klienta, aplikacja zapewn
 ## 2.1. Wymagania funkcjonalne
 System umożliwia:
 * wyszukiwanie dostępnych w określonym terminie samochodów, wg zadanych kryteriów takich jak:
-    * typ pojazdu, 
     * marka,
-    * kolor,
-    * rodzaj paliwa,
-    * pojemność silnika,
-    * rodzaj skrzyni biegów,
+    * model
 * wyświetlenie szczegółowych informacji na temat wybranego pojazdu,
 * rejestrację użytkowników,
-* przeglądanie pojazdów w tynie gościa,
+* logowanie użytkowników
+* zarządzanie użtrkownikami w trybie adminstratora (dodawanie/edycja/usuwanie)
+* przeglądanie pojazdów w trybie gościa,
 * dokonanie rezerwacji przez zarejestrowanego i zalogowanego użytkownika,
 * odwołanie rezerwacji przez osobę zarządzającą,
 * rejestrację użytkowników oraz modyfikację danych przez użytkowników,
@@ -25,10 +23,22 @@ System umożliwia:
 * dodawanie/usuwanie oraz modyfikacje pojazdów przez osobę zarządzającą,
 * przeglądanie listy zarezerwowanych oraz wypożyczonych samochodów przez osobę zarządzającą,
 * obsługę płatności,
-* generowanie i pobieranie faktur elektronicznych w formacie pdf
-* kontaktowanie się z obsługą wypożyczalni po przez formularz kontaktowy.
+* generowanie i pobieranie potwierdzenia rezerwacji w formacie pdf
+* kontaktowanie się z obsługą wypożyczalni po przez formularz kontaktowy
+* wysyłanie wiadomości do obsługi serwisu
+* wysyłanie wiadomości do obsługi w trybie gościa zabezpieczone reCaptcha v2
+* walidacja dla wszystkich wprowadzonych pól wraz z systemem alertów/ostrzeżeń o źle wprowadzonych danych (pola o szczególnej składni jak kod pocztowy czy email walidowane z wykorzystaniem wyrażeń regularnych)
+* zabezpieczenie ścieżek URL (dostęp tylko do ściezki tylko dla użytkowników uprawnionych)
 
-# 2.2. Wymaganie niefunkcjonalne
+## 2.2. Opcjonalne wymagania funkcjonalne
+* rozszerzenie wyszukiwania dostępnych samochodów o kryteria takie jak:
+    * rodzaj skrzyni biegów
+    * rodzaj silnika (benzyna/diesel/elektryczny)
+* zmiana statusu z rezerwacji na wypożyczenie
+* generowanie faktur dla rezerwacji
+* generowanie korekty faktury w przypadku odwołania zlecenia
+
+# 2.3. Wymaganie niefunkcjonalne
 * GUI:
     * Aplikacja webowa z interfejsem dla przeglądarki internetowej
     * Spójny wygląd zgodnie z zaakceptowanym szablonem (spójna kolorystyka, menu, zachowanie się systemu)
@@ -42,9 +52,11 @@ System umożliwia:
     * automatyczne wylogowanie użytkownika po upływie 10 minut
     * spełnia wymagania Ustawy z dnia 10 maja 2018 r. o
       ochronie danych osobowych (RODO)
+* Tabele danych do wyświetlenia, w szczególności dla danych filtrowanych łaodwane bez przeładowywania całej strony. Architektura typu Single Page Application nie jest wymagana, dopuszczalna jest architektura hybrydowa.
 
-# 2.3. Ograniczenia
-* System musi być inslowany z obrazu Dockera pobieranego online
+
+# 2.4. Ograniczenia
+* System musi być instalowany z obrazu Dockera pobieranego online
 * Aplikacja zbudowana w oparciu o architekturę monolityczną we frameworku Spring Boot oraz wzorzez MVC
 * System musi być zgodny z ustawą o ochdonie danych osobowych RODO
 
@@ -65,13 +77,16 @@ System umożliwia:
 4. Gość
   - posiada możliwość wyszykiwania pojazdów w wybranym terminie, spełniających wybrane kryteria.
 
-4. Słownik pojęć
+# 4. Słownik pojęć
 
 * **MTFB (Mean Time between Failures)** - średni czas pomiędzy wystąpieniem awarii
 * **Docker** - otwarte oprogramowanie do wirtualizacji, umożliwiające "konteneryzację" tj. pozwalające umieścić program oraz jego zależności (biblioteki) w przenośnym wirtualnym kontenerze który można uruchomić na dowolnym serwerze z systemem Linux, Windows i MacOS.
-* **GUI (Graphical User Interface)** - graficzny interfejs użytkownika
-* **RODO** - Ogólne rozporządzenie o ochronie danych, inaczej rozporządzenie o ochronie danych osobowych, OROD lub RODO – rozporządzenie unijne, zawierające przepisy o ochronie osób fizycznych w związku z przetwarzaniem danych osobowych oraz przepisy o swobodnym przepływie danych osobowych
+* **GUI (Graphical User Interface)** - graficzny interfejs .
+* **RODO** - Ogólne rozporządzenie o ochronie danych, inaczej rozporządzenie o ochronie danych osobowych, OROD lub RODO – rozporządzenie unijne, zawierające przepisy o ochronie osób fizycznych w związku z przetwarzaniem danych osobowych oraz przepisy o swobodnym przepływie danych osobowych.
 * **PDF (PDF Portable Document Format)** - format plików służący do prezentacji, przenoszenia i drukowania treści tekstowo-graficznych, stworzony przez firmę Adobe Systems. Obecnie rozwijany i utrzymywany przez Międzynarodową Organizację Normalizacyjną. 
+* **Spring Boot** - framework do budowania aplikacji w tym aplikacji webowych w języku java.
+* **Thymeleaf** - silnik szablonów html.
+* **H2** - baza danych SQL przechowująca dane w pliku lub w pamięci operacyjnej, stosowana do testów lub prostych aplikacji w tym MVP.
 
 5. Diagram przypadków użycia
 
