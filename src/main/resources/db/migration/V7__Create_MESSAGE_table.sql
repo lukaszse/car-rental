@@ -1,8 +1,8 @@
 create table message (
 
     id int primary key auto_increment,
-    user_name varchar(20),
-    subject varchar(200),
+    user_name varchar(40),
+    subject varchar(255),
     content varchar(1000),
     sent_date date,
     is_read bit

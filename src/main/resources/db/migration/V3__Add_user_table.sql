@@ -1,8 +1,8 @@
 create table app_user (
-    user_name  varchar(20) primary key,
-    first_name varchar(100),
-    last_name varchar(100),
-    user_role varchar(100),
+    user_name  varchar(40) primary key,
+    first_name varchar(255),
+    last_name varchar(255),
+    user_role varchar(255),
     password varchar(500)
 );
 
