@@ -2,7 +2,7 @@ package org.lukaszse.carRental.service;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.lukaszse.carRental.model.ReCaptchaResponse;
+import org.lukaszse.carRental.model.dto.ReCaptchaResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;

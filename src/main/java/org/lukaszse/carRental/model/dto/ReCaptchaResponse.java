@@ -1,4 +1,4 @@
-package org.lukaszse.carRental.model;
+package org.lukaszse.carRental.model.dto;
 
 import lombok.Data;
 
