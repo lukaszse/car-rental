@@ -16,7 +16,7 @@ class AvailabilityServiceSpec extends Specification {
     def "should check if data ranges overlap correctly - test #no"() {
 
         when: "invoke method to check if data ranges overlaps"
-        def overlap = availabilityService.checkIfPeriodOverlap(firstPeriod, secondPeriod)
+        def overlap = availabilityService.checkIfPeriodsOverlap(firstPeriod, secondPeriod)
 
         then: "should check correctly if data ranges overlap"
         overlap == expectedResult

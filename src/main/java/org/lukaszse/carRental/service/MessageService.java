@@ -35,7 +35,7 @@ public class MessageService {
         messageSearchRepository.save(newMessage);
     }
 
-    public List<Integer> getPageNumbers(final Page<Message> messagesPage) {
+    public static List<Integer> getPageNumbers(final Page<Message> messagesPage) {
         return Stream.of(messagesPage.getTotalPages())
                 .filter(totalPages -> totalPages > 0)
                 .map(totalPages -> IntStream.rangeClosed(1, totalPages)
