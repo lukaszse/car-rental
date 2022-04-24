@@ -8,14 +8,11 @@ import org.lukaszse.carRental.model.TimePeriod;
 import org.lukaszse.carRental.repository.CarRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -43,11 +40,11 @@ public class CarService {
         }
     }
 
-    public void addCar(Car car) {
+    private void addCar(Car car) {
         carRepository.save(car);
     }
 
-    public void editCar(final Car car) {
+    private void editCar(final Car car) {
         if(!carRepository.existsById(car.getId())) {
             throw new NotFoundException(CAR_NOT_FOUND_ERROR_MESSAGE.formatted(car.getId()));
         }

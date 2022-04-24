@@ -38,10 +38,10 @@ public class UserController {
 
 
     @GetMapping(Mappings.USER_ADMINISTRATION)
-    public String userListView(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
-                               @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
-                               final Model model) {
-        Page<User> usersPage = userService.getPaginated(PageRequest.of(pageNumber - 1, pageSize));
+    public String users(@RequestParam(name = "pageNumber", defaultValue = "1") final int pageNumber,
+                        @RequestParam(name = "pageSize", defaultValue = "5") final int pageSize,
+                        final Model model) {
+        Page<User> usersPage = userService.findAll(PageRequest.of(pageNumber - 1, pageSize));
         model.addAttribute(AttributeNames.USER_PAGE, usersPage);
         Stream.of(usersPage.getTotalPages())
                 .filter(totalPages -> totalPages > 0)
@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @GetMapping(Mappings.ADD_USER)
-    public String addUserView(final Model model) {
+    public String addUser(final Model model) {
         var userRoles = roles();
         userRoles.removeIf(role -> role.equals(ROLE_GUEST.getShortName()));
         model.addAttribute(AttributeNames.USER, new User());
@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @GetMapping(Mappings.EDIT_USER)
-    public String editUserView(@RequestParam final String userName, final Model model) {
+    public String editUser(@RequestParam final String userName, final Model model) {
         var user = userService.getUser(userName);
         user.setPassword(null);
         model.addAttribute(AttributeNames.USER, user);
@@ -72,8 +72,7 @@ public class UserController {
     @PostMapping(Mappings.ADD_USER)
     public String performAddUser(@ModelAttribute(AttributeNames.USER) @Valid final User user,
                                  final BindingResult bindingResult,
-                                 final Model model,
-                                 final Principal principal) {
+                                 final Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeNames.USER, user);
             return ViewNames.ADD_USER;
@@ -88,7 +87,7 @@ public class UserController {
     }
 
     @PostMapping(Mappings.EDIT_USER)
-    public String editUser(
+    public String performEditUser(
             @ModelAttribute(AttributeNames.USER) @Valid final User user,
             final BindingResult bindingResult,
             final Model model) {
@@ -128,5 +127,4 @@ public class UserController {
         userService.delete(userName);
         return "redirect:/" + Mappings.USER_ADMINISTRATION;
     }
-
 }
