@@ -59,7 +59,7 @@ public class ReservationController {
                                  @RequestParam final int carId,
                                  final TimePeriod timePeriod,
                                  final Model model) {
-        final ReservationDto reservationViedDto = reservationService.prepareReservationViewDto(principal.getName(), carId, timePeriod);
+        final ReservationDto reservationViedDto = reservationService.reservationDtoOf(principal.getName(), carId, timePeriod);
         model.addAttribute(AttributeNames.RESERVATION, reservationViedDto);
         return ViewNames.ADD_RESERVATION;
     }
@@ -91,7 +91,7 @@ public class ReservationController {
     }
 
     @PostMapping(Mappings.EDIT_RESERVATION)
-    public String processEditReservation(@ModelAttribute(AttributeNames.RESERVATION) @Valid final ReservationDto submittedReservation,
+    public String performEditReservation(@ModelAttribute(AttributeNames.RESERVATION) @Valid final ReservationDto submittedReservation,
                                          final BindingResult bindingResult, final Model model) {
         if (!bindingResult.hasErrors()) {
             reservationService.updateReservation(submittedReservation);

@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -30,7 +29,7 @@ public class ReservationService {
     private final UserService userService;
     private final AvailabilityService availabilityService;
 
-    public Reservation getReservation(Integer id) {
+    public Reservation getReservation(final Integer id) {
         return reservationRepository.getById(id);
     }
 
@@ -39,7 +38,7 @@ public class ReservationService {
     }
 
     @Transactional
-    public boolean addReservation(ReservationDto reservationDto) {
+    public boolean addReservation(final ReservationDto reservationDto) {
         final Reservation newReservation = createReservationOrGetReservationForUpdate(reservationDto);
         final boolean isCarAvailable = availabilityService.isCarAvailable(reservationDto.getCarId(),
                 TimePeriod.of(reservationDto.getDateFrom(), reservationDto.getDateTo()));
@@ -51,16 +50,16 @@ public class ReservationService {
         }
     }
     @Transactional
-    public void updateReservation(ReservationDto reservationDto) {
+    public void updateReservation(final ReservationDto reservationDto) {
         final Reservation reservationToUpdate = createReservationOrGetReservationForUpdate(reservationDto);
         reservationRepository.save(reservationToUpdate);
     }
 
-    public void deleteReservation(Integer id) {
+    public void deleteReservation(final Integer id) {
         reservationRepository.deleteById(id);
     }
 
-    public ReservationDto prepareReservationViewDto(final String userName, final int carId, final TimePeriod timePeriod) {
+    public ReservationDto reservationDtoOf(final String userName, final int carId, final TimePeriod timePeriod) {
         final Car car = carService.getCar(carId);
         final BigDecimal totalCost = calculateTotalCost(timePeriod, car.getCostPerDay());
         return ReservationDto.of(userName, carId, car, timePeriod, totalCost);
@@ -73,7 +72,7 @@ public class ReservationService {
         var user = userService.getUser(reservationDto.getUserName());
         var car = carService.getCar(reservationDto.getCarId());
         final TimePeriod timePeriod = TimePeriod.of(reservationDto.getDateFrom(), reservationDto.getDateTo());
-        var totalCost = calculateTotalCost(reservationDto.getDateFrom(), reservationDto.getDateTo(), car.getCostPerDay());
+        var totalCost = calculateTotalCost(timePeriod, car.getCostPerDay());
         return reservationDto.getId() == null ?
                 createReservation(reservationDto, user, car, totalCost) :
                 getAndUpdateReservation(reservationDto, user, car, totalCost);
@@ -103,12 +102,12 @@ public class ReservationService {
                 reservationDto.getRented());
     }
 
+    private static BigDecimal calculateTotalCost(final TimePeriod timePeriod, final BigDecimal costPerDay) {
+        return calculateTotalCost(timePeriod.getDateFrom(), timePeriod.getDateTo(), costPerDay);
+    }
+
     private static BigDecimal calculateTotalCost(final LocalDate dateFrom, final LocalDate dateTo, final BigDecimal costPerDay) {
         var daysDiff = ChronoUnit.DAYS.between(dateFrom, dateTo);
         return costPerDay.multiply(BigDecimal.valueOf(daysDiff));
-    }
-
-    private static BigDecimal calculateTotalCost(final TimePeriod timePeriod, final BigDecimal costPerDay) {
-        return calculateTotalCost(timePeriod.getDateFrom(), timePeriod.getDateTo(), costPerDay);
     }
 }
