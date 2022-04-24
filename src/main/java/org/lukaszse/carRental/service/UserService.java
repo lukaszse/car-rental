@@ -46,7 +46,7 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND_ERROR_MESSAGE.formatted(userName)));
     }
 
-    public Page<User> getPaginated(Pageable pageable) {
+    public Page<User> findAll(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         var users = userRepository.findAll();

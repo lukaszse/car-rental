@@ -55,7 +55,7 @@ public class CarController {
 
     @Transactional
     @PostMapping(Mappings.ADD_CAR)
-    public String processAddEditCar(@ModelAttribute(AttributeNames.CAR) @Valid final Car car,
+    public String performAddEditCar(@ModelAttribute(AttributeNames.CAR) @Valid final Car car,
                                     final BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {

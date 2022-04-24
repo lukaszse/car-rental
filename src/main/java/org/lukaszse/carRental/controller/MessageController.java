@@ -7,6 +7,7 @@ import org.lukaszse.carRental.service.ReCaptchaValidationService;
 import org.lukaszse.carRental.util.AttributeNames;
 import org.lukaszse.carRental.util.Mappings;
 import org.lukaszse.carRental.util.ViewNames;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,7 +33,7 @@ public class MessageController {
                               final Model model) {
         var messages = messageService.findMessages(pageNumber, pageSize);
         model.addAttribute(AttributeNames.MESSAGES, messages);
-        model.addAttribute(AttributeNames.PAGE_NUMBERS, messageService.getPageNumbers(messages));
+        model.addAttribute(AttributeNames.PAGE_NUMBERS, MessageService.getPageNumbers(messages));
         return ViewNames.MESSAGES;
     }
 
@@ -45,16 +46,16 @@ public class MessageController {
     @PostMapping(Mappings.SEND_MESSAGE)
     public String performSendMessage(@ModelAttribute(AttributeNames.MESSAGE) @Valid final Message message,
                                      final BindingResult bindingResult, final Model model, final Principal principal,
-                                     @RequestParam(name = "g-recaptcha-response") final String recaptchaResponse) {
+                                     @Nullable @RequestParam(name = "g-recaptcha-response") final String recaptchaResponse) {
 
-        boolean reCaptchaVerified = reCaptchaValidationService.validateCaptcha(recaptchaResponse);
+        boolean isUserARobot = isUserARobot(principal, recaptchaResponse);
 
-        if(!reCaptchaVerified) {
+        if(isUserARobot) {
             model.addAttribute(AttributeNames.FAIL_MESSAGE, "Please Verify Captcha");
         }
 
         var bindingResultAfterNameValidation = validateUserName(message.getUserName(), principal, bindingResult);
-        if (!reCaptchaVerified || bindingResultAfterNameValidation.hasErrors()) {
+        if (isUserARobot || bindingResultAfterNameValidation.hasErrors()) {
             return ViewNames.SEND_MESSAGE;
         }
 
@@ -69,5 +70,10 @@ public class MessageController {
             bindingResult.addError(error);
         }
         return bindingResult;
+    }
+
+    private boolean isUserARobot(final Principal principal, final String recaptchaResponse) {
+        boolean reCaptchaVerified = reCaptchaValidationService.validateCaptcha(recaptchaResponse);
+        return !reCaptchaVerified && principal == null;
     }
 }
