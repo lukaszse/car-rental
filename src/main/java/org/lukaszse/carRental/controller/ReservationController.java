@@ -1,5 +1,6 @@
 package org.lukaszse.carRental.controller;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -72,9 +73,10 @@ public class ReservationController {
         return ViewNames.EDIT_RESERVATION;
     }
 
+    @Transactional
     @PostMapping(Mappings.ADD_RESERVATION)
-    public String processAddReservation(@ModelAttribute(AttributeNames.RESERVATION) @Valid final ReservationDto submittedReservation,
-                                         final BindingResult bindingResult, final Model model) {
+    public String performAddReservation(@ModelAttribute(AttributeNames.RESERVATION) @Valid final ReservationDto submittedReservation,
+                                        final BindingResult bindingResult, final Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeNames.RESERVATION, submittedReservation);
             return ViewNames.ADD_RESERVATION;
