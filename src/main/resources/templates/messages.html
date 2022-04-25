@@ -37,7 +37,7 @@
 
     <nav aria-label="...">
         <ul class="pagination pagination-sm">
-            <li class="page-item" th:each="pageNumber : ${page_numbers}" th:classappend="${pageNumber==messages.number} ? active">
+            <li class="page-item" th:each="pageNumber : ${page_numbers}" th:classappend="${pageNumber==messages.number + 1} ? active">
                 <a class="page-link" th:href="@{/messages(pageSize=${messages.size}, pageNumber=${pageNumber - 1})}" th:text="${pageNumber}"></a>
             </li>
         </ul>
