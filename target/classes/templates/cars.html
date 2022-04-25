@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head id="headId"></head>
+<body class="p-3 mb-2 bg-dark text-white">
+
+<div th:replace="~{fragments/menu :: menuFragment}"/>
+
+<div class="container-md">
+    <p>&nbsp;</p>
+    <div th:if="${success_message != null}">
+        <div class="alert alert-success" role="alert">
+            <H5 align="center" class="text" th:text="${success_message}"></H5>
+        </div>
+    </div>
+    <div th:if="${fail_message != null}">
+        <div class="alert alert-success" role="alert">
+            <H5 align="center" class="text" th:text="${fail_message}"></H5>
+        </div>
+        <p>&nbsp;
+    </div>
+    <p>&nbsp;</p>
+    <h5 class="text-center">Available cars:</h5>
+    <p>&nbsp;</p>
+    <h6 class="text-left">Date from: <input id="dateFromFilter" type="date" name="dateFrom" value=""> Date to: <input
+            id="dateToFilter" type="date" name="dateTo" value=""></h6>
+    <table class="table table-striped table-dark" border="2" cellpadding="2">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Manufacturer</th>
+            <th scope="col">Model</th>
+            <th scope="col">Cost per day</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col"></th>
+            <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col"></th>
+        </tr>
+        <tr>
+            <td>Filters:</td>
+            <td><input id="manufacturerFilter" type="text" name="manufacturer" value=""></td>
+            <td><input id="modelFilter" type="text" name="model" value=""></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')"></td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')"></td>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+    <nav aria-label="...">
+        <ul id="page-links" class="pagination pagination-sm">
+        </ul>
+    </nav>
+
+    <div sec:authorize="hasRole('ROLE_ADMIN')" class="col text-center"><a id="addCarId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Add New
+        Car</a></div>
+
+</div>
+<div align="center">
+    <footer id="footerId">this is a footer</footer>
+</div>
+
+<script th:inline="javascript">
+    var userRoles = /*[[${#authentication.authorities}]]*/ "Guest";
+    var userRole = userRoles[0].authority;
+</script>
+
+<script>
+    let modelFilter = document.getElementById("modelFilter");
+    let manufacturerFilter = document.getElementById("manufacturerFilter");
+    let dateFromFilter = document.getElementById("dateFromFilter");
+    let dateToFilter = document.getElementById("dateToFilter");
+
+    window.onload = function () {
+        loadDoc();
+    }
+    modelFilter.addEventListener("keyup", function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            filter();
+        }
+    });
+    ``
+    manufacturerFilter.addEventListener("keyup", function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            filter();
+        }
+    });
+
+    dateFromFilter.addEventListener("change", function (event) {
+        event.preventDefault();
+        filter();
+    });
+
+    dateToFilter.addEventListener("change", function (event) {
+        event.preventDefault();
+        filter();
+    });
+
+    function filter() {
+        loadDoc(manufacturerFilter.value, modelFilter.value, dateFromFilter.value, dateToFilter.value)
+    }
+
+    function loadDoc(manufacturer, model, dateFrom, dateTo, pageNumber) {
+
+        if (manufacturer == null) {
+            manufacturer = "";
+        }
+        if (model == null) {
+            model = "";
+        }
+
+        if (dateFrom == null) {
+            dateFrom = "";
+        }
+
+        if (dateTo == null) {
+            dateTo = "";
+        }
+
+        if (pageNumber == null) {
+            pageNumber = 1;
+        }
+
+        get(`/car-rental/cars/findCars?manufacturer=${manufacturer}&model=${model}&dateFrom=${dateFrom}&dateTo=${dateTo}&pageNumber=${pageNumber}`, function (err, response) {
+            if (err != null) {
+                console.error(err);
+            } else {
+                buildTable(response.content);
+                pageLinks(response, pageNumber);
+            }
+        });
+    }
+
+    function buildTable(array) {
+        let tbody = document.createElement("tbody");
+        tbody.id = "tbody";
+
+        for (const element of array) {
+            var row = document.createElement("tr");
+            addTextCell(element.id, row);
+            addTextCell(element.manufacturer, row);
+            addTextCell(element.model, row);
+            addTextCell(currencyFormatPLN(element.costPerDay), row);
+            addBookButton(element.id, dateFromFilter.value, dateToFilter.value, row)
+            addLinkCell('View Details', `car?id=${element.id}`, row);
+            if(userRole === "ROLE_ADMIN") {
+                addLinkCell('Edit', `edit_car?id=${element.id}`, row);
+                addLinkCell('Delete', `delete_car?id=${element.id}`, row);
+            }
+            tbody.appendChild(row);
+        }
+        document.getElementById("tbody").replaceWith(tbody);
+    }
+
+    function addBookButton(carId, dateFrom, dateTo, row) {
+        if (dateFrom !== "" || dateTo !== "") {
+            addLinkCell('Book', `add_reservation?carId=${carId}&dateFrom=${dateFrom}&dateTo=${dateTo}`, row)
+        } else {
+            addButtonCell('Book', 'Select rental period first!', row)
+        }
+    }
+
+    function addTextCell(cellContent, row) {
+        let cell = document.createElement("td");
+        cell.appendChild(document.createTextNode(cellContent));
+        row.appendChild(cell);
+    }
+
+    function addLinkCell(buttonName, link, row) {
+        let cell = document.createElement("td");
+        cell.setAttribute("align", "center")
+        let a = document.createElement("a");
+        a.appendChild(document.createTextNode(buttonName))
+        a.title = buttonName
+        a.href = link
+        a.className = "btn btn-light btn-sm";
+        a.setAttribute("class", "btn btn-light btn-sm")
+        a.setAttribute("role", "button")
+        a.setAttribute("aria-pressed", "true")
+        cell.appendChild(a);
+        row.appendChild(cell);
+        return row;
+    }
+
+    function addButtonCell(buttonName, alertMessage, row) {
+        let cell = document.createElement("td");
+        cell.setAttribute("align", "center")
+        let button = document.createElement("button");
+        button.appendChild(document.createTextNode(buttonName))
+        button.onclick = function () {
+            alert(alertMessage)
+        }
+        button.title = buttonName
+        button.className = "btn btn-light btn-sm";
+        button.setAttribute("class", "btn btn-light btn-sm")
+        cell.appendChild(button);
+        row.appendChild(cell);
+        return row;
+    }
+
+    function pageLinks(data, pageNumber) {
+
+        let pageLinks = document.createElement("ul");
+        pageLinks.id = "page-links";
+        pageLinks.className = "pagination pagination-sm";
+
+        for (let i = 1; i <= data.totalPages; i++) {
+            let li = document.createElement("li");
+            if (i === pageNumber) {
+                li.className = "page-item active";
+            } else {
+                li.className = "page-item";
+            }
+            let a = document.createElement("a");
+            a.appendChild(document.createTextNode(i))
+            a.className = "page-link";
+            a.onclick = function () {
+                loadDoc(manufacturerFilter.value, modelFilter.value, dateFromFilter.value, dateToFilter.value, i)
+            }
+            a.title = i
+            li.appendChild(a);
+            pageLinks.appendChild(li);
+        }
+        document.getElementById("page-links").replaceWith(pageLinks);
+    }
+
+    function get(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.responseType = 'json';
+        xhr.onload = function () {
+            var status = xhr.status;
+            if (status === 200) {
+                callback(null, xhr.response);
+            } else {
+                callback(status, xhr.response);
+            }
+        };
+        xhr.send();
+    }
+
+    function currencyFormatPLN(num) {
+        return (
+            num
+                .toFixed(2) // always two decimal digits
+                .replace('.', ',') // replace decimal point character with ,
+                .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' PLN'
+        )
+    }
+</script>
+</body>
+</html>
