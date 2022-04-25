@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head id="headId">
+</head>
+<body class="p-3 mb-2 bg-dark text-white">
+<div th:replace="~{fragments/menu :: menuFragment}"/>
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+            <div>
+
+                <form th:action="@{edit_reservation}" th:object="${reservation}" method="post">
+
+                    <p>&nbsp;</p>
+                    <H5 th:if="*{id != null}" align="center">Edit reservation:</H5>
+                    <H5 th:if="*{id == null}" align="center">Add reservation:</H5>
+                    <p>&nbsp;</p>
+
+                    <div align="center" class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('all')}">
+                        <h5>Error. Wrong data format:</h5>
+                        <i th:errors="*{all}">Incorrect date</i>
+                    </div>
+                    <p>&nbsp<br></p>
+
+                    <div th:if="*{id != null}" class="form-group row">
+                        <label for="inputId" class="col-sm-2 col-form-label">Id</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="inputId" th:field="*{id}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="selectUser" class="col-sm-2 col-form-label">User</label>
+                        <div class="col-sm-10">
+                            <select id="selectUser" class="form-control" th:field="*{userName}"
+                                    th:errorclass="'form-control is-invalid'">
+                                <option th:each="user : ${users}"
+                                        th:value="${user.userName}"
+                                        th:text="${user.userName}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label for="selectCar" class="col-sm-2 col-form-label">Car</label>
+                        <div class="col-sm-10">
+                            <select id="selectCar" class="form-control" th:field="*{carId}"
+                                    th:errorclass="'form-control is-invalid'">
+                                <option th:each="car : ${cars}"
+                                        th:value="${car.id}"
+                                        th:text="${car.model}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputDateFrom" class="col-sm-2 col-form-label">Date From</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control bg-secondary" placeholder="Disabled input" id="inputDateFrom" th:field="*{dateFrom}"
+                                   th:errorclass="'form-control is-invalid'" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputDateFrom" class="col-sm-2 col-form-label">Date From</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control bg-secondary" placeholder="Disabled input" id="inputDateTo" th:field="*{dateTo}"
+                                   th:errorclass="'form-control is-invalid'" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputTotalCost" class="col-sm-2 col-form-label">Total cost [PLN]</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputTotalCost" th:field="*{totalCost}"
+                                   th:errorclass="'form-control is-invalid'">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputRented" class="col-sm-2 col-form-label">Rented</label>
+                        <div class="col-sm-10">
+                            <input type="checkbox" class="form-check-input position-static" id="inputRented" th:field="*{rented}"
+                                   th:errorclass="'form-control is-invalid'">
+                        </div>
+                    </div>
+
+                    <div align="center">
+                        <input type="submit" class="btn btn-light " value="Submit">
+                        <input type="reset" class="btn btn-light" value="Reset">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+</div>
+<div align="center">
+    <footer id="footerId">this is a footer</footer>
+</div>
+</body>
+</html>
