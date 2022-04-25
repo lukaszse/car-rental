@@ -5,7 +5,7 @@ Po przez informatyzację wszystkich procesów obsługi klienta, aplikacja zapewn
 * zwiększenie wydajności obsługi klientów,
 * zapewnienie bezpieczeństwa danych przechowywanych w scentralizowanej bazie danych.
 
-# 2. Szczegółlowy opis wymagań
+# 2. Szczegółowy opis wymagań
 ## 2.1. Wymagania funkcjonalne
 System umożliwia:
 * wyszukiwanie dostępnych w określonym terminie samochodów, wg zadanych kryteriów takich jak:
@@ -88,7 +88,7 @@ System umożliwia:
 * **Thymeleaf** - silnik szablonów html.
 * **H2** - baza danych SQL przechowująca dane w pliku lub w pamięci operacyjnej, stosowana do testów lub prostych aplikacji w tym MVP.
 
-5. Diagram przypadków użycia
+5. Diagramy przypadków użycia (wybrane przykłady)
 
 ![Diagram Przypadków Użycia](./images/useCaseDiagram.png "Diagram Przypadków użycia").
 
@@ -110,4 +110,28 @@ System umożliwia:
 
 # 4. Diagram klas
 
-![img.png](images/classDiagram.png)
+![Diagram klas](images/classDiagram.png)
+
+# 5. Diagramy czynności (wybrane przykłady)
+
+## 5.1. Logowanie do systemu
+
+![Logowanie do systemu](images/signIiActivityDiagram.png)
+
+## 5.2. Zmień dane użytkownika
+
+![Zmiana danych użytkownika](images/changeUserDataActivityDiagram.png)
+
+## 5.3. Zmiana danych pojazdu
+
+![Zmiana danych pojazdu](images/changeCarData.png)
+
+## 5.4 Wyszukiwanie samochodów
+
+![Wyszukiwanie samochodów](images/findCarsActivityDiagram.png)
+
+## 5.5. Rejestracja użytkownika
+
+![Rejestracja użytkownika](images/registrationActivityDiagram.png)
+
+## 6. Diagramy sekwencji (wybrane przykłady)

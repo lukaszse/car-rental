@@ -1,0 +1,27 @@
+<thlogic>
+    <attr sel="#headId"
+          th:replace="~{fragments/head :: headFragment}"/>
+    <attr sel="#footerId"
+          th:replace="~{fragments/footer :: footerFragment}"/>
+    <attr sel="#carId"
+          th:href="${viewCar}+'?id='+${car.id}"
+          th:with="viewCar=${T(org.lukaszse.carRental.util.Mappings).CAR}"
+    />
+    <attr sel="#addCarId"
+          th:href="${addCar}"
+          th:with="addCar=${T(org.lukaszse.carRental.util.Mappings).ADD_CAR}"
+    />
+    <attr sel="#deleteCarId"
+          th:href="${deleteCar}+'?id='+${car.id}"
+          th:with="deleteCar=${T(org.lukaszse.carRental.util.Mappings).DELETE_CAR}"
+    />
+    <attr sel="#editCarId"
+          th:href="${editCar}+'?id='+${car.id}"
+          th:with="editCar=${T(org.lukaszse.carRental.util.Mappings).EDIT_CAR}"
+    />
+          th:href="@{__${T(org.lukaszse.carRental.util.Mappings).EDIT_car}__+'?id='+${car.id}}"/>
+    <attr sel="#home"
+          th:href="${home}"
+          th:with="home=${T(org.lukaszse.carRental.util.Mappings).HOME}"
+    />
+</thlogic>
