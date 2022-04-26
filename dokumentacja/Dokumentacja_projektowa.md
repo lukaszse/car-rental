@@ -28,7 +28,7 @@ System umożliwia:
 * wysyłanie wiadomości do obsługi serwisu
 * wysyłanie wiadomości do obsługi w trybie gościa zabezpieczone reCaptcha v2
 * walidacja dla wszystkich wprowadzonych pól wraz z systemem alertów/ostrzeżeń o źle wprowadzonych danych (pola o szczególnej składni jak kod pocztowy czy email walidowane z wykorzystaniem wyrażeń regularnych)
-* zabezpieczenie ścieżek URL (dostęp tylko do ściezki tylko dla użytkowników uprawnionych)
+* zabezpieczenie ścieżek URL (dostęp do ściezki tylko dla użytkowników uprawnionych)
 
 ## 2.2. Opcjonalne wymagania funkcjonalne
 * rozszerzenie wyszukiwania dostępnych samochodów o kryteria takie jak:
@@ -134,4 +134,14 @@ System umożliwia:
 
 ![Rejestracja użytkownika](images/registrationActivityDiagram.png)
 
-## 6. Diagramy sekwencji (wybrane przykłady)
+# 6. Diagramy sekwencji (wybrane przykłady)
+
+## 6.1. Logowanie do systemu
+![Logowanie do systemu](images/loginToSystemSequenceDiagram.png)
+
+## 6.2. Wyświetlanie listy wszystkich rezerwacji użytkownika
+![Rezerwacje użytkownika](images/userReservationsSequenceDiagram.png)
+
+## 6.3. Wyświetlanie listy dostępnych samochodów spełniających wybrane kryteria
+
+![Przegldanie samochodów](images/findCarsSequenceDiagram.png)
