@@ -155,3 +155,8 @@ System umożliwia:
 
 ## 7.3. Zarządzanie wiadomościami
 ![Zarządzanie wiadomościami](images/messageManagementStateMachineDiagram.png)
+
+# 8. Diagramy wdrożenia
+
+# 8.1. Wdrożenie z wykorzysaniem pliku jar
+![Diagram wrożnia](images/deploymentDiagram.png)
