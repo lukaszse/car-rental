@@ -145,3 +145,13 @@ System umożliwia:
 ## 6.3. Wyświetlanie listy dostępnych samochodów spełniających wybrane kryteria
 
 ![Przegldanie samochodów](images/findCarsSequenceDiagram.png)
+
+# 7. Diagramy stanów (wybrane przykłady)
+## 7.1. Zarządzanie użytkownikami 
+![Zarządzanie użytkownikami](images/userManagementStateMachineDiagram.png)
+
+## 7.2. Status/rola zalogowanego użytkownika
+![Role zalogowanego użytkownika](images/UserRoleMachineStateDiagram.png)
+
+## 7.3. Zarządzanie wiadomościami
+![Zarządzanie wiadomościami](images/messageManagementStateMachineDiagram.png)
