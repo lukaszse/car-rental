@@ -21,7 +21,7 @@ aby pobrać obraz, a następnie:
 
 `docker run -d --restart unless-stopped -p 443:443 llseremak/car-rental`
 
-gdzie pierwszy port 8101 to port pod którym aplikacja będzie dostępna z zewnątrz kontenera.
+gdzie pierwszy port 443 to port pod którym aplikacja będzie dostępna z zewnątrz kontenera (port 443 jest portem domyślnym da połączeń szyfrowanych z wykorzystaniem TSL)
 
 ## 2.3. Dodatkowa konfiguracja z wykrzystaniem NGINX
 Przy pomocy NGINX można skonfigurowac przekierowanie z portu na którym działa aplikacja do okreslonego adresu url.
