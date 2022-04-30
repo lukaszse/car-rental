@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 public enum SecurityRole {
 
     ROLE_ADMIN("ADMIN"),
+    ROLE_MANAGER("MANAGER"),
     ROLE_USER("USER"),
     ROLE_GUEST("GUEST");
 

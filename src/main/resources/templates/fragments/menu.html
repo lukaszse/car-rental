@@ -29,7 +29,7 @@
                                    th:with="cars=${T(org.lukaszse.carRental.util.Mappings).CARS}">Cars</a>
                             </li>
 
-                            <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+                            <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" class="nav-item">
                                 <a class="nav-link"
                                    th:href="${reservations}"
                                    th:with="reservations=${T(org.lukaszse.carRental.util.Mappings).RESERVATIONS}">Reservations</a>
