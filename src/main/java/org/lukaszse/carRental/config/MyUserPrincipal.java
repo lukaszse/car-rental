@@ -20,13 +20,12 @@ public class MyUserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if("ADMIN".equals(user.getUserRole())) {
-            return List.of(new SimpleGrantedAuthority(ROLE_ADMIN.getFullName()));
-        } else if ("USER".equals(user.getUserRole())) {
-            return List.of(new SimpleGrantedAuthority(ROLE_USER.getFullName()));
-        } else {
-            return List.of(new SimpleGrantedAuthority(ROLE_GUEST.getFullName()));
-        }
+        return switch (user.getUserRole()) {
+            case "ADMIN" -> List.of(new SimpleGrantedAuthority(ROLE_ADMIN.getFullName()));
+            case "USER" -> List.of(new SimpleGrantedAuthority(ROLE_USER.getFullName()));
+            case "MANAGER" -> List.of(new SimpleGrantedAuthority(ROLE_MANAGER.getFullName()));
+            default -> List.of(new SimpleGrantedAuthority(ROLE_GUEST.getFullName()));
+        };
     }
 
     @Override
