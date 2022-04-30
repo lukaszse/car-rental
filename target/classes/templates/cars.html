@@ -34,8 +34,8 @@
             <th scope="col">Cost per day</th>
             <th scope="col"></th>
             <th scope="col"></th>
-            <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col"></th>
-            <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col"></th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" scope="col"></th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" scope="col"></th>
         </tr>
         <tr>
             <td>Filters:</td>
@@ -44,8 +44,8 @@
             <td></td>
             <td></td>
             <td></td>
-            <td sec:authorize="hasRole('ROLE_ADMIN')"></td>
-            <td sec:authorize="hasRole('ROLE_ADMIN')"></td>
+            <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"></td>
+            <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"></td>
         </tr>
         </thead>
         <tbody id="tbody">
@@ -56,7 +56,7 @@
         </ul>
     </nav>
 
-    <div sec:authorize="hasRole('ROLE_ADMIN')" class="col text-center"><a id="addCarId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Add New
+    <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" class="col text-center"><a id="addCarId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Add New
         Car</a></div>
 
 </div>
@@ -84,7 +84,7 @@
             filter();
         }
     });
-    ``
+
     manufacturerFilter.addEventListener("keyup", function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();
@@ -149,13 +149,17 @@
             addTextCell(currencyFormatPLN(element.costPerDay), row);
             addBookButton(element.id, dateFromFilter.value, dateToFilter.value, row)
             addLinkCell('View Details', `car?id=${element.id}`, row);
-            if(userRole === "ROLE_ADMIN") {
+            if(userRole === "ROLE_ADMIN" || userRole === "ROLE_MANAGER") {
                 addLinkCell('Edit', `edit_car?id=${element.id}`, row);
                 addLinkCell('Delete', `delete_car?id=${element.id}`, row);
             }
             tbody.appendChild(row);
         }
         document.getElementById("tbody").replaceWith(tbody);
+
+        if(array.length === 0) {
+            alert("Couldn't find any car for the given criteria.")
+        }
     }
 
     function addBookButton(carId, dateFrom, dateTo, row) {

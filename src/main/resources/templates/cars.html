@@ -156,6 +156,10 @@
             tbody.appendChild(row);
         }
         document.getElementById("tbody").replaceWith(tbody);
+
+        if(array.length === 0) {
+            alert("Couldn't find any car for the given criteria.")
+        }
     }
 
     function addBookButton(carId, dateFrom, dateTo, row) {
