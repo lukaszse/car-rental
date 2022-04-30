@@ -91,6 +91,7 @@
         let tbody = document.createElement("tbody");
         tbody.id = "tbody";
 
+
         for (const element of array) {
             var row = document.createElement("tr");
             addTextCell(element.id, row);
@@ -105,6 +106,10 @@
             tbody.appendChild(row);
         }
         document.getElementById("tbody").replaceWith(tbody);
+
+        if(array.length === 0) {
+            alert("Couldn't find any reservation for the given criteria.")
+        }
     }
 
     function addTextCell(cellContent, row) {

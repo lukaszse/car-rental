@@ -1,12 +1,12 @@
 # 1. Repozytorium
 
 ## 1.1. Wymagania wstępne
-Aby skorzystac z repozorium należy zainstalować na lokalnej maszynie aplikację aplikację do kontroli wersji.
+Aby skorzystac z repozorium należy na lokalnej maszynie zainstalować aplikację Git do kontroli wersji.
 Apikacja jest dostępna dla systemów Windows, Linux oraz MacOS:
 https://git-scm.com/
 
 ## 1.2. Pobieranie repozytorium
-Kod aplikacji znajduje się w repozytrium w serwisie GitHub:
+Kod źródłowy aplikacji Car-Rental znajduje się w repozytrium w serwisie GitHub:
 https://github.com/lukaszse/car-rental
 
 W celu pobrania repozytorium, użyj komendy:
@@ -14,17 +14,17 @@ W celu pobrania repozytorium, użyj komendy:
 `git clone https://github.com/lukaszse/car-rental.git`
 
 ## 1.3. Uruchamianie aplikacji
-Aby uruchomić aplikację należy zbudować plik jak. W tym celu nalezy uruchomić komendę:
+Aby uruchomić aplikację należy zbudować plik jar. W tym celu należy użyć komendy:
 
 `./mvnw clean install`
 
 ## 1.4. Konfiguracja
-W aplikacji skonfigurowano dwa profile **LOCAL** służący do uruchamiania aplikacji nalokalnym komuterze (z rszszerzonymi opcjami logowania, debbugowania oraz dostępem bez szyfrowania TSL) oraz **PROD** służący do uruchomienia aplikacji produkcyjnej na serwerze.
-Profil można przełączyć poprzez modufykację zmiennej `spring.profiles.active=prod` która znajduję się w pliku `src/main/resources/application.properties`.
+W aplikacji skonfigurowano dwa profile **LOCAL** służący do uruchamiania aplikacji na lokalnym komuterze (z rozszerzonymi opcjami logowania, debbugowania oraz dostępem bez szyfrowania TSL) oraz **PROD** służący do uruchomienia aplikacji produkcyjnej na serwerze.
+Profil można przełączyć poprzez modufykację zmiennej `spring.profiles.active=prod`, która znajduję się w pliku `src/main/resources/application.properties`.
 Szczegółowe konfiguracje dla środowisk znajdują się w plikach `application-local.yml` oraz application-prod.yml` znajdujących się w tej samej lokalizacji.
 
 # 2. Obraz Docker
-W głównym folderze aplikacji znajduje się plik `Dockerfile` który służy do zbudowania obrazu z aktualnego pliku jar znajdującego się w foldwrze `target`.
+W głównym folderze aplikacji znajduje się plik `Dockerfile`, który służy do zbudowania obrazu z aktualnego pliku jar znajdującego się w folderze `target`.
 Aby zbudowac obraz nalezy użyć komendy:
 
 `docker build -t nazwaObrazu .`
@@ -45,12 +45,12 @@ Podstawowa znajomość wszystkich tych technologii jest konieczna do rozpoczęci
 #### 3.2.1.1. Opis algorytmu i kontekst jego zastosowania
 W aplikacji zastosowano mechanizm sprawdzania dostępności samochodu w danym przedziale czasu.
 Algorytm ten wykorzystywany jest w dwóch sytuacjach:
-1. Wyszykiwanie samochodów w widoku **cars** - użytkownik ma możliwoś wpisania zakresu czasu (`dateFrom` oraz `dateTo`), w celu wyszukiwania dostępnych do wypożyczenia samochodów. Mechanizm ten realizowany jest z wykorzystaniem zapytania REST API **@GET** które zaimplementowane z wykorzystaniem Javascript.
-   Do obsługi zapytania **@GEY** stworzon endpoint `cars/findCars` który przyjmuje m.in. dwa parametry QueryParam - dateFrom oraz DateTo.
+1. Wyszukiwanie samochodów w widoku **cars** - użytkownik ma możliwoś wpisania zakresu czasu (`dateFrom` oraz `dateTo`), w celu wyszukiwania dostępnych do wypożyczenia samochodów. Mechanizm ten realizowany jest z wykorzystaniem zapytania REST API **@GET** które zaimplementowane z wykorzystaniem Javascript.
+   Do obsługi zapytania **@GET** utworzono endpoint `cars/findCars`, który przyjmuje m.in. dwa parametry QueryParam - dateFrom oraz DateTo.
 
 ![img.png](images/findCarAlgorithmContext.png)
 
-3. Rezerwowanie samochodu (dodawanie rezerwacji) - po wyszukaniu samochodu użytkownim w widoku **cars** ma możliwość zarezrwowania wybranego samochodu po przez kliknięcie przycisku **Book**, a następnie po przez potwierdzenie zamówienia po przez kliknięcie przycisku **Submit** na ekranie z z danymi samochodu, co spowoduje wysłanie zapytania **@POST** oraz wywołanie metody 'performAddReservation' która przyjmuje kilka paramerów w tym parametry `dateFrom` oraz `dateTo`.
+3. Rezerwowanie samochodu (dodawanie rezerwacji) - po wyszukaniu samochodu użytkownik w widoku **cars** ma możliwość zarezrwowania wybranego samochodu po przez kliknięcie przycisku **Book**, a następnie po przez potwierdzenie zamówienia po przez kliknięcie przycisku **Submit** na ekranie z z danymi samochodu, co spowoduje wysłanie zapytania **@POST** oraz wywołanie metody 'performAddReservation' która przyjmuje kilka paramerów w tym parametry `dateFrom` oraz `dateTo`.
    Przed zarezerwowaniem samochodu również sprawdzana jest dostępność samochodu, a operacja przeprowadzana jest w formie transakcji.
 
 ![img.png](images/bookCar.png)
