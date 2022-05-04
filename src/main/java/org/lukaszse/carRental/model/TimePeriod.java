@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.lukaszse.carRental.customValidator.ValidateTimePeriod;
 
 import java.time.LocalDate;
 
