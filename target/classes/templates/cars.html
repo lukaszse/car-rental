@@ -129,7 +129,8 @@
 
         get(`/car-rental/cars/findCars?manufacturer=${manufacturer}&model=${model}&dateFrom=${dateFrom}&dateTo=${dateTo}&pageNumber=${pageNumber}`, function (err, response) {
             if (err != null) {
-                console.error(err);
+                console.error("Some error occurred: " + err);
+                alert(response.message)
             } else {
                 buildTable(response.content);
                 pageLinks(response, pageNumber);

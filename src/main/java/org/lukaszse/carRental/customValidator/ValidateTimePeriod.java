@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Target(value = {ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidateTimePeriod {
-    String message() default "Invalid time period";
+    String message() default "Invalid time period. Please check if chosen dates are correct!";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

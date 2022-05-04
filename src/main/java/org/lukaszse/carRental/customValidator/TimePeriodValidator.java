@@ -17,9 +17,10 @@ public class TimePeriodValidator implements ConstraintValidator<ValidateTimePeri
     public boolean isValid(@Nullable TimePeriod timePeriod, ConstraintValidatorContext constraintValidatorContext) {
 
         return timePeriod == null
-                || (timePeriod.getDateFrom() != null && timePeriod.getDateTo() != null)
+                || ((timePeriod.getDateFrom() == null) && timePeriod.getDateTo() == null)
+                || ((timePeriod.getDateFrom() != null && timePeriod.getDateTo() != null)
                 && (timePeriod.getDateFrom().isBefore(timePeriod.getDateTo()) || timePeriod.getDateFrom().isEqual(timePeriod.getDateTo()))
                 && (LocalDate.now().isBefore(timePeriod.getDateFrom()) || LocalDate.now().isEqual(timePeriod.getDateFrom()))
-                && (LocalDate.now().isBefore(timePeriod.getDateTo()) || LocalDate.now().isAfter(timePeriod.getDateTo()));
+                && (LocalDate.now().isBefore(timePeriod.getDateTo()) || LocalDate.now().isAfter(timePeriod.getDateTo())));
     }
 }
