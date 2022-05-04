@@ -1,3 +1,4 @@
+org\lukaszse\carRental\customValidator\ValidateTimePeriod.class
 org\lukaszse\carRental\repository\UserRepository.class
 org\lukaszse\carRental\service\ReCaptchaValidationService.class
 org\lukaszse\carRental\model\dto\ReservationDto.class
@@ -25,6 +26,7 @@ org\lukaszse\carRental\controller\HomeController.class
 org\lukaszse\carRental\controller\ReservationController.class
 org\lukaszse\carRental\config\WebConfig.class
 org\lukaszse\carRental\exceptions\ConflictException.class
+org\lukaszse\carRental\customValidator\TimePeriodValidator.class
 org\lukaszse\carRental\config\MyUserPrincipal.class
 org\lukaszse\carRental\model\TimePeriod.class
 org\lukaszse\carRental\util\ViewNames.class

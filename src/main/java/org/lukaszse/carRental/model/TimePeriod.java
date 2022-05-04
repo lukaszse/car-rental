@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.lukaszse.carRental.customValidator.ValidateTimePeriod;
 
 import java.time.LocalDate;
 
@@ -12,9 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor(staticName = "of")
 public class TimePeriod {
 
-    @NotNull(message = "Date from cannot be null")
     private LocalDate dateFrom;
-    @NotNull(message = "Date to cannot be null")
     private LocalDate dateTo;
 
     public TimePeriod(final String dateFrom, final String dateTo) {
