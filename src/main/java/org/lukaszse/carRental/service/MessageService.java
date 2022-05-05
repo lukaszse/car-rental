@@ -2,6 +2,7 @@ package org.lukaszse.carRental.service;
 
 import lombok.AllArgsConstructor;
 import org.lukaszse.carRental.model.Message;
+import org.lukaszse.carRental.repository.MessageRepository;
 import org.lukaszse.carRental.repository.MessageSearchRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,8 @@ import java.util.stream.Stream;
 public class MessageService {
 
     private final MessageSearchRepository messageSearchRepository;
+
+    private final MessageRepository messageRepository;
 
     public Page<Message> findMessages(final Integer pageNumber, final Integer pageSize) {
         final Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("id"));
@@ -45,5 +48,8 @@ public class MessageService {
                 .orElse(Collections.emptyList());
     }
 
+    public void deleteMessage(final Integer MessageId) {
+        messageRepository.deleteById(MessageId);
+    }
 
 }
