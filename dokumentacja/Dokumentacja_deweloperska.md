@@ -77,7 +77,7 @@ Obie wyżej wymienione metody korzystają z klasy `AvailabilityService` oraz zai
             return false;
         }
 
-        if(s1.compareTo(s2)<0 && e1.compareTo(s2)>0 ||
+        if(s1.compareTo(s2)<=0 && e1.compareTo(s2)>=0 ||
                 s1.compareTo(e2)<0 && e1.compareTo(e2)>0 ||
                 s1.compareTo(s2)<0 && e1.compareTo(e2)>0 ||
                 s1.compareTo(s2)>0 && e1.compareTo(e2)<0 )

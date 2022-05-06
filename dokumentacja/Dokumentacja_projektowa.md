@@ -112,51 +112,116 @@ System umożliwia:
 
 ![Diagram klas](images/classDiagram.png)
 
-# 5. Diagramy czynności (wybrane przykłady)
+# 5. Kod SQL
+W projekcie wykorzystano baze danych H2 (dialekt H2).
+Struktura bazy danych budowana jest z wykorzystaniem narzędzia Flyway (https://flywaydb.org/), które odpowiada również za wypełnienie bazy danych danymi testowymi.
+Z uwagi na fakt, że aplikacja testowa nie posiada wszystkich projektowanych funcji, również baza danych nie zawiera wszystkich tabel określonych na diagramie ERD.
+Poniżej zamieszczono kod SQL do wszystkich tabel z których aktualnie korzysta aplikacja. Wszystkie tablice dostępne są również w folderze aplikacji:
+https://github.com/lukaszse/car-rental/tree/master/src/main/resources/db/migration
 
-## 5.1. Logowanie do systemu
+## 5.1. Tabela CAR
+```sql
+create table car (
+                     id int primary key auto_increment,
+                     registration_no varchar(255),
+                     manufacturer varchar(255) not null,
+                     model varchar(255) not null ,
+                     fuel_type varchar(255) not null ,
+                     type varchar(255) not null ,
+                     engine_capacity int not null ,
+                     passenger_number int not null ,
+                     description varchar(255) not null,
+                     cost_per_day numeric(19,2) not null
+);
+```
+
+## 5.2. Tabela APP_USER
+```sql
+create table app_user (
+    user_name  varchar(40) primary key,
+    first_name varchar(255),
+    last_name varchar(255),
+    user_role varchar(255),
+    password varchar(500)
+);
+```
+
+## 5.3. Tabela RESERVATION
+```sql
+create table reservation (
+    id int primary key auto_increment,
+    user_name varchar(255) not null,
+    car_id int not null,
+    reservation_date date,
+    date_from date,
+    date_to date,
+    total_cost numeric(19,2) not null,
+    invoice_id varchar(255),
+    rented bit,
+    foreign key (car_id) references car(id),
+    foreign key (user_name) references app_user(user_name)
+);
+```
+
+## 5.3. Tabela MESSAGE
+```sql
+create table message (
+
+    id int primary key auto_increment,
+    user_name varchar(40),
+    subject varchar(255),
+    content varchar(1000),
+    sent_date date,
+    is_read bit
+);
+```
+
+
+# 6. Diagramy czynności (wybrane przykłady)
+
+## 6.1. Logowanie do systemu
 
 ![Logowanie do systemu](images/signIiActivityDiagram.png)
 
-## 5.2. Zmień dane użytkownika
+## 6.2. Zmień dane użytkownika
 
 ![Zmiana danych użytkownika](images/changeUserDataActivityDiagram.png)
 
-## 5.3. Zmiana danych pojazdu
+## 6.3. Zmiana danych pojazdu
 
 ![Zmiana danych pojazdu](images/changeCarData.png)
 
-## 5.4 Wyszukiwanie samochodów
+## 6.4 Wyszukiwanie samochodów
 
 ![Wyszukiwanie samochodów](images/findCarsActivityDiagram.png)
 
-## 5.5. Rejestracja użytkownika
+## 6.5. Rejestracja użytkownika
 
 ![Rejestracja użytkownika](images/registrationActivityDiagram.png)
 
-# 6. Diagramy sekwencji (wybrane przykłady)
+# 7. Diagramy sekwencji (wybrane przykłady)
 
-## 6.1. Logowanie do systemu
+## 7.1. Logowanie do systemu
 ![Logowanie do systemu](images/loginToSystemSequenceDiagram.png)
 
-## 6.2. Wyświetlanie listy wszystkich rezerwacji użytkownika
+## 7.2. Wyświetlanie listy wszystkich rezerwacji użytkownika
 ![Rezerwacje użytkownika](images/userReservationsSequenceDiagram.png)
 
-## 6.3. Wyświetlanie listy dostępnych samochodów spełniających wybrane kryteria
+## 7.3. Wyświetlanie listy dostępnych samochodów spełniających wybrane kryteria
 
 ![Przegldanie samochodów](images/findCarsSequenceDiagram.png)
 
-# 7. Diagramy stanów (wybrane przykłady)
-## 7.1. Zarządzanie użytkownikami 
+# 8. Diagramy stanów (wybrane przykłady)
+## 8.1. Zarządzanie użytkownikami 
 ![Zarządzanie użytkownikami](images/userManagementStateMachineDiagram.png)
 
-## 7.2. Status/rola zalogowanego użytkownika
+## 8.2. Status/rola zalogowanego użytkownika
 ![Role zalogowanego użytkownika](images/UserRoleMachineStateDiagram.png)
 
-## 7.3. Zarządzanie wiadomościami
+## 8.3. Zarządzanie wiadomościami
 ![Zarządzanie wiadomościami](images/messageManagementStateMachineDiagram.png)
 
-# 8. Diagramy wdrożenia
+# 9. Diagramy wdrożenia
 
-# 8.1. Wdrożenie z wykorzysaniem pliku jar
+# 9.1. Wdrożenie z wykorzysaniem pliku jar
 ![Diagram wrożnia](images/deploymentDiagram.png)
