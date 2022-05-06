@@ -38,7 +38,8 @@ public class AvailabilityService {
         if(s1.compareTo(s2)<0 && e1.compareTo(s2)>0 ||
                 s1.compareTo(e2)<0 && e1.compareTo(e2)>0 ||
                 s1.compareTo(s2)<0 && e1.compareTo(e2)>0 ||
-                s1.compareTo(s2)>0 && e1.compareTo(e2)<0 )
+                s1.compareTo(s2)>0 && e1.compareTo(e2)<0 ||
+                (s1.compareTo(s2)==0 || e1.compareTo(e2)==0))
         {
             log.info("Periods overlap! Period 1: {}, Period2: {}", timePeriod1, timePeriod2);
             return true;

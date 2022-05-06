@@ -3,4 +3,8 @@
           th:replace="~{fragments/head :: headFragment}"/>
     <attr sel="#footerId"
           th:replace="~{fragments/footer :: footerFragment}"/>
+    <attr sel="#deleteMessageId"
+          th:href="${deleteMessage}+'?id='+${message.id}"
+          th:with="deleteMessage=${T(org.lukaszse.carRental.util.Mappings).DELETE_MESSAGE}"
+    />
 </thlogic>
