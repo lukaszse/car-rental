@@ -22,13 +22,13 @@ class AvailabilityServiceSpec extends Specification {
         overlap == expectedResult
 
         where:
-        no | firstPeriod           | secondPeriod          | expectedResult
-        1  | getTimePeriod(1, 2)   | getTimePeriod(3, 4)   | false
-        2  | getTimePeriod(2, 4)   | getTimePeriod(3, 5)   | true
-        3  | getTimePeriod(1, 4)   | getTimePeriod(20, 30) | false
-        4  | getTimePeriod(10, 14) | getTimePeriod(7, 13)  | true
-        5  | getTimePeriod(10, 14) | getTimePeriod(7, 60)  | true
-        7  | getTimePeriod(1, 200) | getTimePeriod(7, 60)  | true
+        no | firstPeriod           | secondPeriod          || expectedResult
+        1  | getTimePeriod(1, 2)   | getTimePeriod(3, 4)   || false
+        2  | getTimePeriod(2, 4)   | getTimePeriod(3, 5)   || true
+        3  | getTimePeriod(1, 4)   | getTimePeriod(20, 30) || false
+        4  | getTimePeriod(10, 14) | getTimePeriod(7, 13)  || true
+        5  | getTimePeriod(10, 14) | getTimePeriod(7, 60)  || true
+        7  | getTimePeriod(1, 200) | getTimePeriod(7, 60)  || true
     }
 
     static def getTimePeriod(final int plusDaysFrom, final int plusDaysTo) {
