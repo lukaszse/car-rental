@@ -29,6 +29,7 @@ class AvailabilityServiceSpec extends Specification {
         4  | getTimePeriod(10, 14) | getTimePeriod(7, 13)  || true
         5  | getTimePeriod(10, 14) | getTimePeriod(7, 60)  || true
         7  | getTimePeriod(1, 200) | getTimePeriod(7, 60)  || true
+        8  | getTimePeriod(1, 3)   | getTimePeriod(1, 3)   || true
     }
 
     static def getTimePeriod(final int plusDaysFrom, final int plusDaysTo) {

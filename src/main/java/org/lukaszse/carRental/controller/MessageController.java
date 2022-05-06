@@ -64,6 +64,12 @@ public class MessageController {
         return ViewNames.SEND_MESSAGE;
     }
 
+    @GetMapping(Mappings.DELETE_MESSAGE)
+    public String deleteMessage(@RequestParam final Integer id) {
+        messageService.deleteMessage(id);
+        return "redirect:/" + Mappings.MESSAGES;
+    }
+
     private static BindingResult validateUserName(final String userName, final Principal principal, BindingResult bindingResult) {
         if ((userName == null || userName.isBlank()) && principal == null) {
             var error = new ObjectError("message", "User Name cannot be empty");
