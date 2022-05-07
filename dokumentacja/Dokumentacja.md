@@ -14,7 +14,7 @@ Po przez informatyzację wszystkich procesów obsługi klienta aplikacja zapewni
 * **PDF (PDF Portable Document Format)** - format plików służący do prezentacji, przenoszenia i drukowania treści tekstowo-graficznych, stworzony przez firmę Adobe Systems. Obecnie rozwijany i utrzymywany przez Międzynarodową Organizację Normalizacyjną.
 * **Spring Boot** - framework do budowania aplikacji w tym aplikacji webowych w języku java.
 * **Thymeleaf** - silnik szablonów html.
-* **H2** - baza danych SQL przechowująca dane w pliku lub w pamięci operacyjnej, stosowana do testów lub prostych aplikacji w tym MVP.
+* **H2** - baza danych SQL przechowująca dane w pliku lub w pamięci operacyjnej, stosowana do testów lub prostych aplikacji.
 
 # 3. Szczegółowy opis wymagań
 ## 3.1. Wymagania funkcjonalne
@@ -577,12 +577,12 @@ W przypadku wpisania błędnych danych użytkownik nie zostanie zalogowany, a na
 
 ![Błąd logowania](images/SingingIn2.png)
 
-**Uwaga**: W wersji prezentacyjnej (MVC) wykorzystano darmowy certyfikat SSL, który zapewnia pełne szyfrowanie ruchu pomiędzy przeglądarką
+**Uwaga**: W wersji prezentacyjnej wykorzystano darmowy certyfikat SSL, który zapewnia pełne szyfrowanie ruchu pomiędzy przeglądarką
 użytkownika a serwerem, jednak nie jest to certyfikat autoryzowany przez Urząd Certyfikacji, wobec tego nie będzie rozpoznany przez przeglądarki jako
 certyfikat zaufany. Wymagać to może, odpowiednich kroków w zależności od konkretnej przeglądarki. W większości przypadków konieczne będzie wybranie opcji zaawansowanych[1], w celu wyświetlenia możliwości otwarcia strony[2].
 ![Certyfikat niezaufany](images/notTrustedCert.png)
 
-**Uwaga**: W wersji prezentacyjnej (MVC) na ekranie logowania znajdują się informację o danych do logowania do kont dla wszystkich
+**Uwaga**: W wersji prezentacyjnej na ekranie logowania znajdują się informację o danych do logowania do kont dla wszystkich
 typów użytkowników.
 
 ## 18.2. Wyszukiwanie samochodów
@@ -594,4 +594,4 @@ numer strony znajdujący się pod wynikami wyszukiwania.
 
 ![Znajdź samochód](images/findCar.png)
 
-**Uwaga:** W wersji prezentacyjnej (MVP) aplikacji nie zaimplementowano sortowania ani możliwości wyboru ilości stron do wyświetlenia na ekranie logowania. Funkcje te znajdą się w pełnej wersji aplikacji.
+**Uwaga:** W wersji prezentacyjnej aplikacji nie zaimplementowano sortowania ani możliwości wyboru ilości stron do wyświetlenia na ekranie logowania. Funkcje te znajdą się w pełnej wersji aplikacji.
