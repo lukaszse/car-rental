@@ -470,11 +470,11 @@ aby pobrać obraz, a następnie:
 gdzie pierwszy port 443 to port pod którym aplikacja będzie dostępna z zewnątrz kontenera (port 443 jest portem domyślnym da połączeń szyfrowanych z wykorzystaniem TSL)
 
 ## 16.5. Dodatkowa konfiguracja z wykrzystaniem NGINX
-Przy pomocy NGINX można skonfigurowac przekierowanie z portu na którym działa aplikacja do okreslonego adresu url.
+Przy pomocy NGINX można skonfigurować przekierowanie z portu, na którym działa aplikacja do określonego adresu url.
 Dokumentacja NGINX: http://nginx.org/en/docs/
 
 ## 16.5. Bezpieczeństwo i certyfikat HTTPS
-W wersji MVC aplikacji wykorzystano niezarejestrowany certyfikat HTTPS. Gwarantuje on szyfrowanie danych przesyłanych z przeglądarki do serwera, jednak nie jest nie jest to certyfikat wydany przez Urząd Certyfikacji, wobec czego nie będzie traktowany przez przeglądarkę jako certyfikat zaufany.
+W wersji MVC aplikacji wykorzystano niezarejestrowany certyfikat HTTPS. Gwarantuje on szyfrowanie danych przesyłanych z przeglądarki do serwera, jednak nie jest to certyfikat wydany przez Urząd Certyfikacji, wobec czego nie będzie traktowany przez przeglądarkę jako certyfikat zaufany.
 
 # 17. Podręcznik użytkownika
 
@@ -488,17 +488,39 @@ W wersji MVC aplikacji wykorzystano niezarejestrowany certyfikat HTTPS. Gwarantu
 7. Funkcje dostępne dla managera
    1. edycja pojazdów 
    2. usuwanie pojazdów 
-   3. przegądanie rezerwacjiw szystkich użytkowników 
+   3. przegadanie rezerwacji w wszystkich użytkowników 
    4. edycja rezerwacji 
    5. usuwanie rezerwacji 
    6. odczytywanie wiadomości
-8. Funckcje dostępne dla administratora
+8. Funkcje dostępne dla administratora
    1. zarządzanie użytkownikami 
    2. ustawienia administracyjne
 
-## 17.1. Wyszukiwanie samochodów
-Aby wyświetlić ekran wyszukiwania samochodów należy kliknąć na zakładkę `Cars` w górnym menu [1].
+## 17.1. Logowanie do systemu
+
+W celu zalogowania się do aplikacji najpierw otworzyć stronę serwisu:
+https://ubuntu.llseremak.p3.tiktalik.io/car-rental/
+W celu zalogowania się do systemu należy, wpisać prawidłowy login oraz hasło. 
+![Logowanie do systemu](images/SingingIn.png)
+W przypadku wpisania błędnych danych użytkownik nie zostanie zalogowany, a na ekranie zostanie wyświetlony stosowny komunikat.
+
+![Błąd logowania](images/SingingIn2.png)
+
+**Uwaga**: W wersji prezentacyjnej (MVC) wykorzystano darmowy certyfikat SSL, który zapewnia pełne szyfrowanie ruchu pomiędzy przeglądarką
+użytkownika a serwerem, jednak nie jest to certyfikat autoryzowany przez Urząd Certyfikacji, wobec tego nie będzie rozpoznany przez przeglądarki jako
+certyfikat zaufany. Wymagać to może, odpowiednich kroków w zależności od konkretnej przeglądarki. W większości przypadków konieczne będzie wybranie opcji zaawansowanych, w celu wyświetlenia możliwości otwarcia strony.
+![Certyfikat niezaufany](images/notTrustedCert.png)
+
+**Uwaga**: W wersji prezentacyjnej (MVC) na ekranie logowania znajdują się informację o danych do logowania do kont dla wszystkich
+typów użytkowników.
+
+## 17.2. Wyszukiwanie samochodów
+Aby wyświetlić ekran wyszukiwania samochodów, należy kliknąć zakładkę `Cars` w górnym menu [1].
 Wstępnie zostaną wyświetlone wszystkie samochody. Aby wyszukać samochód dostępny w danym terminie, należy wprowadzić dwie daty `dateFrom` oraz `dateTo` [2].
 Po wpisaniu dat wyświetlone zostaną wszystkie samochody dostępne w danym terminie. Aby zawęzić wyszukiwania można użyć dodatkowych filtrów [3] w celu wprowadzenia marki oraz modelu samochodu.
+Na ekranie wyświetlane jest pierwsze 5 znalezionych pojazdów, aby wyświetlić pozostałe wyniki, należy przejść do kolejnych stron wyszukiwania, w tym celu należy kliknąć 
+numer strony znajdujący się pod wynikami wyszukiwania.
 
 ![Znajdź samochód](images/findCar.png)
+
+**Uwaga:** W wersji prezentacyjnej (MVP) aplikacji nie zaimplementowano sortowania ani możliwości wyboru ilości stron do wyświetlenia na ekranie logowania. Funkcje te znajdą się w pełnej wersji aplikacji.
