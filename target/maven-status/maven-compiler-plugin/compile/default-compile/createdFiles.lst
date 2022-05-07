@@ -8,6 +8,7 @@ org\lukaszse\carRental\util\CompanyData.class
 org\lukaszse\carRental\model\Car.class
 org\lukaszse\carRental\endpoint\CarEndpoint.class
 org\lukaszse\carRental\service\CarService.class
+org\lukaszse\carRental\repository\MessageRepository.class
 org\lukaszse\carRental\service\AvailabilityService.class
 org\lukaszse\carRental\model\dto\UserDto.class
 org\lukaszse\carRental\endpoint\ReservationEndpoint.class

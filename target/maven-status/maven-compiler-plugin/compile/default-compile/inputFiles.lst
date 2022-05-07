@@ -30,6 +30,7 @@ D:\02_PROGRAMOWANIE\studia\car-rental\src\main\java\org\lukaszse\carRental\repos
 D:\02_PROGRAMOWANIE\studia\car-rental\src\main\java\org\lukaszse\carRental\endpoint\CarEndpoint.java
 D:\02_PROGRAMOWANIE\studia\car-rental\src\main\java\org\lukaszse\carRental\service\ReservationService.java
 D:\02_PROGRAMOWANIE\studia\car-rental\src\main\java\org\lukaszse\carRental\model\TimePeriod.java
+D:\02_PROGRAMOWANIE\studia\car-rental\src\main\java\org\lukaszse\carRental\repository\MessageRepository.java
 D:\02_PROGRAMOWANIE\studia\car-rental\src\main\java\org\lukaszse\carRental\config\BeanConfig.java
 D:\02_PROGRAMOWANIE\studia\car-rental\src\main\java\org\lukaszse\carRental\CarRentalApplication.java
 D:\02_PROGRAMOWANIE\studia\car-rental\src\main\java\org\lukaszse\carRental\controller\UserController.java

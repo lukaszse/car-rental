@@ -1,7 +1,4 @@
 # SYSTEM ZARZĄDZANIA WYPOŻYCZALNIĄ SAMOCHODÓW
 
-## 1. [Dokumentacja projektowa](/dokumentacja/Dokumentacja_projektowa.md "Dokumentacja projektowa")
+## 1. [Dokumentacja](/dokumentacja/Dokumentacja.md "Dokumentacja")
 
-## 2. [Dokumentacja deweloperska](/dokumentacja/Dokumentacja_deweloperska.md "Dokumentacja deweloperska")
-
-## 3. [Dokumentacja techniczna](/dokumentacja/Dokumentacja_techniczna.md "Dokumentacja techniczna")

@@ -17,7 +17,7 @@ public class AvailabilityService {
 
 
     public boolean isCarAvailable(final Integer carId, final TimePeriod timePeriod) {
-        if(timePeriod.getDateFrom() == null && timePeriod.getDateTo() == null) {
+        if (timePeriod.getDateFrom() == null && timePeriod.getDateTo() == null) {
             return true;
         }
         return reservationSearchRepository.findByCar_Id(carId).stream()
@@ -31,20 +31,17 @@ public class AvailabilityService {
         final LocalDate s2 = timePeriod2.getDateFrom();
         final LocalDate e2 = timePeriod2.getDateTo();
 
-        if(s1 == null || e1 == null || s2 == null || e2 == null) {
+        if (s1 == null || e1 == null || s2 == null || e2 == null) {
             return false;
         }
 
-        if(s1.compareTo(s2)<0 && e1.compareTo(s2)>0 ||
-                s1.compareTo(e2)<0 && e1.compareTo(e2)>0 ||
-                s1.compareTo(s2)<0 && e1.compareTo(e2)>0 ||
-                s1.compareTo(s2)>0 && e1.compareTo(e2)<0 ||
-                (s1.compareTo(s2)==0 || e1.compareTo(e2)==0))
-        {
+        if (s1.compareTo(s2) <= 0 && e1.compareTo(s2) >= 0 ||
+                s1.compareTo(e2) < 0 && e1.compareTo(e2) > 0 ||
+                s1.compareTo(s2) < 0 && e1.compareTo(e2) > 0 ||
+                s1.compareTo(s2) > 0 && e1.compareTo(e2) < 0) {
             log.info("Periods overlap! Period 1: {}, Period2: {}", timePeriod1, timePeriod2);
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
