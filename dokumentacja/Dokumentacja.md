@@ -111,6 +111,21 @@ pozwalających wspierających mechanizm wyszukiwania (filtrowania rekordów).
 ![Diagram Przypadków Użycia](./images/useCaseDiagram.png "Diagram Przypadków użycia").
 
 # 6. Scenariusze przypadków użycia
+Poniżej przedstawiono wybrane scenariusze przypadków użycia spośród wszystkich scenariuszy:
+- logowanie do systemu
+- rejestracja użytkownika
+- wysłanie wiadomości do obsługi
+- odczyt wiadomości przez administratora/managera
+- usuwanie wiadomości przez administratora/managera
+- wyszukiwanie samochodów
+- rezerwacja samochodu
+- wyświetlanie listy wszystkich rezerwacji przez administratora/managera
+- przeglądanie własnych rezerwacji przez użytkownika
+- zmiana danych własnych użytkownika
+- tworzenie użytkownika przez administora
+- edycja dowolnego użytkownika przez administratora
+- usuwanie dowolnego użytkownika przez administratora
+- wyświetlanie listy wypożyczeń
 ## 6.1. Logowanie do systemu
 ![Scenariusz Przypadku Użycia](./images/useCaseScenario1.png "Scenariusz 1").
 ## 6.1. Zmiana danych
@@ -119,13 +134,31 @@ pozwalających wspierających mechanizm wyszukiwania (filtrowania rekordów).
 ![Scenariusz Przypadku Użycia](./images/useCaseScenario3.png "Scenariusz 3").
 
 # 7. Model bady danych
-## 7.1. Model logiczny (ERD)
+## 7.1. Model konceptualny
+![Model konceptualny](images/conceptualDataModel.png)
+
+## 7.2. Model logiczny (ERD)
 ![Model logiczny](images/erd.png)
 
-# 7.2. Model relacyjny
+# 7.3. Model relacyjny (Fizyczny)
 ![Model relacyjny](images/relationalModel.png)
 
 # 7. Diagramy czynności (wybrane przykłady)
+Poniżej przedstawiono wybrane diagramy czynności. Wszystkie diagramy znajdują się na poniższej liście:
+- logowanie do systemu
+- rejestracja użytkownika
+- wysłanie wiadomości do obsługi
+- odczyt wiadomości przez administratora/managera
+- usuwanie wiadomości przez administratora/managera
+- wyszukiwanie samochodów
+- rezerwacja samochodu
+- wyświetlanie listy wszystkich rezerwacji przez administratora/managera
+- przeglądanie własnych rezerwacji przez użytkownika
+- zmiana danych własnych użytkownika
+- tworzenie użytkownika przez administora
+- edycja dowolnego użytkownika przez administratora
+- usuwanie dowolnego użytkownika przez administratora
+- wyświetlanie listy wypożyczeń
 
 ## 7.1. Logowanie do systemu
 ![Logowanie do systemu](images/signIiActivityDiagram.png)
@@ -143,6 +176,21 @@ pozwalających wspierających mechanizm wyszukiwania (filtrowania rekordów).
 ![Rejestracja użytkownika](images/registrationActivityDiagram.png)
 
 # 8. Diagramy sekwencji (wybrane przykłady)
+Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują się na poniższej liście:
+- logowanie do systemu
+- rejestracja użytkownika
+- wysłanie wiadomości do obsługi
+- odczyt wiadomości przez administratora/managera
+- usuwanie wiadomości przez administratora/managera
+- wyszukiwanie samochodów
+- rezerwacja samochodu
+- wyświetlanie listy wszystkich rezerwacji przez administratora/managera
+- przeglądanie własnych rezerwacji przez użytkownika
+- zmiana danych własnych użytkownika
+- tworzenie użytkownika przez administora
+- edycja dowolnego użytkownika przez administratora
+- usuwanie dowolnego użytkownika przez administratora
+- wyświetlanie listy wypożyczeń
 
 ## 8.1. Logowanie do systemu
 ![Logowanie do systemu](images/loginToSystemSequenceDiagram.png)
