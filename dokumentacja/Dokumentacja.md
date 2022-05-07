@@ -577,12 +577,12 @@ W przypadku wpisania błędnych danych użytkownik nie zostanie zalogowany, a na
 
 ![Błąd logowania](images/SingingIn2.png)
 
-**Uwaga**: W wersji prezentacyjnej (MVC) wykorzystano darmowy certyfikat SSL, który zapewnia pełne szyfrowanie ruchu pomiędzy przeglądarką
+**Uwaga**: W wersji prezentacyjnej (MVP) wykorzystano darmowy certyfikat SSL, który zapewnia pełne szyfrowanie ruchu pomiędzy przeglądarką
 użytkownika a serwerem, jednak nie jest to certyfikat autoryzowany przez Urząd Certyfikacji, wobec tego nie będzie rozpoznany przez przeglądarki jako
 certyfikat zaufany. Wymagać to może, odpowiednich kroków w zależności od konkretnej przeglądarki. W większości przypadków konieczne będzie wybranie opcji zaawansowanych[1], w celu wyświetlenia możliwości otwarcia strony[2].
 ![Certyfikat niezaufany](images/notTrustedCert.png)
 
-**Uwaga**: W wersji prezentacyjnej (MVC) na ekranie logowania znajdują się informację o danych do logowania do kont dla wszystkich
+**Uwaga**: W wersji prezentacyjnej (MVP) na ekranie logowania znajdują się informację o danych do logowania do kont dla wszystkich
 typów użytkowników.
 
 ## 18.2. Wyszukiwanie samochodów
