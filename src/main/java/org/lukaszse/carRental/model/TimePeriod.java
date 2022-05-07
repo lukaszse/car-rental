@@ -1,15 +1,15 @@
 package org.lukaszse.carRental.model;
 
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.lukaszse.carRental.customValidator.ValidateTimePeriod;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor(staticName = "of")
 public class TimePeriod {
 
