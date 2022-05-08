@@ -545,7 +545,7 @@ Przy pomocy NGINX można skonfigurować przekierowanie z portu, na którym dzia�
 Dokumentacja NGINX: http://nginx.org/en/docs/
 
 ## 17.5. Bezpieczeństwo i certyfikat HTTPS
-W wersji MVC aplikacji wykorzystano niezarejestrowany certyfikat HTTPS. Gwarantuje on szyfrowanie danych przesyłanych z przeglądarki do serwera, jednak nie jest to certyfikat wydany przez Urząd Certyfikacji, wobec czego nie będzie traktowany przez przeglądarkę jako certyfikat zaufany.
+W wersji demonstracyjnej aplikacji wykorzystano niezarejestrowany certyfikat HTTPS. Gwarantuje on szyfrowanie danych przesyłanych z przeglądarki do serwera, jednak nie jest to certyfikat wydany przez Urząd Certyfikacji, wobec czego nie będzie traktowany przez przeglądarkę jako certyfikat zaufany.
 
 # 18. Podręcznik użytkownika
 
