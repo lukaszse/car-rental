@@ -128,10 +128,16 @@ Poniżej przedstawiono wybrane scenariusze przypadków użycia spośród wszystk
 - wyświetlanie listy wypożyczeń
 ## 6.1. Logowanie do systemu
 ![Scenariusz Przypadku Użycia](./images/useCaseScenario1.png "Scenariusz 1").
-## 6.1. Zmiana danych
+## 6.2. Zmiana danych
 ![Scenariusz Przypadku Użycia](./images/useCaseScenario2.png "Scenariusz 2").
-## 6.1. Rezerwacja samochodu
+## 6.3. Rezerwacja samochodu
 ![Scenariusz Przypadku Użycia](./images/useCaseScenario3.png "Scenariusz 3").
+## 6.4. Usuwanie wiadomości
+![Scenariusz Przypadku Użycia](./images/useCaseScenario4.png "Scenariusz 4").
+## 6.5. Edycja danych dowolnego użytkownika
+![Scenariusz Przypadku Użycia](./images/useCaseScenario5.png "Scenariusz 5")
+## 6.6. Dodanie nowego użytkownika
+![Scenariusz Przypadku Użycia](./images/useCaseScenario6.png "Scenariusz 6")
 
 # 7. Model bady danych
 ## 7.1. Model konceptualny
@@ -143,7 +149,7 @@ Poniżej przedstawiono wybrane scenariusze przypadków użycia spośród wszystk
 # 7.3. Model relacyjny (Fizyczny)
 ![Model relacyjny](images/relationalModel.png)
 
-# 7. Diagramy czynności (wybrane przykłady)
+# 8. Diagramy czynności (wybrane przykłady)
 Poniżej przedstawiono wybrane diagramy czynności. Wszystkie diagramy znajdują się na poniższej liście:
 - logowanie do systemu
 - rejestracja użytkownika
@@ -160,22 +166,22 @@ Poniżej przedstawiono wybrane diagramy czynności. Wszystkie diagramy znajdują
 - usuwanie dowolnego użytkownika przez administratora
 - wyświetlanie listy wypożyczeń
 
-## 7.1. Logowanie do systemu
+## 8.1. Logowanie do systemu
 ![Logowanie do systemu](images/signIiActivityDiagram.png)
 
-## 7.2. Zmień dane użytkownika
+## 8.2. Zmień dane użytkownika
 ![Zmiana danych użytkownika](images/changeUserDataActivityDiagram.png)
 
-## 7.3. Zmiana danych pojazdu
+## 8.3. Zmiana danych pojazdu
 ![Zmiana danych pojazdu](images/changeCarData.png)
 
-## 7.4 Wyszukiwanie samochodów
+## 8.4 Wyszukiwanie samochodów
 ![Wyszukiwanie samochodów](images/findCarsActivityDiagram.png)
 
-## 7.5. Rejestracja użytkownika
+## 8.5. Rejestracja użytkownika
 ![Rejestracja użytkownika](images/registrationActivityDiagram.png)
 
-# 8. Diagramy sekwencji (wybrane przykłady)
+# 9. Diagramy sekwencji (wybrane przykłady)
 Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują się na poniższej liście:
 - logowanie do systemu
 - rejestracja użytkownika
@@ -192,40 +198,40 @@ Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują 
 - usuwanie dowolnego użytkownika przez administratora
 - wyświetlanie listy wypożyczeń
 
-## 8.1. Logowanie do systemu
+## 9.1. Logowanie do systemu
 ![Logowanie do systemu](images/loginToSystemSequenceDiagram.png)
 
-## 8.2. Wyświetlanie listy wszystkich rezerwacji użytkownika
+## 9.2. Wyświetlanie listy wszystkich rezerwacji użytkownika
 ![Rezerwacje użytkownika](images/userReservationsSequenceDiagram.png)
 
-## 8.3. Wyświetlanie listy dostępnych samochodów spełniających wybrane kryteria
+## 9.3. Wyświetlanie listy dostępnych samochodów spełniających wybrane kryteria
 ![Przegldanie samochodów](images/findCarsSequenceDiagram.png)
 
-# 9. Diagramy stanów (wybrane przykłady)
-## 9.1. Zarządzanie użytkownikami
+# 10. Diagramy stanów (wybrane przykłady)
+## 10.1. Zarządzanie użytkownikami
 ![Zarządzanie użytkownikami](images/userManagementStateMachineDiagram.png)
-## 9.2. Status/rola zalogowanego użytkownika
+## 10.2. Status/rola zalogowanego użytkownika
 ![Role zalogowanego użytkownika](images/UserRoleMachineStateDiagram.png)
-## 9.3. Zarządzanie wiadomościami
+## 10.3. Zarządzanie wiadomościami
 ![Zarządzanie wiadomościami](images/messageManagementStateMachineDiagram.png)
 
-# 10. Diagram klas
+# 11. Diagram klas
 
 ![Diagram klas](images/classDiagram.png)
 
-# 11. Kod SQL
-## 11.1. Standard tworzenia bazy danych
+# 12. Kod SQL
+## 12.1. Standard tworzenia bazy danych
 Struktura bazy danych budowana jest z wykorzystaniem narzędzia Flyway (https://flywaydb.org/), które odpowiada również za wypełnienie bazy danych danymi testowymi.
 Z uwagi na fakt, że aplikacja testowa nie posiada wszystkich projektowanych funkcji, również baza danych nie zawiera wszystkich tabel określonych na diagramie ERD.
 Poniżej zamieszczono kod SQL do wszystkich tabel, z których aktualnie korzysta aplikacja. Wszystkie tablice dostępne są również w folderze aplikacji:
 https://github.com/lukaszse/car-rental/tree/master/src/main/resources/db/migration
 
-## 11.2. Dialekt SQL
+## 12.2. Dialekt SQL
 W projekcie wykorzystano bazę danych H2 oraz dialekt SQL H2 (https://www.h2database.com/).
 
-## 11.3. Kod SQL
+## 12.3. Kod SQL
 
-### 11.3.1. Tabela CAR
+### 12.3.1. Tabela CAR
 ```sql
 create table car (
                      id int primary key auto_increment,
@@ -241,7 +247,7 @@ create table car (
 );
 ```
 
-## 11.3.2. Tabela APP_USER
+## 12.3.2. Tabela APP_USER
 ```sql
 create table app_user (
     user_name  varchar(40) primary key,
@@ -252,7 +258,7 @@ create table app_user (
 );
 ```
 
-## 11.3.3. Tabela RESERVATION
+## 12.3.3. Tabela RESERVATION
 ```sql
 create table reservation (
     id int primary key auto_increment,
@@ -269,7 +275,7 @@ create table reservation (
 );
 ```
 
-## 11.3.4. Tabela MESSAGE
+## 12.3.4. Tabela MESSAGE
 ```sql
 create table message (
     id int primary key auto_increment,
@@ -281,14 +287,14 @@ create table message (
 );
 ```
 
-# 12. System kontroli wersji oraz repozytorium
+# 13. System kontroli wersji oraz repozytorium
 
-## 12.1. Wymagania wstępne
+## 13.1. Wymagania wstępne
 Aby skorzystać z repozytorium, należy na lokalnej maszynie zainstalować aplikację Git do kontroli wersji.
 Aplikacja jest dostępna dla systemów Windows, Linux oraz MacOS:
 https://git-scm.com/
 
-## 12.2. Pobieranie repozytorium
+## 13.2. Pobieranie repozytorium
 Kod źródłowy aplikacji Car-Rental znajduje się w repozytrium w serwisie GitHub:
 https://github.com/lukaszse/car-rental
 
@@ -296,17 +302,17 @@ W celu pobrania repozytorium użyj komendy:
 
 `git clone https://github.com/lukaszse/car-rental.git`
 
-## 12.3. Uruchamianie aplikacji
+## 13.3. Uruchamianie aplikacji
 Aby uruchomić aplikację, należy zbudować plik jar. W tym celu należy użyć komendy:
 
 `./mvnw clean install`
 
-## 12.4. Konfiguracja
+## 13.4. Konfiguracja
 W aplikacji skonfigurowano dwa profile **LOCAL** służący do uruchamiania aplikacji na lokalnym komuterze (z rozszerzonymi opcjami logowania, debbugowania oraz dostępem bez szyfrowania TSL) oraz **PROD** służący do uruchomienia aplikacji produkcyjnej na serwerze.
 Profil można przełączyć poprzez modufykację zmiennej `spring.profiles.active=prod`, która znajduję się w pliku `src/main/resources/application.properties`.
 Szczegółowe konfiguracje dla środowisk znajdują się w plikach `application-local.yml` oraz application-prod.yml` znajdujących się w tej samej lokalizacji.
 
-# 13. Obraz Docker
+# 14. Obraz Docker
 W głównym folderze aplikacji znajduje się plik `Dockerfile`, który służy do zbudowania obrazu z aktualnego pliku jar znajdującego się w folderze `target`.
 Aby zbudować obraz name użyć komendy:
 
@@ -315,14 +321,14 @@ Aby zbudować obraz name użyć komendy:
 W celu zapisania obrazu w repozytorium zdalnym Docker'a (tak, aby był dostępny on online dla publicznie), należy użyć komendy:
 `docker push nazwaObrazu`
 
-# 14. Implementacja
-## 14.1. Zastosowane technologie i wymahgania wobec developera
+# 15. Implementacja
+## 15.1. Zastosowane technologie i wymahgania wobec developera
 Aplikację napisano w języku Java w wersji 17 oraz z wykorzystaniem frameworku Spring Boot. W aplikacji wykorzystano także mechanizm szablonów Thymeleaf oraz elementy napisane w języku JavaScript.
 Podstawowa znajomość wszystkich tych technologii jest konieczna do rozpoczęcia pracy z kodem aplikacji.
 
-## 14.2. Wykorzystane algorytmy
+## 15.2. Wykorzystane algorytmy
 
-### 14.2.1. Algorytm sprawdzania dostępności samochodu w danym przedziale czasu
+### 15.2.1. Algorytm sprawdzania dostępności samochodu w danym przedziale czasu
 
 W aplikacji zastosowano mechanizm sprawdzania dostępności samochodu w danym przedziale czasu.
 Algorytm ten wykorzystywany jest w dwóch sytuacjach:
@@ -382,7 +388,7 @@ Niniejszy algorytm przedstawiono na poniższych schematach blokowych (zastosowan
 ![img.png](images/checkIfPeriodsOverlap.png)
 
 
-# 15. Testowanie
+# 16. Testowanie
 Podstawową formą testów aplikacji będą testy jednostkowe oraz
 integracyjne pisane na bieżąco, w trakcie powstawania kodu źródłowego, pisane
 przez zespół testerski.
@@ -393,11 +399,11 @@ uruchomiona pełna funkcjonalność aplikacji. Przypadki testowe będą zawiera�
 rezerwacji samochodów itd.
 Dodatkowo zostaną przeprowadzone testy wydajnościowe aplikacji dla
 określonej grupy wirtualnych użytkowników.
-## 15.1. Testy jednostkowe
+## 16.1. Testy jednostkowe
 W aplikacji wykorzystano testowy framework Spock oraz testy jednostkowe napisane w języku Groovy.
 Spock umożliwia między innymi tworzenie testów wykorzystujących koncepcję Data Driven Tests.
 
-15.1. Testowanie metody sprawdzającej dostępność samochodów
+### 16.1.1 Testowanie metody sprawdzającej dostępność samochodów
 Jak to opisano w punkcie 14.2.1. w aplikacji zastosowano algorytm sprawdzania dostępności pojazdów, który znajduje się w klasie `AvailabilityService`.
 Algorytm ten wykorzystuje metodę `checkIfPeriodsOverlap`, która sprawdza, czy dwa okresy się pokrywają (okres 'TimePeriod' jest obiektem zawierającym dwie daty
 - datę "od" oraz datę "do").
@@ -435,7 +441,7 @@ Aby uruchomić test, konieczne było utworzenie protez ("mocks") dla wykorzystan
 ```
 Odnośnik do klasy testowej: https://github.com/lukaszse/car-rental/blob/master/src/test/groovy/org/lukaszse/carRental/service/AvailabilityServiceSpec.groovy
 
-15.2. Walidacja daty
+### 16.1.2 Walidacja daty
 W aplikacji wykorzystano mechanizm adnotacji do walidowania m.in. danych przychodzących z zewnątrz (z przeglądarki internetowej do serwera).
 Stworzono, także m.in. niestandardową adnotację `@ValidateTimePeriod` oraz walidator do sprawdzania poprawności wprowadzanych dat.
 Walidator stanowi odrębną klasę, z główną metodą `isValid`, która używa odpowiedniej logiki do zweryfikowania poprawności wprowadzonego okresu (TimePeriod).
@@ -464,9 +470,9 @@ Metoda testowa wykorzystuje protezy obiektów ("mocks"):
     ConstraintValidatorContext constraintValidatorContext = Mock()
 ```
 
-# 15.2 Przypadki testowe dla testów manualnych
+# 16.2 Przypadki testowe dla testów manualnych
 
-### 15.2.1. Logowanie do aplikacji
+### 16.2.1. Logowanie do aplikacji
 **Cel:** Sprawdzenie możliwości zalogowania dla użytkowników o różnych uprawnieniach
 
 **Warunki początkowe** 
@@ -484,7 +490,7 @@ Metoda testowa wykorzystuje protezy obiektów ("mocks"):
 **Szacowany czas:** 1 min. dla każdego logowania  
 **Uwagi:** powtórzyć dla każdej roli [user, manager, admin]
 
-### 15.2.2. Wyszykiwanie samochodu
+### 16.2.2. Wyszykiwanie samochodu
 **Cel:** Sprawdzenie możliwości wyszukania samochodu
 
 **Warunki początkowe**
@@ -506,17 +512,17 @@ Metoda testowa wykorzystuje protezy obiektów ("mocks"):
 **Szacowany czas:** 1 min dla każdej roli + 2 minuty na sprawdzenie danych w bazie.
 **Uwagi:** powtórzyć dla każdej roli [user, manager, admin]
 
-# 16. Diagramy komponentów
-## 16.1. Diagram główynych komponentów systemu
+# 17. Diagramy komponentów
+## 17.1. Diagram główynych komponentów systemu
 ![Diagram komponentów](images/componentDiagram.png)
 Powyższy diagram komponentów przedstawia główne komponenty systemu z wyłączeniem bazy danych.
 
-# 17. Wdrożenie
-## 17.1. Diagramy wdrożenia
-### 17.1.1. Wdrożenie z wykorzysaniem kontenera Docker
+# 18. Wdrożenie
+## 18.1. Diagramy wdrożenia
+### 18.1.1. Wdrożenie z wykorzysaniem kontenera Docker
 ![Diagram wrożnia](images/deploymentDiagram.png)
 
-## 17.2. Wymagania systemowe
+## 18.2. Wymagania systemowe
 Aplikacja napisana została w wielopratformowym języku Java. Działa na każdym systemie z systemem operacyjnym Windows, Linux czy MacOS.
 Poniżej przedstawiono szczegółowe wymagania systemowe.
 
@@ -525,12 +531,12 @@ Wymagania systemowe:
 * Zainstalowana maszyna wirtualna Javy w wersji minimum 17. Zalecana dystrybucja OpenJDK 17.
 * Opcjonalnie zainstalowane oprogramowanie Docker. Zalecana wersja 20.10.10 lub wyższa.
 
-## 17.3. Instalacja z wykorzystaniem pliku jar
+## 18.3. Instalacja z wykorzystaniem pliku jar
 Skopiowac plik na serwer oraz uruchomić komendę:
 
 `java -jar nazwa_pliku.jar`
 
-## 17.4. Instalacja z wykorzystaniem obrazu Docker
+## 18.4. Instalacja z wykorzystaniem obrazu Docker
 Aby ściągnąć obraz Dockera zawierający aplikację, należy użyć kolejno komend:
 
 `docker pull llseremak/car-rental`
@@ -540,14 +546,14 @@ aby pobrać obraz, a następnie:
 
 gdzie pierwszy port 443 to port, pod którym aplikacja będzie dostępna z zewnątrz kontenera (port 443 jest portem domyślnym da połączeń szyfrowanych z wykorzystaniem TSL)
 
-## 17.5. Dodatkowa konfiguracja z wykorzystaniem NGINX
+## 18.5. Dodatkowa konfiguracja z wykorzystaniem NGINX
 Przy pomocy NGINX można skonfigurować przekierowanie z portu, na którym działa aplikacja do określonego adresu url.
 Dokumentacja NGINX: http://nginx.org/en/docs/
 
-## 17.5. Bezpieczeństwo i certyfikat HTTPS
+## 18.5. Bezpieczeństwo i certyfikat HTTPS
 W wersji demonstracyjnej aplikacji wykorzystano niezarejestrowany certyfikat HTTPS. Gwarantuje on szyfrowanie danych przesyłanych z przeglądarki do serwera, jednak nie jest to certyfikat wydany przez Urząd Certyfikacji, wobec czego nie będzie traktowany przez przeglądarkę jako certyfikat zaufany.
 
-# 18. Podręcznik użytkownika
+# 19. Podręcznik użytkownika
 
 **Spis treści**
 1. Rejestrowanie użytkownika
@@ -567,7 +573,7 @@ W wersji demonstracyjnej aplikacji wykorzystano niezarejestrowany certyfikat HTT
    1. zarządzanie użytkownikami 
    2. ustawienia administracyjne
 
-## 18.1. Logowanie do systemu
+## 19.1. Logowanie do systemu
 
 W celu zalogowania się do aplikacji najpierw otworzyć stronę serwisu:
 https://ubuntu.llseremak.p3.tiktalik.io/car-rental/
@@ -585,7 +591,7 @@ certyfikat zaufany. Wymagać to może, odpowiednich kroków w zależności od ko
 **Uwaga**: W wersji prezentacyjnej na ekranie logowania znajdują się informację o danych do logowania do kont dla wszystkich
 typów użytkowników.
 
-## 18.2. Wyszukiwanie samochodów
+## 19.2. Wyszukiwanie samochodów
 Aby wyświetlić ekran wyszukiwania samochodów, należy kliknąć zakładkę `Cars` w górnym menu [1].
 Wstępnie zostaną wyświetlone wszystkie samochody. Aby wyszukać samochód dostępny w danym terminie, należy wprowadzić dwie daty `dateFrom` oraz `dateTo` [2].
 Po wpisaniu dat wyświetlone zostaną wszystkie samochody dostępne w danym terminie. Aby zawęzić wyszukiwania można użyć dodatkowych filtrów [3] w celu wprowadzenia marki oraz modelu samochodu.
