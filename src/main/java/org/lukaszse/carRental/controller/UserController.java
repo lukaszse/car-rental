@@ -1,7 +1,5 @@
 package org.lukaszse.carRental.controller;
 
-import javax.validation.Valid;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.lukaszse.carRental.model.User;
@@ -15,11 +13,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -71,19 +71,33 @@ public class UserController {
 
     @PostMapping(Mappings.ADD_USER)
     public String performAddUser(@ModelAttribute(AttributeNames.USER) @Valid final User user,
-                                 final BindingResult bindingResult,
+                                 BindingResult bindingResult,
                                  final Model model) {
+
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeNames.USER, user);
             return ViewNames.ADD_USER;
         }
-        if(user.getUserRole() == null) {
+
+        if (user.getUserRole() == null) {
             user.setUserRole(ROLE_USER.getShortName());
             model.addAttribute(AttributeNames.MESSAGE, ACCOUNT_CREATED_MESSAGE.formatted(user.getUserName()));
-            return ViewNames.LOGIN;
+            if (userService.addUser(user)) {
+                return ViewNames.LOGIN;
+            } else {
+                userConflictError(user, bindingResult);
+                return ViewNames.ADD_USER;
+            }
+        } else {
+            userService.addUser(user);
         }
-        userService.addUser(user);
+        userConflictError(user, bindingResult);
         return "redirect:/" + Mappings.USER_ADMINISTRATION;
+    }
+
+    public void userConflictError(final User user, final BindingResult bindingResult) {
+        final String userConflictMessage = "userWithName %s already exist".formatted(user.getUserName());
+        bindingResult.addError(new ObjectError("message", userConflictMessage));
     }
 
     @PostMapping(Mappings.EDIT_USER)
