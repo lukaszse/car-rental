@@ -96,7 +96,7 @@ public class UserController {
     }
 
     public void userConflictError(final User user, final BindingResult bindingResult) {
-        final String userConflictMessage = "userWithName %s already exist".formatted(user.getUserName());
+        final String userConflictMessage = "User with name %s already exist".formatted(user.getUserName());
         bindingResult.addError(new ObjectError("message", userConflictMessage));
     }
 

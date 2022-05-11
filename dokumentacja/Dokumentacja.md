@@ -201,10 +201,10 @@ Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują 
 ## 9.1. Logowanie do systemu
 ![Logowanie do systemu](images/loginToSystemSequenceDiagram.png)
 
-## 9.2. Wyświetlanie listy wszystkich rezerwacji użytkownika
+## 9.2. Wyświetlanie listy wszystkich rezerwacji przez administratora/managera
 ![Rezerwacje użytkownika](images/userReservationsSequenceDiagram.png)
 
-## 9.3. Wyświetlanie listy dostępnych samochodów spełniających wybrane kryteria
+## 9.3. Wyszukiwanie samochodów
 ![Przegldanie samochodów](images/findCarsSequenceDiagram.png)
 
 # 10. Diagramy stanów (wybrane przykłady)
@@ -221,7 +221,7 @@ Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują 
 
 # 11. Diagram klas
 
-![Diagram klas](images/classDiagram.png)
+![Diagram klas](images/classDiagram2.png)
 
 # 12. Kod SQL
 ## 12.1. Standard tworzenia bazy danych
@@ -577,11 +577,27 @@ W wersji demonstracyjnej aplikacji wykorzystano niezarejestrowany certyfikat HTT
    1. zarządzanie użytkownikami 
    2. ustawienia administracyjne
 
-## 19.1. Logowanie do systemu
+## 19.1. Rejestrowanie użytkownika
+
+W celu rejestracji w aplikacji należy otworzyć stronę serwisu:  
+https://ubuntu.llseremak.p3.tiktalik.io/car-rental/add_user  
+Następnie należy uzupełnić formularz rejestracyjny.
+
+![Rejestracja do systemu](images/SignUp.png)
+
+W przypadku wysłania pustego formularza albo błędów w nim użytkownik nie zostanie zarejestrowany oraz zostanie wyświetlony odpowiedni komunikat.
+
+![Błąd rejestracji](images/SignUp2.png)
+
+Komunikat wystąpi także, jeśli użytkownik o danym loginie już istnieje.
+
+![Użytkownik istnieje](images/SignUp3.png)
+## 19.2. Logowanie do systemu
 
 W celu zalogowania się do aplikacji najpierw otworzyć stronę serwisu:
-https://ubuntu.llseremak.p3.tiktalik.io/car-rental/
+https://ubuntu.llseremak.p3.tiktalik.io/car-rental/login  
 W celu zalogowania się do systemu należy, wpisać prawidłowy login oraz hasło. 
+
 ![Logowanie do systemu](images/SingingIn.png)
 
 W przypadku wpisania błędnych danych użytkownik nie zostanie zalogowany, a na ekranie zostanie wyświetlony stosowny komunikat.
@@ -591,12 +607,13 @@ W przypadku wpisania błędnych danych użytkownik nie zostanie zalogowany, a na
 **Uwaga**: W wersji prezentacyjnej wykorzystano darmowy certyfikat SSL, który zapewnia pełne szyfrowanie ruchu pomiędzy przeglądarką
 użytkownika a serwerem, jednak nie jest to certyfikat autoryzowany przez Urząd Certyfikacji, wobec tego nie będzie rozpoznany przez przeglądarki jako
 certyfikat zaufany. Wymagać to może, odpowiednich kroków w zależności od konkretnej przeglądarki. W większości przypadków konieczne będzie wybranie opcji zaawansowanych[1], w celu wyświetlenia możliwości otwarcia strony[2].
+
 ![Certyfikat niezaufany](images/notTrustedCert.png)
 
 **Uwaga**: W wersji prezentacyjnej na ekranie logowania znajdują się informację o danych do logowania do kont dla wszystkich
 typów użytkowników.
 
-## 19.2. Wyszukiwanie samochodów
+## 19.3. Wyszukiwanie dostępnych pojazdów
 Aby wyświetlić ekran wyszukiwania samochodów, należy kliknąć zakładkę `Cars` w górnym menu [1].
 Wstępnie zostaną wyświetlone wszystkie samochody. Aby wyszukać samochód dostępny w danym terminie, należy wprowadzić dwie daty `dateFrom` oraz `dateTo` [2].
 Po wpisaniu dat wyświetlone zostaną wszystkie samochody dostępne w danym terminie. Aby zawęzić wyszukiwania można użyć dodatkowych filtrów [3] w celu wprowadzenia marki oraz modelu samochodu.
