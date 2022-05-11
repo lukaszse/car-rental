@@ -1,7 +1,7 @@
 # 1. Cel projektu
 Celem projektu jest zaprojektowanie oraz implementacja aplikacji webowej wspomagającej procesy obsługi zleceń związanych z wypożyczaniem samochodów osobowych dla klientów indywidualnych.
 Po przez informatyzację wszystkich procesów obsługi klienta aplikacja zapewni szereg korzyści m.in.:
-* redukcję kosztów obsługi zamówień po przez ich całkowitą automatyzację,
+* redukcję kosztów obsługi zamówień poprzez ich całkowitą automatyzację,
 * zwiększenie wydajności obsługi klientów,
 * zapewnienie bezpieczeństwa danych przechowywanych w scentralizowanej bazie danych.
 
@@ -108,7 +108,7 @@ pozwalających wspierających mechanizm wyszukiwania (filtrowania rekordów).
 - posiada możliwość wyszukiwania pojazdów w wybranym terminie, spełniających wybrane kryteria.
 
 # 5. Diagramy przypadków użycia (wybrane przykłady)
-![Diagram Przypadków Użycia](./images/useCaseDiagram.png "Diagram Przypadków użycia").
+![Diagram Przypadków Użycia](./images/useCaseDiagram.png "Diagram Przypadków użycia")
 
 # 6. Scenariusze przypadków użycia
 Poniżej przedstawiono wybrane scenariusze przypadków użycia spośród wszystkich scenariuszy:
@@ -122,7 +122,7 @@ Poniżej przedstawiono wybrane scenariusze przypadków użycia spośród wszystk
 - wyświetlanie listy wszystkich rezerwacji przez administratora/managera
 - przeglądanie własnych rezerwacji przez użytkownika
 - zmiana danych własnych użytkownika
-- tworzenie użytkownika przez administora
+- tworzenie użytkownika przez administratora
 - edycja dowolnego użytkownika przez administratora
 - usuwanie dowolnego użytkownika przez administratora
 - wyświetlanie listy wypożyczeń
@@ -139,7 +139,7 @@ Poniżej przedstawiono wybrane scenariusze przypadków użycia spośród wszystk
 ## 6.6. Dodanie nowego użytkownika
 ![Scenariusz Przypadku Użycia](./images/useCaseScenario6.png "Scenariusz 6")
 
-# 7. Model bady danych
+# 7. Model bazy danych
 ## 7.1. Model konceptualny
 ![Model konceptualny](images/conceptualDataModel.png)
 
@@ -161,7 +161,7 @@ Poniżej przedstawiono wybrane diagramy czynności. Wszystkie diagramy znajdują
 - wyświetlanie listy wszystkich rezerwacji przez administratora/managera
 - przeglądanie własnych rezerwacji przez użytkownika
 - zmiana danych własnych użytkownika
-- tworzenie użytkownika przez administora
+- tworzenie użytkownika przez administratora
 - edycja dowolnego użytkownika przez administratora
 - usuwanie dowolnego użytkownika przez administratora
 - wyświetlanie listy wypożyczeń
@@ -193,7 +193,7 @@ Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują 
 - wyświetlanie listy wszystkich rezerwacji przez administratora/managera
 - przeglądanie własnych rezerwacji przez użytkownika
 - zmiana danych własnych użytkownika
-- tworzenie użytkownika przez administora
+- tworzenie użytkownika przez administratora
 - edycja dowolnego użytkownika przez administratora
 - usuwanie dowolnego użytkownika przez administratora
 - wyświetlanie listy wypożyczeń
@@ -214,6 +214,10 @@ Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują 
 ![Role zalogowanego użytkownika](images/UserRoleMachineStateDiagram.png)
 ## 10.3. Zarządzanie wiadomościami
 ![Zarządzanie wiadomościami](images/messageManagementStateMachineDiagram.png)
+## 10.4. Logowanie do systemu
+![Logowanie do systemu](images/loginStateDiagram.png)
+## 10.5. Rejestracja użytkownika
+![Rejestracja użytkownika](images/registrationStateDiagram.png)
 
 # 11. Diagram klas
 
@@ -490,7 +494,7 @@ Metoda testowa wykorzystuje protezy obiektów ("mocks"):
 **Szacowany czas:** 1 min. dla każdego logowania  
 **Uwagi:** powtórzyć dla każdej roli [user, manager, admin]
 
-### 16.2.2. Wyszykiwanie samochodu
+### 16.2.2. Wyszukiwanie samochodu
 **Cel:** Sprawdzenie możliwości wyszukania samochodu
 
 **Warunki początkowe**
@@ -579,6 +583,7 @@ W celu zalogowania się do aplikacji najpierw otworzyć stronę serwisu:
 https://ubuntu.llseremak.p3.tiktalik.io/car-rental/
 W celu zalogowania się do systemu należy, wpisać prawidłowy login oraz hasło. 
 ![Logowanie do systemu](images/SingingIn.png)
+
 W przypadku wpisania błędnych danych użytkownik nie zostanie zalogowany, a na ekranie zostanie wyświetlony stosowny komunikat.
 
 ![Błąd logowania](images/SingingIn2.png)
