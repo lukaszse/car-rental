@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "google.recaptcha.key.site",
-      "type": "java.lang.String",
-      "description": "Description for google.recaptcha.key.site."
-  }
-] }
