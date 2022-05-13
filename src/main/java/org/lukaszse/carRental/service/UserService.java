@@ -1,8 +1,6 @@
 package org.lukaszse.carRental.service;
 
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.lukaszse.carRental.exceptions.ConflictException;
 import org.lukaszse.carRental.exceptions.NotFoundException;
 import org.lukaszse.carRental.exceptions.WrongPayloadException;
 import org.lukaszse.carRental.model.User;
@@ -17,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,12 +59,13 @@ public class UserService {
     }
 
     @Transactional
-    public void addUser(final User user) {
+    public boolean addUser(final User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (userRepository.existsById(user.getUserName())) {
-            throw new ConflictException(USER_EXIST_ERROR_MESSAGE.formatted(user.getUserName()));
+            return false;
         }
         userRepository.save(user);
+        return true;
     }
 
     @Transactional

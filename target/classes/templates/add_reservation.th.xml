@@ -1,9 +1,0 @@
-<thlogic>
-    <attr sel="#headId"
-          th:replace="~{fragments/head :: headFragment}"/>
-    <attr sel="#footerId"
-          th:replace="~{fragments/footer :: footerFragment}"/>
-    <attr sel="#home"
-          th:href="${home}"
-          th:with="home=${T(org.lukaszse.carRental.util.Mappings).HOME}"/>
-</thlogic>
