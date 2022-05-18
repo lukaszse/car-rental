@@ -1,6 +1,6 @@
-# 1. Cel projektu
+    # 1. Cel projektu
 Celem projektu jest zaprojektowanie oraz implementacja aplikacji webowej wspomagającej procesy obsługi zleceń związanych z wypożyczaniem samochodów osobowych dla klientów indywidualnych.
-Po przez informatyzację wszystkich procesów obsługi klienta aplikacja zapewni szereg korzyści m.in.:
+Poprzez informatyzację wszystkich procesów obsługi klienta aplikacja zapewni szereg korzyści m.in.:
 * redukcję kosztów obsługi zamówień poprzez ich całkowitą automatyzację,
 * zwiększenie wydajności obsługi klientów,
 * zapewnienie bezpieczeństwa danych przechowywanych w scentralizowanej bazie danych.
@@ -567,15 +567,17 @@ W wersji demonstracyjnej aplikacji wykorzystano niezarejestrowany certyfikat HTT
 5. Przeglądanie rezerwacji oraz usuwanie rezerwacji
 6. Wysyłanie wiadomości
 7. Funkcje dostępne dla managera
-   1. edycja pojazdów 
-   2. usuwanie pojazdów 
-   3. przegadanie rezerwacji wszystkich użytkowników 
-   4. edycja rezerwacji 
-   5. usuwanie rezerwacji 
-   6. odczytywanie wiadomości
+   1. Edycja pojazdów 
+   2. Usuwanie pojazdów 
+   3. Przeglądanie rezerwacji wszystkich użytkowników 
+   4. Edycja rezerwacji 
+   5. Usuwanie rezerwacji 
+   6. Odczytywanie wiadomości
 8. Funkcje dostępne dla administratora
-   1. zarządzanie użytkownikami 
-   2. ustawienia administracyjne
+   1. Zarządzanie użytkownikami
+      1. Dodawanie użytkownika
+      2. Edycja użytkownika
+   2. Ustawienia administracyjne
 
 ## 19.1. Rejestrowanie użytkownika
 
@@ -623,3 +625,129 @@ numer strony znajdujący się pod wynikami wyszukiwania.
 ![Znajdź samochód](images/findCar.png)
 
 **Uwaga:** W wersji prezentacyjnej aplikacji nie zaimplementowano sortowania ani możliwości wyboru ilości stron do wyświetlenia na ekranie logowania. Funkcje te znajdą się w pełnej wersji aplikacji.
+
+## 19.4. Składanie rezerwacji
+
+W celu złożenia rezerwacji musimy posiadać konto w serwisie. Po rejestracji lub zalogowaniu (kroki 19.1 i 19.2) należy podobnie jak w kroku 19.3, kliknąć zakładkę `Cars` [1] dzięki której uzyskamy dostęp do pełnej listy pojazdów.
+W celu zarezerwowania pojazdu należy najpierw określić termin, w jakim chcielibyśmy dokonać rezerwacji [2].
+Następnie wybrać dostępny w tym terminie pojazd naciskając przycisk `Book` [3],  dzięki któremu uzyskamy dostęp do podglądu potwierdzenia naszej rezerwacji.
+
+![Rezerwacja](images/reservation.png)
+
+Po dokładnym zapoznaniu się z danymi rezerwacji należy wcisnąć przycisk `Submit` [1] potwierdzający złożenie rezerwacji w określonym terminie i po określonej cenie lub przycisk `Go Back` który pozwala na rezygnację z rezerwacji i powrót do okna listy dostępnych pojazdów [2].
+
+![Potwierdzenie rezerwacji](images/confirmReservation.png)
+
+## 19.5 Przeglądanie rezerwacji oraz usuwanie rezerwacji
+
+Aby wyświetlić listę złożonych rezerwacji należy po zalogowaniu lub rejestracji wejść w zakładkę `Reservations` [1].
+Wyświetlona zostanie lista rezerwacji złożonych na tym koncie, nazwa pojazdu, czas rezerwacji oraz jej koszt.
+W celu zobaczenia dokładnych danych pojedynczej rezerwacji należy nacisnąć przycisk `View Details` [2]. 
+Program pozwala również na anulowanie zamówienia za pomocą przycisku `Cancel Reservation` [3].
+
+![Lista rezerwacji](images/reservationsList.png)
+
+Po naciśnięciu przycisku `View Details` uzyskamy dostęp do panelu pozwalającego na podgląd danych dotyczących tylko jednego wybranego zamówienia.
+Panel ten pozwala nam również na anulowanie zlecenia `Cancel Reservation` [1] oraz wygenerowanie pliku PDF z wszystkimi danymi tego zlecenia `Generate PDF` [1].
+
+**Uwaga**: Panel zawiera również funkcję `Edit` [3] pozwalającą na edytowanie zlecenia. Funkcja ta jest dostępna tylko dla Menadżera lub Administratora.
+
+![Detale rezerwacji](images/reservationDetails.png)
+
+## 19.6 Wysyłanie wiadomości
+
+W celu wysłania wiadomości do administracji **jako użytkownik niezalogowany** należy nacisnąć w panel `Send Message` [1], a następnie uzupełnić formularz zgodnie z tytułami pól.
+Po uzupełnieniu formularza należy potwierdzić pole captcha w `verify` zabezpieczające przed spamem [2].
+
+![Wysyłanie wiadomości jako gość](images/sendingMessageGuest.png)
+
+W razie próby wysłania wiadomości jako **zalogowany użytkownik**, panel ten wygląda trochę inaczej. Pole z imieniem jest uzupełniane automatycznie według loginu użytkownika.
+
+![Wysyłanie wiadomości jako użytkownik](images/sendingMessageUser.png)
+
+## 19.7. Funkcje dostępne dla managera
+
+Wszystkie funkcje przedstawione w tym rozdziale jest niedostępne dla zwykłego użytkownika. W celu ich obsługi przez osobę zarządzającą została stworzona managera.
+
+### 19.7.1 Edycja pojazdów
+
+W celu edycji danych pojazdu trzeba udać się do panelu `Cars` [1], a następnie kliknąć przycisk `Edit` [2] na wybranym pojeździe, który chcemy edytować.
+
+![Lista pojazdów - Edycja](images/editCarsView.png)
+
+Po wykonaniu tych kroków uzyskujemy widok edycji pojazdu. Aby edytować pojazd należy uzupełnić formularz, a następnie zatwierdzić go przyciskiem `Submit` [1]. W przypadku chęci powrotu do danych początkowych na należy nacisnąć przycisk `Reset` [2].
+
+![Edycja pojazdu](images/editCar.png)
+
+### 19.7.2 Usuwanie pojazdów
+
+W celu usunięcia pojazdu należy wejść w panel `Cars` [1], a następnie wcisnąć przycisk `Delete` na wybranym pojeździe [2]. 
+
+![Usuwanie pojazdu](images/deleteCar.png)
+
+### 19.7.3 Przeglądanie rezerwacji wszystkich użytkowników 
+
+Aby wyświetlić listę wszystkich rezerwacji użytkowników należy wejść w panel `Reservations` [1]. Na ekranie wyświetli się lista zarezerwowanych samochodów wraz z loginem użytkownika, który zarezerwował dany pojazd. 
+
+![Lista rezerwacji pojazdów](images/reservationsListManager.png)
+
+### 19.7.4 Edycja rezerwacji 
+
+W celu edycji danych rezerwacji trzeba udać się do panelu `Reservations` [1], a następnie kliknąć przycisk `Edit` [2] na wybranej rezerwacji,, którą chcemy edytować.
+
+![Edycja rezerwacji lista](images/editingReservationListManager.png)
+
+Uzyskujemy tym sposobem widok edycji rezerwacji. W celu edycji pojazdu należy uzupełnić formularz, a następnie zatwierdzić go przyciskiem `Submit` [1]. W przypadku chęci powrotu do danych początkowych na należy nacisnąć przycisk `Reset` [2].
+
+![Edycja rezerwacji lista](images/editingReservationManager.png)
+
+### 19.7.5 Usuwanie rezerwacji 
+
+W celu usunięcia rezerwacji należy wejść w panel `Reservations` [1], a następnie wcisnąć przycisk `Delete` na wybranej rezerwacji [2].
+
+![Edycja rezerwacji lista](images/deleteReservationManager.png)
+
+### 19.7.6 Odczytywanie i zarządzanie wiadomościami
+
+Menadżer ma możliwość odczytywania wiadomości od użytkowników dotyczących wynajmu. W celu dostania się do panelu wiadomości należy nacisnąć `Messages` [1], a następne z rozsuwanej listy wybrać `View Messages` [2].
+W przypadku chęci przeczytania pełnej treści wiadomości należy nacisnąć przycisk `View` [3]*, a w przypadku chęci usunięcia wiadomości należy nacisnąc przycisk `Delete` [4].
+
+
+**Uwaga**: W wersji prezentacyjnej podgląd wiadomości nie został zaimplementowany.
+
+![Podgląd wiadomości](images/messagesView.png)
+
+## 19.8 Funkcje dostępne dla administratora
+
+Administrator to specjalny użytkownik zawierający oprócz wszystkich funkcji poniżej dostęp dwóch specjalnych funkcji przeznaczonych tylko dla niego.
+
+### 19.8.1 Zarządzanie użytkownikami
+
+W celu dostania się do panelu zarządzania użytkownikami należy nacisnąć przycisk `Settings` [1], a następnie z rozsuwanej listy `User Administration` [2].
+Panel ten pozwala nam na dodawanie (przycisk `Add User` [3], edycję (przycisk `Edit` [4]) oraz usuwanie użytkowników (przycisk `Delete` [5].
+
+![Zarządzanie użytkownikami](images/userAdminList.png)
+
+#### 19.8.1.1 Dodawanie użytkownika
+
+Po wciśnięciu przycisku `Add User` uzyskujemy dostęp do formularza, w którym dodajemy dane nowego użytkownika oraz przypisujemy mu określoną rolę.  
+Wszelkie zmiany należy zatwierdzić przyciskiem `Submit` [1], natomiast w przypadku chęci wyczyszczenia formularza należy użyć przycisku `Reset` [2].
+
+![Dodawanie użytkownika](images/addUserAdmin.png)
+
+#### 18.1.1.2 Edycja użytkownika
+
+Po użyciu przycisku `Edit` na wybranym użytkowniku wyświetla się formularz edycji, w którym możemy dookonać potrzebnych nam zmian.
+Każdą zmianę należy zatwierdzić przyciskiem `Submit` [1], natomiast w przypadku chęci wyczyszczenia formularza należy użyć przycisku `Reset` [2].
+
+![Edycja użytkownika](images/editUserAdmin.png)
+
+### 19.8.2 Ustawienia administracyjne
+
+**UWAGA**: Panel ustawień administracyjnych w wersji prezentacyjnej jest wyłącznie pokazowy, wszelkie funkcje nie zostały jeszcze zaimplementowane.
+
+Aby dostać się do ustawień administracyjnych trzeba wejśc w panel `Settings`[1], a następnie z rozwijanej listy wybrać `Administration Settings`.
+Panel ten pozwala nam na zmianę danych dotyczących firmy [3] oraz zmianę waluty obsługiwanej na stronie [4].
+Wszelkie zmiany zatwierdzane są przyciskiem `Submit` [5], a w celu przywrócenia poprzednich danych należy nacisnąć przycisk `Reset`[6].
+
+![Ustawienia administracyjne](images/administratorSettings.png)
