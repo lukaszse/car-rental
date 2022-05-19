@@ -1,4 +1,4 @@
-    # 1. Cel projektu
+# 1. Cel projektu
 Celem projektu jest zaprojektowanie oraz implementacja aplikacji webowej wspomagającej procesy obsługi zleceń związanych z wypożyczaniem samochodów osobowych dla klientów indywidualnych.
 Poprzez informatyzację wszystkich procesów obsługi klienta aplikacja zapewni szereg korzyści m.in.:
 * redukcję kosztów obsługi zamówień poprzez ich całkowitą automatyzację,
