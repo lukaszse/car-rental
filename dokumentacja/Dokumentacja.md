@@ -202,10 +202,16 @@ Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują 
 ![Logowanie do systemu](images/loginToSystemSequenceDiagram.png)
 
 ## 9.2. Wyświetlanie listy wszystkich rezerwacji przez administratora/managera
-![Rezerwacje użytkownika](images/userReservationsSequenceDiagram.png)
+![Rezerwacje użytkownika](images/adminReservationsSequenceDiagram.png)
 
 ## 9.3. Wyszukiwanie samochodów
-![Przegldanie samochodów](images/findCarsSequenceDiagram.png)
+![Przeglądanie samochodów](images/findCarsSequenceDiagram.png)
+
+## 9.4 Usuwanie wiadomości
+![Przeglądanie samochodów](images/deleteSequenceDiagram.png)
+
+## 9.5 Usuwanie dowolnego użytkownika przez administratora
+![Przeglądanie samochodów](images/deleteUserSequenceDiagram.png)
 
 # 10. Diagramy stanów (wybrane przykłady)
 ## 10.1. Zarządzanie użytkownikami
@@ -221,7 +227,7 @@ Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują 
 
 # 11. Diagram klas
 
-![Diagram klas](images/classDiagram2.png)
+![Diagram klas](images/classDiagram3.png)
 
 # 12. Kod SQL
 ## 12.1. Standard tworzenia bazy danych
@@ -746,7 +752,7 @@ Każdą zmianę należy zatwierdzić przyciskiem `Submit` [1], natomiast w przyp
 
 **UWAGA**: Panel ustawień administracyjnych w wersji prezentacyjnej jest wyłącznie pokazowy, wszelkie funkcje nie zostały jeszcze zaimplementowane.
 
-Aby dostać się do ustawień administracyjnych trzeba wejśc w panel `Settings`[1], a następnie z rozwijanej listy wybrać `Administration Settings`.
+Aby dostać się do ustawień administracyjnych trzeba wejść w panel `Settings`[1], a następnie z rozwijanej listy wybrać `Administration Settings`.
 Panel ten pozwala nam na zmianę danych dotyczących firmy [3] oraz zmianę waluty obsługiwanej na stronie [4].
 Wszelkie zmiany zatwierdzane są przyciskiem `Submit` [5], a w celu przywrócenia poprzednich danych należy nacisnąć przycisk `Reset`[6].
 
