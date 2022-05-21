@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head id="headId"></head>
 <body class="p-3 mb-2 bg-dark text-white">
 <div th:replace="~{fragments/menu :: menuFragment}"/>
 <div class="container-md" align="center">
     <p>&nbsp;</p>
-    <H5>Reservation detail:</H5>
+    <H5>Reservation details:</H5>
     <p>&nbsp;</p>
     <div id="principal" align="left">
         <p>Purchaser:</p>
@@ -31,8 +32,8 @@
         </tr>
     </table>
 
-    <a id="editOrderId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Edit</a>
-    <a id="deleteOrderId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Delete</a>
+    <a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" id="editOrderId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Edit</a>
+    <a id="deleteOrderId" class="btn btn-light btn-sm" role="button" aria-pressed="true">Cancel Reservation</a>
     <a href="javascript:genPDF()" class="btn btn-light btn-sm" role="button" aria-pressed="true">Generate PDF</a>
 
 </div>
