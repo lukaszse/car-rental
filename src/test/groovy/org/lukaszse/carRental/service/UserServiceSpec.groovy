@@ -21,7 +21,7 @@ class UserServiceSpec extends Specification {
         given: "Mock all required methods"
         userRepository.findUserByUserName(_ as String) >> Optional.of(prepareUser())
         passwordEncoder.matches(_ as String, _ as String) >> true
-        passwordEncoder.encode(_ as String) >> "some password"
+        passwordEncoder.encode(_ as String) >> "some encrypted password"
         userService.passwordEncoder = passwordEncoder
 
 
@@ -41,12 +41,12 @@ class UserServiceSpec extends Specification {
         2  | "joe"    | "password"  | "123456"    | "123456"
     }
 
-    def "should throw exception while trying password with wrong data"() {
+    def "should throw exception while trying to change password with wrong data"() {
 
         given: "Mock all required methods"
         userRepository.findUserByUserName(_ as String) >> Optional.of(prepareUser())
         passwordEncoder.matches(_ as String, _ as String) >> passwordEncoderMatch
-        passwordEncoder.encode(_ as String) >> "some password"
+        passwordEncoder.encode(_ as String) >> "some encrypted password"
         userService.passwordEncoder = passwordEncoder
 
 
