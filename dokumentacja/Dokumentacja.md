@@ -1,6 +1,6 @@
 # 1. Cel projektu
 Celem projektu jest zaprojektowanie oraz implementacja aplikacji webowej wspomagającej procesy obsługi zleceń związanych z wypożyczaniem samochodów osobowych dla klientów indywidualnych.
-Po przez informatyzację wszystkich procesów obsługi klienta aplikacja zapewni szereg korzyści m.in.:
+Poprzez informatyzację wszystkich procesów obsługi klienta aplikacja zapewni szereg korzyści m.in.:
 * redukcję kosztów obsługi zamówień poprzez ich całkowitą automatyzację,
 * zwiększenie wydajności obsługi klientów,
 * zapewnienie bezpieczeństwa danych przechowywanych w scentralizowanej bazie danych.
@@ -73,7 +73,7 @@ System umożliwia:
 
 ## 3.5. Architektura aplikacji
 
-### 3.5.1.
+### 3.5.1. Aplikacja MVC
 Aplikacja wykorzystywać będzie wzorzec projektowy MVC. Zgodnie ze wzorcem MVC będzie podzielona na 3 moduły:
 * Model reprezentujący dane (np. pobierane z bazy danych czy parsowane z plików XML)
 * Widok reprezentujący interfejs użytkownika 
@@ -202,10 +202,16 @@ Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują 
 ![Logowanie do systemu](images/loginToSystemSequenceDiagram.png)
 
 ## 9.2. Wyświetlanie listy wszystkich rezerwacji przez administratora/managera
-![Rezerwacje użytkownika](images/userReservationsSequenceDiagram.png)
+![Rezerwacje użytkownika](images/adminReservationsSequenceDiagram.png)
 
 ## 9.3. Wyszukiwanie samochodów
-![Przegldanie samochodów](images/findCarsSequenceDiagram.png)
+![Przeglądanie samochodów](images/findCarsSequenceDiagram.png)
+
+## 9.4 Usuwanie wiadomości
+![Usuwanie wiadomości](images/deleteSequenceDiagram.png)
+
+## 9.5 Usuwanie dowolnego użytkownika przez administratora
+![Usuwanie użytkownika](images/deleteUserSequenceDiagram.png)
 
 # 10. Diagramy stanów (wybrane przykłady)
 ## 10.1. Zarządzanie użytkownikami
@@ -221,7 +227,7 @@ Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują 
 
 # 11. Diagram klas
 
-![Diagram klas](images/classDiagram2.png)
+![Diagram klas](images/classDiagram3.png)
 
 # 12. Kod SQL
 ## 12.1. Standard tworzenia bazy danych
@@ -299,7 +305,7 @@ Aplikacja jest dostępna dla systemów Windows, Linux oraz MacOS:
 https://git-scm.com/
 
 ## 13.2. Pobieranie repozytorium
-Kod źródłowy aplikacji Car-Rental znajduje się w repozytrium w serwisie GitHub:
+Kod źródłowy aplikacji Car-Rental znajduje się w repozytorium w serwisie GitHub:
 https://github.com/lukaszse/car-rental
 
 W celu pobrania repozytorium użyj komendy:
@@ -312,8 +318,8 @@ Aby uruchomić aplikację, należy zbudować plik jar. W tym celu należy użyć
 `./mvnw clean install`
 
 ## 13.4. Konfiguracja
-W aplikacji skonfigurowano dwa profile **LOCAL** służący do uruchamiania aplikacji na lokalnym komuterze (z rozszerzonymi opcjami logowania, debbugowania oraz dostępem bez szyfrowania TSL) oraz **PROD** służący do uruchomienia aplikacji produkcyjnej na serwerze.
-Profil można przełączyć poprzez modufykację zmiennej `spring.profiles.active=prod`, która znajduję się w pliku `src/main/resources/application.properties`.
+W aplikacji skonfigurowano dwa profile **LOCAL** służący do uruchamiania aplikacji na lokalnym komputerze (z rozszerzonymi opcjami logowania, debbugowania oraz dostępem bez szyfrowania TSL) oraz **PROD** służący do uruchomienia aplikacji produkcyjnej na serwerze.
+Profil można przełączyć poprzez modyfikację zmiennej `spring.profiles.active=prod`, która znajduję się w pliku `src/main/resources/application.properties`.
 Szczegółowe konfiguracje dla środowisk znajdują się w plikach `application-local.yml` oraz application-prod.yml` znajdujących się w tej samej lokalizacji.
 
 # 14. Obraz Docker
@@ -326,7 +332,7 @@ W celu zapisania obrazu w repozytorium zdalnym Docker'a (tak, aby był dostępny
 `docker push nazwaObrazu`
 
 # 15. Implementacja
-## 15.1. Zastosowane technologie i wymahgania wobec developera
+## 15.1. Zastosowane technologie i wymagania wobec developera
 Aplikację napisano w języku Java w wersji 17 oraz z wykorzystaniem frameworku Spring Boot. W aplikacji wykorzystano także mechanizm szablonów Thymeleaf oraz elementy napisane w języku JavaScript.
 Podstawowa znajomość wszystkich tych technologii jest konieczna do rozpoczęcia pracy z kodem aplikacji.
 
@@ -384,7 +390,7 @@ Obie wyżej wymienione metody korzystają z klasy `AvailabilityService` oraz zai
 
 Jak widać (co wynika z powyższego kodu) metoda `isCarAvailable` wywołuje zapytanie bazy danych z wykorzystaniem `RepositorySearchService` w celu pobrania wszystkich rezerwacji dla danego samochodu, a następnie sprawdza, czy jakikolwiek okres z pobranych rezerwacji nie pokrywa się z okresem rezerwacji wymaganym przez użytkownika.
 Jeśli żaden z tych okresów się nie pokrywa `noneMatch` metoda zwraca `true`, w przeciwnym razie `false`.
-Samo sprawdzenie, czy pojedynczy pobrany z bazy danych okres rezerwacji pokrywa się z okresem rezerwacji wymaganym przez użytkownika sprawdzane jest w metodzie 'checkIfPeriodOverlap'.
+Samo sprawdzenie, czy pojedynczy pobrany z bazy danych okres rezerwacji pokrywa się z okresem rezerwacji wymaganym przez użytkownika, sprawdzane jest w metodzie 'checkIfPeriodOverlap'.
 Niniejszy algorytm przedstawiono na poniższych schematach blokowych (zastosowano osobny schemat dla metody `checkIfPeriodsOverlap`):
 
 ![img.png](images/caravailabilityAlgorithm.png)
@@ -408,7 +414,7 @@ W aplikacji wykorzystano testowy framework Spock oraz testy jednostkowe napisane
 Spock umożliwia między innymi tworzenie testów wykorzystujących koncepcję Data Driven Tests.
 
 ### 16.1.1 Testowanie metody sprawdzającej dostępność samochodów
-Jak to opisano w punkcie 14.2.1. w aplikacji zastosowano algorytm sprawdzania dostępności pojazdów, który znajduje się w klasie `AvailabilityService`.
+Jak opisano w punkcie 14.2.1., w aplikacji zastosowano algorytm sprawdzania dostępności pojazdów, który znajduje się w klasie `AvailabilityService`.
 Algorytm ten wykorzystuje metodę `checkIfPeriodsOverlap`, która sprawdza, czy dwa okresy się pokrywają (okres 'TimePeriod' jest obiektem zawierającym dwie daty
 - datę "od" oraz datę "do").
 Poniżej zamieszczono kod testu jednostkowego sprawdzającego poprawność działania metody `checkIfPeriodsOverlap`:
@@ -449,7 +455,7 @@ Odnośnik do klasy testowej: https://github.com/lukaszse/car-rental/blob/master/
 W aplikacji wykorzystano mechanizm adnotacji do walidowania m.in. danych przychodzących z zewnątrz (z przeglądarki internetowej do serwera).
 Stworzono, także m.in. niestandardową adnotację `@ValidateTimePeriod` oraz walidator do sprawdzania poprawności wprowadzanych dat.
 Walidator stanowi odrębną klasę, z główną metodą `isValid`, która używa odpowiedniej logiki do zweryfikowania poprawności wprowadzonego okresu (TimePeriod).
-Walidator sprawdza m.in. czy nie wprowadzono daty z przeszłości oraz, czy data "do" nie jest wcześniejsza niż data "do".
+Walidator sprawdza m.in. czy nie wprowadzono daty z przeszłości oraz, czy data "od" nie jest wcześniejsza niż data "do".
 W celu sprawdzenia poprawności działania walidatora przygotowano test jednostkowy weryfikujący poprawność działania metody `isValid`:
 
 ```groovy
@@ -472,6 +478,112 @@ Metoda testowa wykorzystuje protezy obiektów ("mocks"):
 ```groovy
     TimePeriodValidator timePeriodValidator = new TimePeriodValidator();
     ConstraintValidatorContext constraintValidatorContext = Mock()
+```
+
+### 16.1.3 Testowanie metody obliczającej koszt całkowity rezerwacji
+W aplikacji wykorzystano metodę statyczną `calculateTotalCost` służącą do obliczania kosztu całkowitego rezerwacji w danym przedziale czasowym, który został wybrany wcześniej przez użytkownika, i po cenie rezerwacji za dzień, określonej przez administrację serwisu.
+W celu sprawdzenia poprawności działania metody przygotowano test jednostkowy:
+
+```groovy
+def "should check if data ranges equals correctly - test #no"() {
+
+        given: "Prepare dates"
+        def localDateFrom = LocalDate.parse(dateFrom)
+        def localDateTo = LocalDate.parse(dateTo)
+
+        when: "Try to calculate cost"
+        def overlap = ReservationService.calculateTotalCost(localDateFrom, localDateTo, costPerDay as BigDecimal)
+
+        then: "Cost should be calculated correctly"
+        overlap == expectedResult
+
+        where:
+        no | dateFrom       | dateTo         |  costPerDay  || expectedResult
+        1  | "2018-05-20"   | "2018-06-02"   | 100          || 1300
+        2  | "2019-03-10"   | "2019-05-22"   | 70           || 5110
+        3  | "2018-03-20"   | "2018-03-22"   | 200          || 400
+        4  | "2000-09-01"   | "2000-09-30"   | 50           || 1450
+    }
+```
+
+### 16.1.4 Testowanie metody zmieniającej hasło użytkownika
+W klasie `UserService` znajduje się metoda `changePassword`, jest to metoda pomocnicza służąca do zmiany hasła użytkownika.
+  Poniżej zamieszczono kod testu jednostkowego sprawdzającego poprawność działania metody:
+```groovy
+    def "should change password"() {
+
+        given: "Mock all required methods"
+        userRepository.findUserByUserName(_ as String) >> Optional.of(prepareUser())
+        passwordEncoder.matches(_ as String, _ as String) >> true
+        passwordEncoder.encode(_ as String) >> "some encrypted password"
+        userService.passwordEncoder = passwordEncoder
+
+
+        and: "prepare prepareChangePasswordDto object"
+        def passwordChangeDto = prepareChangePasswordDto(oldPassword, newPassword, newPasswordConfirm)
+
+        when: "try to change password"
+        userService.changePassword(userName, passwordChangeDto)
+
+        then: "should throw now exception and invoke changePassword() method once"
+        noExceptionThrown()
+        1 * userRepository.changePassword(_ as String, _ as String)
+
+        where:
+        no | userName | oldPassword | newPassword | newPasswordConfirm
+        1  | "joe"    | "password"  | "qwerty"    | "qwerty"
+        2  | "joe"    | "password"  | "123456"    | "123456"
+    }
+
+    def "should throw exception while trying to change password with wrong data"() {
+
+        given: "Mock all required methods"
+        userRepository.findUserByUserName(_ as String) >> Optional.of(prepareUser())
+        passwordEncoder.matches(_ as String, _ as String) >> passwordEncoderMatch
+        passwordEncoder.encode(_ as String) >> "some encrypted password"
+        userService.passwordEncoder = passwordEncoder
+
+
+        and: "prepare prepareChangePasswordDto object"
+        def passwordChangeDto = prepareChangePasswordDto(oldPassword, newPassword, newPasswordConfirm)
+
+        when: "try to change password"
+        userService.changePassword(userName, passwordChangeDto)
+
+        then: "should throw exception and not change password"
+        thrown(WrongPayloadException.class)
+        0 * userRepository.changePassword(_ as String, _ as String)
+
+        where:
+        no | userName | oldPassword | newPassword | newPasswordConfirm | passwordEncoderMatch
+        1  | "joe"    | "password"  | "qwerty2"   | "qwerty"           | true
+        2  | "joe"    | "password"  | "1234562"   | "123456"           | true
+        3  | "joe"    | "password"  | "123456"    | "123456"           | false
+    }
+
+    def static prepareChangePasswordDto(String oldPassword, String newPassword, String newPasswordConfirm) {
+        def passwordChangeDto = new PasswordChangeDto()
+        passwordChangeDto.setOldPassword(oldPassword)
+        passwordChangeDto.setNewPassword(newPassword)
+        passwordChangeDto.setNewPasswordConfirm(newPasswordConfirm)
+        passwordChangeDto
+    }
+
+    def static prepareUser() {
+        def user = new User()
+        user.setUserName("Joe")
+        user.setPassword('{bcrypt}\$2a\$12$feoSS.Dx/rRdQWfWHeWYZu8txsYcy8Dxt89MWd9U3O8r4CaAKKY3S')
+        // Password = password
+        user
+    }
+}
+
+```
+Aby uruchomić test, konieczne było utworzenie protez ("mocks") dla wykorzystanych obiektów:
+```groovy
+    PasswordEncoder passwordEncoder = Mock()
+    UserRepository userRepository = Mock()
+    UserService userService = new UserService(userRepository)
 ```
 
 # 16.2 Przypadki testowe dla testów manualnych
@@ -504,7 +616,7 @@ Metoda testowa wykorzystuje protezy obiektów ("mocks"):
 
 | Krok                                                         | Rezultat                                                                     |
 |--------------------------------------------------------------|------------------------------------------------------------------------------|
-| 1. Kliknij na `Cars` (menu)                                  | 1. Wyświetlono z dostepnymi samochodami                                      |
+| 1. Kliknij na `Cars` (menu)                                  | 1. Wyświetlono z dostępnymi samochodami                                      |
 | 2. Wprowadź wybrany okres (dateFrom i dateTo)                | 2. Wyświetlono samochody dostępne w danym okresie                            |
 | 3. Wprowadź pierwsze znaki marki samochodu i naciśnij enter  | 3. Wyświetlono samochody których marka rozpoczyna się od wprowadzonych liter |
 | 4. Wprowadź pierwsze znaki modelu samochodu i naciśnij enter | 4. Wyświetlono samochody których model rozpoczyna się od wprowadzonych liter |
@@ -513,21 +625,57 @@ Metoda testowa wykorzystuje protezy obiektów ("mocks"):
 
 **Priorytet:** wysoki  
 **Wykonanie** manualne  
-**Szacowany czas:** 1 min dla każdej roli + 2 minuty na sprawdzenie danych w bazie.
+**Szacowany czas:** 1 min. dla każdej roli + 2 min. na sprawdzenie danych w bazie.  
 **Uwagi:** powtórzyć dla każdej roli [user, manager, admin]
 
+### 16.2.3. Rejestracja
+**Cel:** Sprawdzenie możliwości rejestracji gościa
+
+**Warunki początkowe**
+- Wejście na stronę jako użytkownik niezarejestrowany w bazie.
+- Użytkownik znajduje się na ekranie powitalnym aplikacji
+
+| Krok                                                         | Rezultat                             |
+|--------------------------------------------------------------|--------------------------------------|
+| 1. Kliknij na `Sign Up` (menu)                               | 1. Wyświetlono ekran rejestracji     |
+| 2. Wprowadź login i hasło                                    | 2. Uzupełniono formularz rejestracji |
+| 3. Naciśnij `Submit`                                          | 3. Następuje rejestracja             |
+
+**Priorytet:** wysoki  
+**Wykonanie** manualne  
+**Szacowany czas:** 1 min.
+**Uwagi:** Brak
+
+### 16.2.4. Wysyłanie wiadomości przez niezalogowanego użytkownika
+**Cel:** Sprawdzenie możliwości wysłania wiadomości
+
+**Warunki początkowe**
+- Użytkownik niezalogowany w systemie
+- Użytkownik znajduje się na ekranie powitalnym aplikacji
+
+| Krok                                               | Rezultat                                     |
+|----------------------------------------------------|----------------------------------------------|
+| 1. Kliknij na `Send Message` (menu)                | 1. Wyświetlono ekran wysyłania wiadomości    |
+| 2. Wprowadź imię, temat i treść, zatwierdź captchę | 2. Uzupełniono formularz wysyłania wiadomości |
+| 3. Naciśnij `Submit`                               | 3. Następuje wysłanie wiadomości             |
+
+**Priorytet:** niski  
+**Wykonanie** manualne  
+**Szacowany czas:** 1 min  
+**Uwagi:** Brak
+
 # 17. Diagramy komponentów
-## 17.1. Diagram główynych komponentów systemu
+## 17.1. Diagram głównych komponentów systemu
 ![Diagram komponentów](images/componentDiagram.png)
 Powyższy diagram komponentów przedstawia główne komponenty systemu z wyłączeniem bazy danych.
 
 # 18. Wdrożenie
 ## 18.1. Diagramy wdrożenia
-### 18.1.1. Wdrożenie z wykorzysaniem kontenera Docker
+### 18.1.1. Wdrożenie z wykorzystaniem kontenera Docker
 ![Diagram wrożnia](images/deploymentDiagram.png)
 
 ## 18.2. Wymagania systemowe
-Aplikacja napisana została w wielopratformowym języku Java. Działa na każdym systemie z systemem operacyjnym Windows, Linux czy MacOS.
+Aplikacja napisana została w wieloplatformowym języku Java. Działa na każdym systemie z systemem operacyjnym Windows, Linux czy MacOS.
 Poniżej przedstawiono szczegółowe wymagania systemowe.
 
 Wymagania systemowe:
@@ -536,7 +684,7 @@ Wymagania systemowe:
 * Opcjonalnie zainstalowane oprogramowanie Docker. Zalecana wersja 20.10.10 lub wyższa.
 
 ## 18.3. Instalacja z wykorzystaniem pliku jar
-Skopiowac plik na serwer oraz uruchomić komendę:
+Skopiować plik na serwer oraz uruchomić komendę:
 
 `java -jar nazwa_pliku.jar`
 
@@ -567,15 +715,17 @@ W wersji demonstracyjnej aplikacji wykorzystano niezarejestrowany certyfikat HTT
 5. Przeglądanie rezerwacji oraz usuwanie rezerwacji
 6. Wysyłanie wiadomości
 7. Funkcje dostępne dla managera
-   1. edycja pojazdów 
-   2. usuwanie pojazdów 
-   3. przegadanie rezerwacji wszystkich użytkowników 
-   4. edycja rezerwacji 
-   5. usuwanie rezerwacji 
-   6. odczytywanie wiadomości
+   1. Edycja pojazdów 
+   2. Usuwanie pojazdów 
+   3. Przeglądanie rezerwacji wszystkich użytkowników 
+   4. Edycja rezerwacji 
+   5. Usuwanie rezerwacji 
+   6. Odczytywanie wiadomości
 8. Funkcje dostępne dla administratora
-   1. zarządzanie użytkownikami 
-   2. ustawienia administracyjne
+   1. Zarządzanie użytkownikami
+      1. Dodawanie użytkownika
+      2. Edycja użytkownika
+   2. Ustawienia administracyjne
 
 ## 19.1. Rejestrowanie użytkownika
 
@@ -623,3 +773,129 @@ numer strony znajdujący się pod wynikami wyszukiwania.
 ![Znajdź samochód](images/findCar.png)
 
 **Uwaga:** W wersji prezentacyjnej aplikacji nie zaimplementowano sortowania ani możliwości wyboru ilości stron do wyświetlenia na ekranie logowania. Funkcje te znajdą się w pełnej wersji aplikacji.
+
+## 19.4. Składanie rezerwacji
+
+W celu złożenia rezerwacji musimy posiadać konto w serwisie. Po rejestracji lub zalogowaniu (kroki 19.1 i 19.2) należy podobnie jak w kroku 19.3, kliknąć zakładkę `Cars` [1] dzięki której uzyskamy dostęp do pełnej listy pojazdów.
+W celu zarezerwowania pojazdu należy najpierw określić termin, w jakim chcielibyśmy dokonać rezerwacji [2].
+Następnie wybrać dostępny w tym terminie pojazd naciskając przycisk `Book` [3], dzięki któremu uzyskamy dostęp do podglądu potwierdzenia naszej rezerwacji.
+
+![Rezerwacja](images/reservation.png)
+
+Po dokładnym zapoznaniu się z danymi rezerwacji należy wcisnąć przycisk `Submit` [1] potwierdzający złożenie rezerwacji w określonym terminie i po określonej cenie lub przycisk `Go Back` który pozwala na rezygnację z rezerwacji i powrót do okna listy dostępnych pojazdów [2].
+
+![Potwierdzenie rezerwacji](images/confirmReservation.png)
+
+## 19.5 Przeglądanie rezerwacji oraz usuwanie rezerwacji
+
+Aby wyświetlić listę złożonych rezerwacji, należy po zalogowaniu lub rejestracji wejść w zakładkę `Reservations` [1].
+Wyświetlona zostanie lista rezerwacji złożonych na tym koncie, nazwa pojazdu, czas rezerwacji oraz jej koszt.
+W celu zobaczenia dokładnych danych pojedynczej rezerwacji należy nacisnąć przycisk `View Details` [2]. 
+Program pozwala również na anulowanie zamówienia za pomocą przycisku `Cancel Reservation` [3].
+
+![Lista rezerwacji](images/reservationsList.png)
+
+Po naciśnięciu przycisku `View Details` uzyskamy dostęp do panelu pozwalającego na podgląd danych dotyczących tylko jednego wybranego zamówienia.
+Panel ten pozwala nam również na anulowanie zlecenia `Cancel Reservation` [1] oraz wygenerowanie pliku PDF z wszystkimi danymi tego zlecenia `Generate PDF` [1].
+
+**Uwaga**: Panel zawiera również funkcję `Edit` [3] pozwalającą na edytowanie zlecenia. Funkcja ta jest dostępna tylko dla Menadżera lub Administratora.
+
+![Detale rezerwacji](images/reservationDetails.png)
+
+## 19.6 Wysyłanie wiadomości
+
+W celu wysłania wiadomości do administracji **jako użytkownik niezalogowany** należy nacisnąć w panel `Send Message` [1], a następnie uzupełnić formularz zgodnie z tytułami pól.
+Po uzupełnieniu formularza należy potwierdzić pole captcha w `verify` zabezpieczające przed spamem [2].
+
+![Wysyłanie wiadomości jako gość](images/sendingMessageGuest.png)
+
+W razie próby wysłania wiadomości jako **zalogowany użytkownik**, panel ten wygląda trochę inaczej. Pole z imieniem jest uzupełniane automatycznie według loginu użytkownika.
+
+![Wysyłanie wiadomości jako użytkownik](images/sendingMessageUser.png)
+
+## 19.7. Funkcje dostępne dla managera
+
+Wszystkie funkcje przedstawione w tym rozdziale jest niedostępne dla zwykłego użytkownika. W celu ich obsługi przez osobę zarządzającą została stworzona managera.
+
+### 19.7.1 Edycja pojazdów
+
+W celu edycji danych pojazdu trzeba udać się do panelu `Cars` [1], a następnie kliknąć przycisk `Edit` [2] na wybranym pojeździe, który chcemy edytować.
+
+![Lista pojazdów - Edycja](images/editCarsView.png)
+
+Po wykonaniu tych kroków uzyskujemy widok edycji pojazdu. Aby edytować pojazd, należy uzupełnić formularz, a następnie zatwierdzić go przyciskiem `Submit` [1]. W przypadku chęci powrotu do danych początkowych na należy nacisnąć przycisk `Reset` [2].
+
+![Edycja pojazdu](images/editCar.png)
+
+### 19.7.2 Usuwanie pojazdów
+
+W celu usunięcia pojazdu należy wejść w panel `Cars` [1], a następnie wcisnąć przycisk `Delete` na wybranym pojeździe [2]. 
+
+![Usuwanie pojazdu](images/deleteCar.png)
+
+### 19.7.3 Przeglądanie rezerwacji wszystkich użytkowników 
+
+Aby wyświetlić listę wszystkich rezerwacji użytkowników, należy wejść w panel `Reservations` [1]. Na ekranie wyświetli się lista zarezerwowanych samochodów wraz z loginem użytkownika, który zarezerwował dany pojazd. 
+
+![Lista rezerwacji pojazdów](images/reservationsListManager.png)
+
+### 19.7.4 Edycja rezerwacji 
+
+W celu edycji danych rezerwacji trzeba udać się do panelu `Reservations` [1], a następnie kliknąć przycisk `Edit` [2] na wybranej rezerwacji,, którą chcemy edytować.
+
+![Edycja rezerwacji lista](images/editingReservationListManager.png)
+
+Uzyskujemy tym sposobem widok edycji rezerwacji. W celu edycji pojazdu należy uzupełnić formularz, a następnie zatwierdzić go przyciskiem `Submit` [1]. W przypadku chęci powrotu do danych początkowych na należy nacisnąć przycisk `Reset` [2].
+
+![Edycja rezerwacji lista](images/editingReservationManager.png)
+
+### 19.7.5 Usuwanie rezerwacji 
+
+W celu usunięcia rezerwacji należy wejść w panel `Reservations` [1], a następnie wcisnąć przycisk `Delete` na wybranej rezerwacji [2].
+
+![Edycja rezerwacji lista](images/deleteReservationManager.png)
+
+### 19.7.6 Odczytywanie i zarządzanie wiadomościami
+
+Menadżer ma możliwość odczytywania wiadomości od użytkowników dotyczących wynajmu. W celu dostania się do panelu wiadomości należy nacisnąć `Messages` [1], a następne z rozsuwanej listy wybrać `View Messages` [2].
+W przypadku chęci przeczytania pełnej treści wiadomości należy nacisnąć przycisk `View` [3]*, a w przypadku chęci usunięcia wiadomości należy nacisnąć przycisk `Delete` [4].
+
+
+**Uwaga**: W wersji prezentacyjnej podgląd wiadomości nie został zaimplementowany.
+
+![Podgląd wiadomości](images/messagesView.png)
+
+## 19.8 Funkcje dostępne dla administratora
+
+Administrator to specjalny użytkownik zawierający oprócz wszystkich funkcji poniżej dostęp dwóch specjalnych funkcji przeznaczonych tylko dla niego.
+
+### 19.8.1 Zarządzanie użytkownikami
+
+W celu dostania się do panelu zarządzania użytkownikami należy nacisnąć przycisk `Settings` [1], a następnie z rozsuwanej listy `User Administration` [2].
+Panel ten pozwala nam na dodawanie (przycisk `Add User` [3], edycję (przycisk `Edit` [4]) oraz usuwanie użytkowników (przycisk `Delete` [5].
+
+![Zarządzanie użytkownikami](images/userAdminList.png)
+
+#### 19.8.1.1 Dodawanie użytkownika
+
+Po wciśnięciu przycisku `Add User` uzyskujemy dostęp do formularza, w którym dodajemy dane nowego użytkownika oraz przypisujemy mu określoną rolę.  
+Wszelkie zmiany należy zatwierdzić przyciskiem `Submit` [1], natomiast w przypadku chęci wyczyszczenia formularza należy użyć przycisku `Reset` [2].
+
+![Dodawanie użytkownika](images/addUserAdmin.png)
+
+#### 18.1.1.2 Edycja użytkownika
+
+Po użyciu przycisku `Edit` na wybranym użytkowniku wyświetla się formularz edycji, w którym możemy dokonać potrzebnych nam zmian.
+Każdą zmianę należy zatwierdzić przyciskiem `Submit` [1], natomiast w przypadku chęci wyczyszczenia formularza należy użyć przycisku `Reset` [2].
+
+![Edycja użytkownika](images/editUserAdmin.png)
+
+### 19.8.2 Ustawienia administracyjne
+
+**UWAGA**: Panel ustawień administracyjnych w wersji prezentacyjnej jest wyłącznie pokazowy, wszelkie funkcje nie zostały jeszcze zaimplementowane.
+
+Aby dostać się do ustawień administracyjnych trzeba wejść w panel `Settings`[1], a następnie z rozwijanej listy wybrać `Administration Settings`.
+Panel ten pozwala nam na zmianę danych dotyczących firmy [3] oraz zmianę waluty obsługiwanej na stronie [4].
+Wszelkie zmiany zatwierdzane są przyciskiem `Submit` [5], a w celu przywrócenia poprzednich danych należy nacisnąć przycisk `Reset`[6].
+
+![Ustawienia administracyjne](images/administratorSettings.png)
