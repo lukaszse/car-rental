@@ -7,14 +7,25 @@ Poprzez informatyzację wszystkich procesów obsługi klienta aplikacja zapewni 
 
 # 2. Słownik pojęć
 
-* **MTFB (Mean Time between Failures)** - średni czas pomiędzy wystąpieniem awarii
-* **Docker** - otwarte oprogramowanie do wirtualizacji, umożliwiające "konteneryzację" tj. pozwalające umieścić program oraz jego zależności (biblioteki) w przenośnym wirtualnym kontenerze który można uruchomić na dowolnym serwerze z systemem Linux, Windows i MacOS.
-* **GUI (Graphical User Interface)** - graficzny interfejs .
-* **RODO** - Ogólne rozporządzenie o ochronie danych, inaczej rozporządzenie o ochronie danych osobowych, OROD lub RODO – rozporządzenie unijne, zawierające przepisy o ochronie osób fizycznych w związku z przetwarzaniem danych osobowych oraz przepisy o swobodnym przepływie danych osobowych.
-* **PDF (PDF Portable Document Format)** - format plików służący do prezentacji, przenoszenia i drukowania treści tekstowo-graficznych, stworzony przez firmę Adobe Systems. Obecnie rozwijany i utrzymywany przez Międzynarodową Organizację Normalizacyjną.
-* **Spring Boot** - framework do budowania aplikacji w tym aplikacji webowych w języku java.
-* **Thymeleaf** - silnik szablonów html.
-* **H2** - baza danych SQL przechowująca dane w pliku lub w pamięci operacyjnej, stosowana do testów lub prostych aplikacji.
+* **MTFB** - (ang. Mean Time between Failures) średni czas pomiędzy wystąpieniem awarii<sup>1</sup>.
+* **Docker** - otwarte oprogramowanie do wirtualizacji, umożliwiające "konteneryzację" tj. pozwalające umieścić program oraz jego zależności (biblioteki) w przenośnym wirtualnym kontenerze który można uruchomić na dowolnym serwerze z systemem Linux, Windows i MacOS<sup>2</sup>.
+* **GUI** - (ang. Graphical User Interface) graficzny interfejs użytkownika.
+* **RODO** - rozporządzenie o ochronie danych osobowych -  rozporządzenie unijne, zawierające przepisy o ochronie osób fizycznych w związku z przetwarzaniem danych osobowych oraz przepisy o swobodnym przepływie danych osobowych<sup>3</sup>.
+* **PDF** - (and. Portable Document Format) format plików służący do prezentacji, przenoszenia i drukowania treści tekstowo-graficznych, stworzony przez firmę Adobe Systems. Obecnie rozwijany i utrzymywany przez Międzynarodową Organizację Normalizacyjną<sup>4</sup>.
+* **Spring Boot** - framework do budowania aplikacji, w tym aplikacji webowych w języku java<sup>5</sup>.
+* **Thymeleaf** - silnik szablonów html<sup>6</sup>.
+* **H2** - baza danych SQL przechowująca dane w pliku lub w pamięci operacyjnej, stosowana do testów lub prostych aplikacji<sup>7</sup>.
+* **Spock** - framework do tworzenia testów jednostkowych, wykorzystujący język Groovy<sup>8</sup>.
+
+<sup>1</sup> https://pl.wikipedia.org/wiki/MTBF  
+<sup>2</sup> https://www.docker.com/  
+<sup>3</sup> https://pl.wikipedia.org/wiki/Og%C3%B3lne_rozporz%C4%85dzenie_o_ochronie_danych  
+<sup>4</sup> https://pl.wikipedia.org/wiki/Portable_Document_Format  
+<sup>5</sup> https://spring.io/projects/spring-boot  
+<sup>6</sup> https://www.thymeleaf.org/  
+<sup>7</sup> https://www.h2database.com/  
+<sup>8</sup> https://spockframework.org/  
+
 
 # 3. Szczegółowy opis wymagań
 ## 3.1. Wymagania funkcjonalne
