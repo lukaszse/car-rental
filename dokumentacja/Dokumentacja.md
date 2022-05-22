@@ -672,7 +672,9 @@ Powyższy diagram komponentów przedstawia główne komponenty systemu z wyłąc
 # 18. Wdrożenie
 ## 18.1. Diagramy wdrożenia
 ### 18.1.1. Wdrożenie z wykorzystaniem kontenera Docker
-![Diagram wrożnia](images/deploymentDiagram.png)
+![Diagram wdrożenia](images/deploymentDiagram.png)
+
+**Uwaga** W wersji MVP aplikacja może wyświetlać się niepoprawnie na urządzeniach mobilnych, ze względu na brak skalowania tabel
 
 ## 18.2. Wymagania systemowe
 Aplikacja napisana została w wieloplatformowym języku Java. Działa na każdym systemie z systemem operacyjnym Windows, Linux czy MacOS.
@@ -705,6 +707,10 @@ Dokumentacja NGINX: http://nginx.org/en/docs/
 ## 18.5. Bezpieczeństwo i certyfikat HTTPS
 W wersji demonstracyjnej aplikacji wykorzystano niezarejestrowany certyfikat HTTPS. Gwarantuje on szyfrowanie danych przesyłanych z przeglądarki do serwera, jednak nie jest to certyfikat wydany przez Urząd Certyfikacji, wobec czego nie będzie traktowany przez przeglądarkę jako certyfikat zaufany.
 
+Wymagać to może, odpowiednich kroków w zależności od konkretnej przeglądarki. W większości przypadków konieczne będzie wybranie opcji zaawansowanych[1], w celu wyświetlenia możliwości otwarcia strony[2].
+
+![Certyfikat niezaufany](images/notTrustedCert.png)
+
 # 19. Podręcznik użytkownika
 
 **Spis treści**
@@ -729,24 +735,32 @@ W wersji demonstracyjnej aplikacji wykorzystano niezarejestrowany certyfikat HTT
 
 ## 19.1. Rejestrowanie użytkownika
 
-W celu rejestracji w aplikacji należy otworzyć stronę serwisu:  
-https://ubuntu.llseremak.p3.tiktalik.io/car-rental/add_user  
+W celu rejestracji należy wejść na stronę aplikacji: https://ubuntu.llseremak.p3.tiktalik.io/car-rental  
+Po przekierowaniu do strony startowej należy kliknąć zakładkę **Sign Up** w głównym menu,  w celu przekierowania do formularza rejestracyjnego.
+
+![Strona startowa](images/landingPage.png)
+
 Następnie należy uzupełnić formularz rejestracyjny.
 
 ![Rejestracja do systemu](images/SignUp.png)
 
-W przypadku wysłania pustego formularza albo błędów w nim użytkownik nie zostanie zarejestrowany oraz zostanie wyświetlony odpowiedni komunikat.
+Wpisane przez użytkownika dane są walidowane. W przypadku wpisania błędnych lub niepełnych danych zostanie zwrócony komunikat o błędzie.
 
 ![Błąd rejestracji](images/SignUp2.png)
 
 Komunikat wystąpi także, jeśli użytkownik o danym loginie już istnieje.
 
 ![Użytkownik istnieje](images/SignUp3.png)
+
+Po wpisaniu prawidłowych danych rejestracyjnych zostanie utworzone nowe konto, a użytkownik zostanie przekierowany na stronę logowania.
+
+![Użytkownik utworzony](images/userCreated.png)
+
 ## 19.2. Logowanie do systemu
 
-W celu zalogowania się do aplikacji najpierw otworzyć stronę serwisu:
-https://ubuntu.llseremak.p3.tiktalik.io/car-rental/login  
-W celu zalogowania się do systemu należy, wpisać prawidłowy login oraz hasło. 
+W celu zalogowania się do aplikacji należy wejść na główną stronę aplikacji, 
+a następnie kliknąć zakładkę **Sign In** w głównym menu, w celu przekierowania do formularza logowania.
+Następnie należy wpisać prawidłowy login oraz hasło. 
 
 ![Logowanie do systemu](images/SingingIn.png)
 
@@ -754,13 +768,7 @@ W przypadku wpisania błędnych danych użytkownik nie zostanie zalogowany, a na
 
 ![Błąd logowania](images/SingingIn2.png)
 
-**Uwaga**: W wersji prezentacyjnej wykorzystano darmowy certyfikat SSL, który zapewnia pełne szyfrowanie ruchu pomiędzy przeglądarką
-użytkownika a serwerem, jednak nie jest to certyfikat autoryzowany przez Urząd Certyfikacji, wobec tego nie będzie rozpoznany przez przeglądarki jako
-certyfikat zaufany. Wymagać to może, odpowiednich kroków w zależności od konkretnej przeglądarki. W większości przypadków konieczne będzie wybranie opcji zaawansowanych[1], w celu wyświetlenia możliwości otwarcia strony[2].
-
-![Certyfikat niezaufany](images/notTrustedCert.png)
-
-**Uwaga**: W wersji prezentacyjnej na ekranie logowania znajdują się informację o danych do logowania do kont dla wszystkich
+**Uwaga**: W wersji MVP na ekranie logowania znajdują się informację o danych do logowania do kont dla wszystkich
 typów użytkowników.
 
 ## 19.3. Wyszukiwanie dostępnych pojazdów
@@ -772,7 +780,7 @@ numer strony znajdujący się pod wynikami wyszukiwania.
 
 ![Znajdź samochód](images/findCar.png)
 
-**Uwaga:** W wersji prezentacyjnej aplikacji nie zaimplementowano sortowania ani możliwości wyboru ilości stron do wyświetlenia na ekranie logowania. Funkcje te znajdą się w pełnej wersji aplikacji.
+**Uwaga:** W wersji MVP aplikacji nie zaimplementowano sortowania ani możliwości wyboru ilości stron do wyświetlenia na ekranie logowania. Funkcje te znajdą się w pełnej wersji aplikacji.
 
 ## 19.4. Składanie rezerwacji
 
@@ -861,7 +869,7 @@ Menadżer ma możliwość odczytywania wiadomości od użytkowników dotyczącyc
 W przypadku chęci przeczytania pełnej treści wiadomości należy nacisnąć przycisk `View` [3]*, a w przypadku chęci usunięcia wiadomości należy nacisnąć przycisk `Delete` [4].
 
 
-**Uwaga**: W wersji prezentacyjnej podgląd wiadomości nie został zaimplementowany.
+**Uwaga**: W wersji MVP podgląd wiadomości nie został zaimplementowany.
 
 ![Podgląd wiadomości](images/messagesView.png)
 
@@ -892,7 +900,7 @@ Każdą zmianę należy zatwierdzić przyciskiem `Submit` [1], natomiast w przyp
 
 ### 19.8.2 Ustawienia administracyjne
 
-**UWAGA**: Panel ustawień administracyjnych w wersji prezentacyjnej jest wyłącznie pokazowy, wszelkie funkcje nie zostały jeszcze zaimplementowane.
+**UWAGA**: Panel ustawień administracyjnych w wersji MVP jest wyłącznie pokazowy, wszelkie funkcje nie zostały jeszcze zaimplementowane.
 
 Aby dostać się do ustawień administracyjnych trzeba wejść w panel `Settings`[1], a następnie z rozwijanej listy wybrać `Administration Settings`.
 Panel ten pozwala nam na zmianę danych dotyczących firmy [3] oraz zmianę waluty obsługiwanej na stronie [4].
