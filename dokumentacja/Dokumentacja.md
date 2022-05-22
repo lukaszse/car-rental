@@ -455,7 +455,7 @@ Odnośnik do klasy testowej: https://github.com/lukaszse/car-rental/blob/master/
 W aplikacji wykorzystano mechanizm adnotacji do walidowania m.in. danych przychodzących z zewnątrz (z przeglądarki internetowej do serwera).
 Stworzono, także m.in. niestandardową adnotację `@ValidateTimePeriod` oraz walidator do sprawdzania poprawności wprowadzanych dat.
 Walidator stanowi odrębną klasę, z główną metodą `isValid`, która używa odpowiedniej logiki do zweryfikowania poprawności wprowadzonego okresu (TimePeriod).
-Walidator sprawdza m.in. czy nie wprowadzono daty z przeszłości oraz, czy data "do" nie jest wcześniejsza niż data "do".
+Walidator sprawdza m.in. czy nie wprowadzono daty z przeszłości oraz, czy data "od" nie jest wcześniejsza niż data "do".
 W celu sprawdzenia poprawności działania walidatora przygotowano test jednostkowy weryfikujący poprawność działania metody `isValid`:
 
 ```groovy
@@ -478,6 +478,32 @@ Metoda testowa wykorzystuje protezy obiektów ("mocks"):
 ```groovy
     TimePeriodValidator timePeriodValidator = new TimePeriodValidator();
     ConstraintValidatorContext constraintValidatorContext = Mock()
+```
+
+### 16.1.3 Testowanie metody obliczającej koszt całkowity rezerwacji
+W aplikacji wykorzystano metodę statyczną `calculateTotalCost` służącą do obliczania kosztu całkowitego rezerwacji w danym przedziale czasowym, który został wybrany wcześniej przez użytkownika, i po cenie rezerwacji za dzień, określonej przez administrację serwisu.
+W celu sprawdzenia poprawności działania metody przygotowano test jednostkowy:
+
+```groovy
+def "should check if data ranges equals correctly - test #no"() {
+
+        given: "Prepare dates"
+        def localDateFrom = LocalDate.parse(dateFrom)
+        def localDateTo = LocalDate.parse(dateTo)
+
+        when: "Try to calculate cost"
+        def overlap = ReservationService.calculateTotalCost(localDateFrom, localDateTo, costPerDay as BigDecimal)
+
+        then: "Cost should be calculated correctly"
+        overlap == expectedResult
+
+        where:
+        no | dateFrom       | dateTo         |  costPerDay  || expectedResult
+        1  | "2018-05-20"   | "2018-06-02"   | 100          || 1300
+        2  | "2019-03-10"   | "2019-05-22"   | 70           || 5110
+        3  | "2018-03-20"   | "2018-03-22"   | 200          || 400
+        4  | "2000-09-01"   | "2000-09-30"   | 50           || 1450
+    }
 ```
 
 # 16.2 Przypadki testowe dla testów manualnych
@@ -510,7 +536,7 @@ Metoda testowa wykorzystuje protezy obiektów ("mocks"):
 
 | Krok                                                         | Rezultat                                                                     |
 |--------------------------------------------------------------|------------------------------------------------------------------------------|
-| 1. Kliknij na `Cars` (menu)                                  | 1. Wyświetlono z dostepnymi samochodami                                      |
+| 1. Kliknij na `Cars` (menu)                                  | 1. Wyświetlono z dostępnymi samochodami                                      |
 | 2. Wprowadź wybrany okres (dateFrom i dateTo)                | 2. Wyświetlono samochody dostępne w danym okresie                            |
 | 3. Wprowadź pierwsze znaki marki samochodu i naciśnij enter  | 3. Wyświetlono samochody których marka rozpoczyna się od wprowadzonych liter |
 | 4. Wprowadź pierwsze znaki modelu samochodu i naciśnij enter | 4. Wyświetlono samochody których model rozpoczyna się od wprowadzonych liter |
@@ -519,8 +545,44 @@ Metoda testowa wykorzystuje protezy obiektów ("mocks"):
 
 **Priorytet:** wysoki  
 **Wykonanie** manualne  
-**Szacowany czas:** 1 min dla każdej roli + 2 minuty na sprawdzenie danych w bazie.
+**Szacowany czas:** 1 min dla każdej roli + 2 minuty na sprawdzenie danych w bazie.  
 **Uwagi:** powtórzyć dla każdej roli [user, manager, admin]
+
+### 16.2.3. Rejestracja
+**Cel:** Sprawdzenie możliwości rejestracji gościa
+
+**Warunki początkowe**
+- Wejście na stronę jako użytkownik niezarejestrowany w bazie.
+- Użytkownik znajduje się na ekranie powitalnym aplikacji
+
+| Krok                                                         | Rezultat                             |
+|--------------------------------------------------------------|--------------------------------------|
+| 1. Kliknij na `Sign Up` (menu)                               | 1. Wyświetlono ekran rejestracji     |
+| 2. Wprowadź login i hasło                                    | 2. Uzupełniono formularz rejestracji |
+| 3. Naciśnij `Submit`                                          | 3. Następuje rejestracja             |
+
+**Priorytet:** wysoki  
+**Wykonanie** manualne  
+**Szacowany czas:** 1 min  
+**Uwagi:** Brak
+
+### 16.2.4. Wysyłanie wiadomości przez niezalogowanego użytkownika
+**Cel:** Sprawdzenie możliwości wysłania wiadomości
+
+**Warunki początkowe**
+- Użytkownik niezalogowany w systemie
+- Użytkownik znajduje się na ekranie powitalnym aplikacji
+
+| Krok                                               | Rezultat                                     |
+|----------------------------------------------------|----------------------------------------------|
+| 1. Kliknij na `Send Message` (menu)                | 1. Wyświetlono ekran wysyłania wiadomości    |
+| 2. Wprowadź imię, temat i treść, zatwierdź captchę | 2. Uzupełniono formularz wysyłania wiadomości |
+| 3. Naciśnij `Submit`                               | 3. Następuje wysłanie wiadomości             |
+
+**Priorytet:** niski  
+**Wykonanie** manualne  
+**Szacowany czas:** 1 min  
+**Uwagi:** Brak
 
 # 17. Diagramy komponentów
 ## 17.1. Diagram główynych komponentów systemu
