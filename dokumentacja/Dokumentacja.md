@@ -73,7 +73,7 @@ System umożliwia:
 
 ## 3.5. Architektura aplikacji
 
-### 3.5.1.
+### 3.5.1. Aplikacja MVC
 Aplikacja wykorzystywać będzie wzorzec projektowy MVC. Zgodnie ze wzorcem MVC będzie podzielona na 3 moduły:
 * Model reprezentujący dane (np. pobierane z bazy danych czy parsowane z plików XML)
 * Widok reprezentujący interfejs użytkownika 
@@ -208,10 +208,10 @@ Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują 
 ![Przeglądanie samochodów](images/findCarsSequenceDiagram.png)
 
 ## 9.4 Usuwanie wiadomości
-![Przeglądanie samochodów](images/deleteSequenceDiagram.png)
+![Usuwanie wiadomości](images/deleteSequenceDiagram.png)
 
 ## 9.5 Usuwanie dowolnego użytkownika przez administratora
-![Przeglądanie samochodów](images/deleteUserSequenceDiagram.png)
+![Usuwanie użytkownika](images/deleteUserSequenceDiagram.png)
 
 # 10. Diagramy stanów (wybrane przykłady)
 ## 10.1. Zarządzanie użytkownikami
@@ -305,7 +305,7 @@ Aplikacja jest dostępna dla systemów Windows, Linux oraz MacOS:
 https://git-scm.com/
 
 ## 13.2. Pobieranie repozytorium
-Kod źródłowy aplikacji Car-Rental znajduje się w repozytrium w serwisie GitHub:
+Kod źródłowy aplikacji Car-Rental znajduje się w repozytorium w serwisie GitHub:
 https://github.com/lukaszse/car-rental
 
 W celu pobrania repozytorium użyj komendy:
@@ -318,8 +318,8 @@ Aby uruchomić aplikację, należy zbudować plik jar. W tym celu należy użyć
 `./mvnw clean install`
 
 ## 13.4. Konfiguracja
-W aplikacji skonfigurowano dwa profile **LOCAL** służący do uruchamiania aplikacji na lokalnym komuterze (z rozszerzonymi opcjami logowania, debbugowania oraz dostępem bez szyfrowania TSL) oraz **PROD** służący do uruchomienia aplikacji produkcyjnej na serwerze.
-Profil można przełączyć poprzez modufykację zmiennej `spring.profiles.active=prod`, która znajduję się w pliku `src/main/resources/application.properties`.
+W aplikacji skonfigurowano dwa profile **LOCAL** służący do uruchamiania aplikacji na lokalnym komputerze (z rozszerzonymi opcjami logowania, debbugowania oraz dostępem bez szyfrowania TSL) oraz **PROD** służący do uruchomienia aplikacji produkcyjnej na serwerze.
+Profil można przełączyć poprzez modyfikację zmiennej `spring.profiles.active=prod`, która znajduję się w pliku `src/main/resources/application.properties`.
 Szczegółowe konfiguracje dla środowisk znajdują się w plikach `application-local.yml` oraz application-prod.yml` znajdujących się w tej samej lokalizacji.
 
 # 14. Obraz Docker
@@ -332,7 +332,7 @@ W celu zapisania obrazu w repozytorium zdalnym Docker'a (tak, aby był dostępny
 `docker push nazwaObrazu`
 
 # 15. Implementacja
-## 15.1. Zastosowane technologie i wymahgania wobec developera
+## 15.1. Zastosowane technologie i wymagania wobec developera
 Aplikację napisano w języku Java w wersji 17 oraz z wykorzystaniem frameworku Spring Boot. W aplikacji wykorzystano także mechanizm szablonów Thymeleaf oraz elementy napisane w języku JavaScript.
 Podstawowa znajomość wszystkich tych technologii jest konieczna do rozpoczęcia pracy z kodem aplikacji.
 
@@ -390,7 +390,7 @@ Obie wyżej wymienione metody korzystają z klasy `AvailabilityService` oraz zai
 
 Jak widać (co wynika z powyższego kodu) metoda `isCarAvailable` wywołuje zapytanie bazy danych z wykorzystaniem `RepositorySearchService` w celu pobrania wszystkich rezerwacji dla danego samochodu, a następnie sprawdza, czy jakikolwiek okres z pobranych rezerwacji nie pokrywa się z okresem rezerwacji wymaganym przez użytkownika.
 Jeśli żaden z tych okresów się nie pokrywa `noneMatch` metoda zwraca `true`, w przeciwnym razie `false`.
-Samo sprawdzenie, czy pojedynczy pobrany z bazy danych okres rezerwacji pokrywa się z okresem rezerwacji wymaganym przez użytkownika sprawdzane jest w metodzie 'checkIfPeriodOverlap'.
+Samo sprawdzenie, czy pojedynczy pobrany z bazy danych okres rezerwacji pokrywa się z okresem rezerwacji wymaganym przez użytkownika, sprawdzane jest w metodzie 'checkIfPeriodOverlap'.
 Niniejszy algorytm przedstawiono na poniższych schematach blokowych (zastosowano osobny schemat dla metody `checkIfPeriodsOverlap`):
 
 ![img.png](images/caravailabilityAlgorithm.png)
@@ -414,7 +414,7 @@ W aplikacji wykorzystano testowy framework Spock oraz testy jednostkowe napisane
 Spock umożliwia między innymi tworzenie testów wykorzystujących koncepcję Data Driven Tests.
 
 ### 16.1.1 Testowanie metody sprawdzającej dostępność samochodów
-Jak to opisano w punkcie 14.2.1. w aplikacji zastosowano algorytm sprawdzania dostępności pojazdów, który znajduje się w klasie `AvailabilityService`.
+Jak opisano w punkcie 14.2.1., w aplikacji zastosowano algorytm sprawdzania dostępności pojazdów, który znajduje się w klasie `AvailabilityService`.
 Algorytm ten wykorzystuje metodę `checkIfPeriodsOverlap`, która sprawdza, czy dwa okresy się pokrywają (okres 'TimePeriod' jest obiektem zawierającym dwie daty
 - datę "od" oraz datę "do").
 Poniżej zamieszczono kod testu jednostkowego sprawdzającego poprawność działania metody `checkIfPeriodsOverlap`:
@@ -506,6 +506,86 @@ def "should check if data ranges equals correctly - test #no"() {
     }
 ```
 
+### 16.1.4 Testowanie metody zmieniającej hasło użytkownika
+W klasie `UserService` znajduje się metoda `changePassword`, jest to metoda pomocnicza służąca do zmiany hasła użytkownika.
+  Poniżej zamieszczono kod testu jednostkowego sprawdzającego poprawność działania metody:
+```groovy
+    def "should change password"() {
+
+        given: "Mock all required methods"
+        userRepository.findUserByUserName(_ as String) >> Optional.of(prepareUser())
+        passwordEncoder.matches(_ as String, _ as String) >> true
+        passwordEncoder.encode(_ as String) >> "some encrypted password"
+        userService.passwordEncoder = passwordEncoder
+
+
+        and: "prepare prepareChangePasswordDto object"
+        def passwordChangeDto = prepareChangePasswordDto(oldPassword, newPassword, newPasswordConfirm)
+
+        when: "try to change password"
+        userService.changePassword(userName, passwordChangeDto)
+
+        then: "should throw now exception and invoke changePassword() method once"
+        noExceptionThrown()
+        1 * userRepository.changePassword(_ as String, _ as String)
+
+        where:
+        no | userName | oldPassword | newPassword | newPasswordConfirm
+        1  | "joe"    | "password"  | "qwerty"    | "qwerty"
+        2  | "joe"    | "password"  | "123456"    | "123456"
+    }
+
+    def "should throw exception while trying to change password with wrong data"() {
+
+        given: "Mock all required methods"
+        userRepository.findUserByUserName(_ as String) >> Optional.of(prepareUser())
+        passwordEncoder.matches(_ as String, _ as String) >> passwordEncoderMatch
+        passwordEncoder.encode(_ as String) >> "some encrypted password"
+        userService.passwordEncoder = passwordEncoder
+
+
+        and: "prepare prepareChangePasswordDto object"
+        def passwordChangeDto = prepareChangePasswordDto(oldPassword, newPassword, newPasswordConfirm)
+
+        when: "try to change password"
+        userService.changePassword(userName, passwordChangeDto)
+
+        then: "should throw exception and not change password"
+        thrown(WrongPayloadException.class)
+        0 * userRepository.changePassword(_ as String, _ as String)
+
+        where:
+        no | userName | oldPassword | newPassword | newPasswordConfirm | passwordEncoderMatch
+        1  | "joe"    | "password"  | "qwerty2"   | "qwerty"           | true
+        2  | "joe"    | "password"  | "1234562"   | "123456"           | true
+        3  | "joe"    | "password"  | "123456"    | "123456"           | false
+    }
+
+    def static prepareChangePasswordDto(String oldPassword, String newPassword, String newPasswordConfirm) {
+        def passwordChangeDto = new PasswordChangeDto()
+        passwordChangeDto.setOldPassword(oldPassword)
+        passwordChangeDto.setNewPassword(newPassword)
+        passwordChangeDto.setNewPasswordConfirm(newPasswordConfirm)
+        passwordChangeDto
+    }
+
+    def static prepareUser() {
+        def user = new User()
+        user.setUserName("Joe")
+        user.setPassword('{bcrypt}\$2a\$12$feoSS.Dx/rRdQWfWHeWYZu8txsYcy8Dxt89MWd9U3O8r4CaAKKY3S')
+        // Password = password
+        user
+    }
+}
+
+```
+Aby uruchomić test, konieczne było utworzenie protez ("mocks") dla wykorzystanych obiektów:
+```groovy
+    PasswordEncoder passwordEncoder = Mock()
+    UserRepository userRepository = Mock()
+    UserService userService = new UserService(userRepository)
+```
+
 # 16.2 Przypadki testowe dla testów manualnych
 
 ### 16.2.1. Logowanie do aplikacji
@@ -545,7 +625,7 @@ def "should check if data ranges equals correctly - test #no"() {
 
 **Priorytet:** wysoki  
 **Wykonanie** manualne  
-**Szacowany czas:** 1 min dla każdej roli + 2 minuty na sprawdzenie danych w bazie.  
+**Szacowany czas:** 1 min. dla każdej roli + 2 min. na sprawdzenie danych w bazie.  
 **Uwagi:** powtórzyć dla każdej roli [user, manager, admin]
 
 ### 16.2.3. Rejestracja
@@ -563,7 +643,7 @@ def "should check if data ranges equals correctly - test #no"() {
 
 **Priorytet:** wysoki  
 **Wykonanie** manualne  
-**Szacowany czas:** 1 min  
+**Szacowany czas:** 1 min.
 **Uwagi:** Brak
 
 ### 16.2.4. Wysyłanie wiadomości przez niezalogowanego użytkownika
@@ -585,17 +665,17 @@ def "should check if data ranges equals correctly - test #no"() {
 **Uwagi:** Brak
 
 # 17. Diagramy komponentów
-## 17.1. Diagram główynych komponentów systemu
+## 17.1. Diagram głównych komponentów systemu
 ![Diagram komponentów](images/componentDiagram.png)
 Powyższy diagram komponentów przedstawia główne komponenty systemu z wyłączeniem bazy danych.
 
 # 18. Wdrożenie
 ## 18.1. Diagramy wdrożenia
-### 18.1.1. Wdrożenie z wykorzysaniem kontenera Docker
+### 18.1.1. Wdrożenie z wykorzystaniem kontenera Docker
 ![Diagram wrożnia](images/deploymentDiagram.png)
 
 ## 18.2. Wymagania systemowe
-Aplikacja napisana została w wielopratformowym języku Java. Działa na każdym systemie z systemem operacyjnym Windows, Linux czy MacOS.
+Aplikacja napisana została w wieloplatformowym języku Java. Działa na każdym systemie z systemem operacyjnym Windows, Linux czy MacOS.
 Poniżej przedstawiono szczegółowe wymagania systemowe.
 
 Wymagania systemowe:
@@ -604,7 +684,7 @@ Wymagania systemowe:
 * Opcjonalnie zainstalowane oprogramowanie Docker. Zalecana wersja 20.10.10 lub wyższa.
 
 ## 18.3. Instalacja z wykorzystaniem pliku jar
-Skopiowac plik na serwer oraz uruchomić komendę:
+Skopiować plik na serwer oraz uruchomić komendę:
 
 `java -jar nazwa_pliku.jar`
 
@@ -698,7 +778,7 @@ numer strony znajdujący się pod wynikami wyszukiwania.
 
 W celu złożenia rezerwacji musimy posiadać konto w serwisie. Po rejestracji lub zalogowaniu (kroki 19.1 i 19.2) należy podobnie jak w kroku 19.3, kliknąć zakładkę `Cars` [1] dzięki której uzyskamy dostęp do pełnej listy pojazdów.
 W celu zarezerwowania pojazdu należy najpierw określić termin, w jakim chcielibyśmy dokonać rezerwacji [2].
-Następnie wybrać dostępny w tym terminie pojazd naciskając przycisk `Book` [3],  dzięki któremu uzyskamy dostęp do podglądu potwierdzenia naszej rezerwacji.
+Następnie wybrać dostępny w tym terminie pojazd naciskając przycisk `Book` [3], dzięki któremu uzyskamy dostęp do podglądu potwierdzenia naszej rezerwacji.
 
 ![Rezerwacja](images/reservation.png)
 
@@ -708,7 +788,7 @@ Po dokładnym zapoznaniu się z danymi rezerwacji należy wcisnąć przycisk `Su
 
 ## 19.5 Przeglądanie rezerwacji oraz usuwanie rezerwacji
 
-Aby wyświetlić listę złożonych rezerwacji należy po zalogowaniu lub rejestracji wejść w zakładkę `Reservations` [1].
+Aby wyświetlić listę złożonych rezerwacji, należy po zalogowaniu lub rejestracji wejść w zakładkę `Reservations` [1].
 Wyświetlona zostanie lista rezerwacji złożonych na tym koncie, nazwa pojazdu, czas rezerwacji oraz jej koszt.
 W celu zobaczenia dokładnych danych pojedynczej rezerwacji należy nacisnąć przycisk `View Details` [2]. 
 Program pozwala również na anulowanie zamówienia za pomocą przycisku `Cancel Reservation` [3].
@@ -743,7 +823,7 @@ W celu edycji danych pojazdu trzeba udać się do panelu `Cars` [1], a następni
 
 ![Lista pojazdów - Edycja](images/editCarsView.png)
 
-Po wykonaniu tych kroków uzyskujemy widok edycji pojazdu. Aby edytować pojazd należy uzupełnić formularz, a następnie zatwierdzić go przyciskiem `Submit` [1]. W przypadku chęci powrotu do danych początkowych na należy nacisnąć przycisk `Reset` [2].
+Po wykonaniu tych kroków uzyskujemy widok edycji pojazdu. Aby edytować pojazd, należy uzupełnić formularz, a następnie zatwierdzić go przyciskiem `Submit` [1]. W przypadku chęci powrotu do danych początkowych na należy nacisnąć przycisk `Reset` [2].
 
 ![Edycja pojazdu](images/editCar.png)
 
@@ -755,7 +835,7 @@ W celu usunięcia pojazdu należy wejść w panel `Cars` [1], a następnie wcisn
 
 ### 19.7.3 Przeglądanie rezerwacji wszystkich użytkowników 
 
-Aby wyświetlić listę wszystkich rezerwacji użytkowników należy wejść w panel `Reservations` [1]. Na ekranie wyświetli się lista zarezerwowanych samochodów wraz z loginem użytkownika, który zarezerwował dany pojazd. 
+Aby wyświetlić listę wszystkich rezerwacji użytkowników, należy wejść w panel `Reservations` [1]. Na ekranie wyświetli się lista zarezerwowanych samochodów wraz z loginem użytkownika, który zarezerwował dany pojazd. 
 
 ![Lista rezerwacji pojazdów](images/reservationsListManager.png)
 
@@ -778,7 +858,7 @@ W celu usunięcia rezerwacji należy wejść w panel `Reservations` [1], a nast�
 ### 19.7.6 Odczytywanie i zarządzanie wiadomościami
 
 Menadżer ma możliwość odczytywania wiadomości od użytkowników dotyczących wynajmu. W celu dostania się do panelu wiadomości należy nacisnąć `Messages` [1], a następne z rozsuwanej listy wybrać `View Messages` [2].
-W przypadku chęci przeczytania pełnej treści wiadomości należy nacisnąć przycisk `View` [3]*, a w przypadku chęci usunięcia wiadomości należy nacisnąc przycisk `Delete` [4].
+W przypadku chęci przeczytania pełnej treści wiadomości należy nacisnąć przycisk `View` [3]*, a w przypadku chęci usunięcia wiadomości należy nacisnąć przycisk `Delete` [4].
 
 
 **Uwaga**: W wersji prezentacyjnej podgląd wiadomości nie został zaimplementowany.
@@ -805,7 +885,7 @@ Wszelkie zmiany należy zatwierdzić przyciskiem `Submit` [1], natomiast w przyp
 
 #### 18.1.1.2 Edycja użytkownika
 
-Po użyciu przycisku `Edit` na wybranym użytkowniku wyświetla się formularz edycji, w którym możemy dookonać potrzebnych nam zmian.
+Po użyciu przycisku `Edit` na wybranym użytkowniku wyświetla się formularz edycji, w którym możemy dokonać potrzebnych nam zmian.
 Każdą zmianę należy zatwierdzić przyciskiem `Submit` [1], natomiast w przypadku chęci wyczyszczenia formularza należy użyć przycisku `Reset` [2].
 
 ![Edycja użytkownika](images/editUserAdmin.png)
