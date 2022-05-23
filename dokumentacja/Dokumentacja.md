@@ -28,65 +28,67 @@ Poprzez informatyzację wszystkich procesów obsługi klienta aplikacja zapewni 
 
 
 # 3. Szczegółowy opis wymagań
-## 3.1. Wymagania funkcjonalne zawarte w wersji MVP
-**UWAGA**  
-W celu uproszczenia wdrożenia aplikacji, autorzy zdecydowali się zastosować konteneryzację, a co za tym idzie udostępnić aplikacje jak obraz Dockera.
+## 3.1. Wymagania funkcjonalne do zaimplementowania w wersji MVP
+
 --------------------------------------
 System umożliwia:
 * wyszukiwanie dostępnych w określonym terminie samochodów, wg zadanych kryteriów takich jak:
     * marka,
-    * model
-* wyświetlenie szczegółowych informacji na temat wybranego pojazdu,
-* rejestrację użytkowników,
-* logowanie użytkowników
-* zarządzanie użytkownikami w trybie administratora (dodawanie/edycja/usuwanie)
-* przeglądanie pojazdów w trybie gościa,
-* dokonanie rezerwacji przez zarejestrowanego i zalogowanego użytkownika,
-* odwołanie rezerwacji przez osobę zarządzającą,
-* rejestrację użytkowników oraz modyfikację danych przez użytkowników,
-* przeglądanie własnych rezerwacji,
-* dodawanie/usuwanie oraz modyfikacje pojazdów przez osobę zarządzającą,
-* przeglądanie listy zarezerwowanych oraz wypożyczonych samochodów przez osobę zarządzającą,
-* obsługę płatności,
-* generowanie i pobieranie potwierdzenia rezerwacji w formacie pdf
-* kontaktowanie się z obsługą wypożyczalni poprzez formularz kontaktowy
-* wysyłanie wiadomości do obsługi serwisu
-* wysyłanie wiadomości do obsługi w trybie gościa zabezpieczone reCaptcha v2
-* walidacja dla wszystkich wprowadzonych pól wraz z systemem alertów/ostrzeżeń o źle wprowadzonych danych (pola o szczególnej składni jak kod pocztowy czy email walidowane z wykorzystaniem wyrażeń regularnych)
-* zabezpieczenie ścieżek URL (dostęp do ścieżki tylko dla użytkowników uprawnionych)
-* przypisywanie ról dla użytkowników przez Administratora
-* Bezpieczeństwo danych użytkownika np. poprzez wykorzystanie protokołu HTTPS
+    * model;
+* wyświetlenie szczegółowych informacji na temat wybranego pojazdu;
+* rejestrację użytkowników;
+* logowanie użytkowników;
+* zarządzanie użytkownikami w trybie *Administratora* (dodawanie/edycja/usuwanie);
+* przeglądanie pojazdów w trybie *Gościa*;
+* dokonanie rezerwacji przez zarejestrowanego i zalogowanego użytkownika;
+* odwołanie rezerwacji przez osobę zarządzającą;
+* rejestrację użytkowników oraz modyfikację danych przez użytkowników;
+* przeglądanie własnych rezerwacji;
+* dodawanie/usuwanie oraz modyfikacje pojazdów przez osobę zarządzającą;
+* przeglądanie listy zarezerwowanych oraz wypożyczonych samochodów przez osobę zarządzającą;
+* obsługę płatności;
+* generowanie i pobieranie potwierdzenia rezerwacji w formacie pdf;
+* kontaktowanie się z obsługą wypożyczalni poprzez formularz kontaktowy;
+* wysyłanie wiadomości do obsługi serwisu;
+* wysyłanie wiadomości do obsługi w trybie *Gościa* zabezpieczone reCaptcha v2;
+* walidacja dla wszystkich wprowadzonych pól wraz z systemem alertów/ostrzeżeń o źle wprowadzonych danych (pola o szczególnej składni jak kod pocztowy czy email walidowane z wykorzystaniem wyrażeń regularnych);
+* zabezpieczenie ścieżek URL (dostęp do ścieżki tylko dla użytkowników uprawnionych);
+* przypisywanie ról dla użytkowników przez *Administratora*;
+* Bezpieczeństwo danych użytkownika np. poprzez wykorzystanie protokołu HTTPS;
 
 ## 3.2. Wymagania funkcjonalne do zaimplementowania w przyszłych wersjach oprogramowania
 * rozszerzenie wyszukiwania dostępnych samochodów o kryteria takie jak:
-    * rodzaj skrzyni biegów
-    * rodzaj silnika (benzyna/diesel/elektryczny)
-* zmiana statusu z rezerwacji na wypożyczenie
-* generowanie faktur dla rezerwacji
-* generowanie korekty faktury w przypadku odwołania zlecenia
+    * rodzaj skrzyni biegów,
+    * rodzaj silnika (benzyna/diesel/elektryczny);
+* zmiana statusu z rezerwacji na wypożyczenie;
+* generowanie faktur dla rezerwacji;
+* generowanie korekty faktury w przypadku odwołania zlecenia.
 
 ## 3.3. Wymaganie niefunkcjonalne
 * GUI:
-    * Aplikacja webowa z interfejsem dla przeglądarki internetowej
-    * Spójny wygląd zgodnie z zaakceptowanym szablonem (spójna kolorystyka, menu, zachowanie się systemu)
+    * aplikacja webowa z interfejsem dla przeglądarki internetowej,
+    * spójny wygląd zgodnie z zaakceptowanym szablonem (spójna kolorystyka, menu, zachowanie się systemu).
 * Dostępność:
-    * Obsługa języków: polski
-    * Obsługa przeglądarek: Chrome, Safari, Edge
+    * obsługa języków: polski,
+    * obsługa przeglądarek: Chrome, Safari, Edge.
 * Niezawodność:
     * System dostępny 24/7. MTFB = 1000h.
 * Bezpieczeństwo:
     * aplikacja jest uruchamiana tylko i wyłącznie używając protokołu https, który zapobiega przechwytywaniu i zmienianiu przesyłanych danych. A dodatkowo zaimplementowane zostało: 
-      * haszowanie haseł
-      * automatyczne wylogowanie użytkownika po upływie 10 minut
+      * haszowanie haseł,
+      * automatyczne wylogowanie użytkownika po upływie 10 minut,
       * spełnia wymagania Ustawy z dnia 10 maja 2018 r. o
-        ochronie danych osobowych (RODO)
+        ochronie danych osobowych (RODO).
 * Tabele danych do wyświetlenia, w szczególności dla danych filtrowanych ładowane bez przeładowywania całej strony. Architektura typu Single Page Application nie jest wymagana, dopuszczalna jest architektura hybrydowa.
 
 ## 3.4. Ograniczenia
-* System musi być instalowany z obrazu Dockera pobieranego online
-* System musi być zgodny z ustawą o ochronie danych osobowych RODO
-* System musi obsługiwać przeglądarki Chrome i Edge
+* System musi być instalowany z obrazu Dockera pobieranego online<sup>1</sup>.
+* System musi być zgodny z ustawą o ochronie danych osobowych RODO.
+* System musi obsługiwać przeglądarki Chrome i Edge.
 * MVC zbudowane na podstawie plikową bazę danych zintegrowaną z aplikacją, aby wyeliminować konieczność tworzenia osobnej bazy danych.
+
+
+<sup>1</sup> W celu uproszczenia wdrożenia aplikacji, autorzy zdecydowali się zastosować konteneryzację, a co za tym idzie udostępnić aplikacje jak obraz Dockera.
 
 ## 3.5. Architektura aplikacji
 
@@ -101,53 +103,53 @@ oraz serwis odpowiedzialny za realizację logiki biznesowej, oraz będący łąc
 ### 3.5.2. Aplikacja monolityczna / hybrydowa
 Aplikacja zostanie zbudowana jako aplikacja monolityczna. Jednakże budowa systemu umożliwia przyszłą modularyzację, poprzez dołączenie dodatkowych mikroserwisów, które byłyby odpowiedzialne za nowe grupy funkcji.
 
-### 3.5.3. Architektura warstwy frontendowej
+### 3.5.3. Architektura warstwy klienckiej (frontend)
 Frontend aplikacji zostanie stworzony z wykorzystaniem silnika szablonów Thymeleaf wspieranego przez Spring Boot. 
 Oprócz statycznych szablonów warstwa frontend będzie wyposażona w dynamiczne elementy obsługiwane za pomocą JavaScript (AJAX), które zostaną wykorzystane m.in. do budowania dynamicznych tablic
 pozwalających wspierających mechanizm wyszukiwania (filtrowania rekordów).
 
 
 # 4. Użytkownicy (Aktorzy/Role)
-1. Administrator (ang. Admin)
-- posiada uprawnienia wszystkich użytkowników, a ponadto ma możliwość zarządzania użytkownikami oraz przypisywania użytkownikom określonej roli
-2. Zarządca (ang. Manager)
-- posiada uprawnienia użytkownika oraz gościa a ponadto:
-  - posiada możliwość przeglądania wszystkich rezerwacji
-  - posiada możliwość anulowania dowolnej rezerwacji
-  - posiada możliwość modyfikacji dowolnej rezerwacji
-  - posiada możliwość złożenia rezerwacji za użytkownika (np. rezerwacja telefoniczna)
-3. Użytkownik (ang. User)
-- posiada uprawnienia gościa, a ponadto:
-  - posiada możliwość dokonywania rezerwacji
-  - posiada możliwość opłacania rezerwacji
-  - posiada możliwość przeglądania swoich rezerwacji
-  - posiada możliwość generowania faktur
-4. Gość (ang. Guest)
+1. *Administrator* (ang. Admin<sup>1</sup>)
+- posiada uprawnienia wszystkich użytkowników, a ponadto ma możliwość zarządzania *Użytkownika*mi oraz przypisywania użytkownikom określonej roli.
+2. *Zarządca* (ang. Manager<sup>1</sup>)
+- posiada uprawnienia *Użytkownika* oraz *Gościa* a ponadto:
+  - posiada możliwość przeglądania wszystkich rezerwacji,
+  - posiada możliwość anulowania dowolnej rezerwacji,
+  - posiada możliwość modyfikacji dowolnej rezerwacji,
+  - posiada możliwość złożenia rezerwacji za *Użytkownika* (np. rezerwacja telefoniczna).
+3. *Użytkownik* (ang. User<sup>1</sup>)
+- posiada uprawnienia *Gościa*, a ponadto:
+  - posiada możliwość dokonywania rezerwacji,
+  - posiada możliwość opłacania rezerwacji,
+  - posiada możliwość przeglądania swoich rezerwacji,
+  - posiada możliwość generowania faktur<sup>2</sup>.
+4. *Gość* (ang. Guest<sup>1</sup>)
 - posiada możliwość wyszukiwania pojazdów w wybranym terminie, spełniających wybrane kryteria.
 
---------------------------------------
-**UWAGA**  
-W związku z przewidywaną dwujęzycznością projektu, w diagramach dokumentacji zostały użyte określenia w stosunku do ról zarówno w języku polskim, jak i angielskim.
+
+<sup>1</sup> W związku z przewidywaną dwujęzycznością projektu, w diagramach dokumentacji zostały użyte określenia w stosunku do ról zarówno w języku polskim, jak i angielskim.  
+<sup>2</sup> Opcja generowania faktur nie jest zaimplementowana w wersji MVP. Będzie zaimplementowana w kolejnych wersjach aplikacji.
 
 # 5. Diagramy przypadków użycia (wybrane przykłady)
 ![Diagram Przypadków Użycia](./images/useCaseDiagramv2.png "Diagram Przypadków użycia")
 
 # 6. Scenariusze przypadków użycia
 Poniżej przedstawiono wybrane scenariusze przypadków użycia spośród wszystkich scenariuszy:
-- logowanie do systemu
-- rejestracja użytkownika
-- wysłanie wiadomości do obsługi
-- odczyt wiadomości przez administratora/zarządcę
-- usuwanie wiadomości przez administratora/zarządcę
-- wyszukiwanie samochodów
-- rezerwacja samochodu
-- wyświetlanie listy wszystkich rezerwacji przez administratora/zarządcę
-- przeglądanie własnych rezerwacji przez użytkownika
-- zmiana danych własnych użytkownika
-- tworzenie użytkownika przez administratora
-- edycja dowolnego użytkownika przez administratora
-- usuwanie dowolnego użytkownika przez administratora
-- wyświetlanie listy wypożyczeń
+- logowanie do systemu,
+- rejestracja użytkownika,
+- wysłanie wiadomości do obsługi,
+- odczyt wiadomości przez *Administratora*/*Zarządcę*,
+- usuwanie wiadomości przez *Administratora*/*Zarządcę*,
+- wyszukiwanie samochodów,
+- rezerwacja samochodu,
+- wyświetlanie listy wszystkich rezerwacji przez *Administratora*/*Zarządcę*,
+- przeglądanie własnych rezerwacji przez użytkownika,
+- zmiana danych własnych użytkownika,
+- tworzenie użytkownika przez *Administratora*,
+- edycja dowolnego użytkownika przez *Administratora*,
+- usuwanie dowolnego użytkownika przez *Administratora*,
+- wyświetlanie listy wypożyczeń.
 
 ## 6.1. Logowanie do systemu
 ![Scenariusz Przypadku Użycia](./images/useCaseScenario1.png "Scenariusz 1")
@@ -169,7 +171,7 @@ Poniżej przedstawiono wybrane scenariusze przypadków użycia spośród wszystk
 
 ## 7.2. Model logiczny (ERD)
 W ramach normalizacji bazy danych została stworzona tabela `Address`.
-Jednakże tabela ta nie występuje w wersji MVP aplikacji i zostanie zaimplementowana w kolejnych wersjach.
+Tabele `Address` oraz `Invoice` ta nie występują w wersji MVP aplikacji. Zostanią one zaimplementowana w kolejnych wersjach.
 
 ![Model logiczny](images/erd.png)
 
@@ -178,20 +180,20 @@ Jednakże tabela ta nie występuje w wersji MVP aplikacji i zostanie zaimplement
 
 # 8. Diagramy czynności (wybrane przykłady)
 Poniżej przedstawiono wybrane diagramy czynności. Wszystkie diagramy znajdują się na poniższej liście:
-- logowanie do systemu
-- rejestracja użytkownika
-- wysłanie wiadomości do obsługi
-- odczyt wiadomości przez administratora/zarządcę
-- usuwanie wiadomości przez administratora/zarządcę
-- wyszukiwanie samochodów
-- rezerwacja samochodu
-- wyświetlanie listy wszystkich rezerwacji przez administratora/zarządcę
-- przeglądanie własnych rezerwacji przez użytkownika
-- zmiana danych własnych użytkownika
-- tworzenie użytkownika przez administratora
-- edycja dowolnego użytkownika przez administratora
-- usuwanie dowolnego użytkownika przez administratora
-- wyświetlanie listy wypożyczeń
+- logowanie do systemu,
+- rejestracja użytkownika,
+- wysłanie wiadomości do obsługi,
+- odczyt wiadomości przez *Administratora*/*Zarządcę*,
+- usuwanie wiadomości przez *Administratora*/*Zarządcę*,
+- wyszukiwanie samochodów,
+- rezerwacja samochodu,
+- wyświetlanie listy wszystkich rezerwacji przez *Administratora*/*Zarządcę*,
+- przeglądanie własnych rezerwacji przez użytkownika,
+- zmiana danych własnych użytkownika,
+- tworzenie użytkownika przez *Administratora*,
+- edycja dowolnego użytkownika przez *Administratora*,
+- usuwanie dowolnego użytkownika przez *Administratora*,
+- wyświetlanie listy wypożyczeń.
 
 ## 8.1. Logowanie do systemu
 ![Logowanie do systemu](images/signIiActivityDiagram.png)
@@ -199,7 +201,7 @@ Poniżej przedstawiono wybrane diagramy czynności. Wszystkie diagramy znajdują
 ## 8.2. Zmień dane użytkownika
 ![Zmiana danych użytkownika](images/changeUserDataActivityDiagram.png)
 
-## 8.3. Zmiana danych pojazdu (tylko Administrator/Zarządca)
+## 8.3. Zmiana danych pojazdu (tylko *Administrator*/*Zarządca*)
 ![Zmiana danych pojazdu](images/changeCarData.png)
 
 ## 8.4 Wyszukiwanie samochodów
@@ -210,27 +212,27 @@ Poniżej przedstawiono wybrane diagramy czynności. Wszystkie diagramy znajdują
 
 # 9. Diagramy sekwencji (wybrane przykłady)
 Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują się na poniższej liście:
-- logowanie do systemu
-- rejestracja użytkownika
-- wysłanie wiadomości do obsługi
-- odczyt wiadomości przez administratora/zarządcę
-- usuwanie wiadomości przez administratora/zarządcę
-- wyszukiwanie samochodów
-- rezerwacja samochodu
-- wyświetlanie listy wszystkich rezerwacji przez administratora/zarządcę
-- przeglądanie własnych rezerwacji przez użytkownika
-- zmiana danych własnych użytkownika
-- tworzenie użytkownika przez administratora
-- edycja dowolnego użytkownika przez administratora
-- usuwanie dowolnego użytkownika przez administratora
-- wyświetlanie listy wypożyczeń
+- logowanie do systemu,
+- rejestracja użytkownika,
+- wysłanie wiadomości do obsługi,
+- odczyt wiadomości przez *Administratora*/*Zarządcę*,
+- usuwanie wiadomości przez *Administratora*/*Zarządcę*,
+- wyszukiwanie samochodów,
+- rezerwacja samochodu,
+- wyświetlanie listy wszystkich rezerwacji przez *Administratora*/*Zarządcę*,
+- przeglądanie własnych rezerwacji przez użytkownika,
+- zmiana danych własnych użytkownika,
+- tworzenie użytkownika przez *Administratora*,
+- edycja dowolnego użytkownika przez *Administratora*,
+- usuwanie dowolnego użytkownika przez *Administratora*,
+- wyświetlanie listy wypożyczeń.
 
 ## 9.1. Logowanie do systemu
 ![Logowanie do systemu](images/loginToSystemSequenceDiagram.png)
 
-**Uwaga** Klasa AuthorizationService pochodzi z frameworku Spring Boot<sup>1.
+**Uwaga** Klasa `AuthorizationService` to klasa należąca do Spring Boot Security, tj. zestawu bibliotek pozwalających na obsługę funkcji bezpieczeństwa aplikacji.
 
-## 9.2. Wyświetlanie listy wszystkich rezerwacji przez administratora/zarządcę
+## 9.2. Wyświetlanie listy wszystkich rezerwacji przez *Administratora*/*Zarządcę*
 ![Rezerwacje użytkownika](images/adminReservationsSequenceDiagram.png)
 
 ## 9.3. Wyszukiwanie samochodów
@@ -239,7 +241,7 @@ Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują 
 ## 9.4 Usuwanie wiadomości
 ![Usuwanie wiadomości](images/deleteSequenceDiagram.png)
 
-## 9.5 Usuwanie dowolnego użytkownika przez administratora
+## 9.5 Usuwanie dowolnego użytkownika przez *Administratora*
 ![Usuwanie użytkownika](images/deleteUserSequenceDiagram.png)
 
 ---
@@ -250,14 +252,14 @@ Poniżej przedstawiono wybrane diagramy sekwencji. Wszystkie diagramy znajdują 
 ![Zarządzanie użytkownikami](images/userManagementStateMachineDiagram.png)
 ## 10.2. Status/rola zalogowanego użytkownika (tylko Administrator)
 ![Role zalogowanego użytkownika](images/UserRoleMachineStateDiagram.png)
-## 10.3. Zarządzanie wiadomościami (tylko Zarządca/Administrator)
+## 10.3. Zarządzanie wiadomościami (tylko *Zarządca*/*Administrator*)
 ![Zarządzanie wiadomościami](images/messageManagementStateMachineDiagram.png)
 ## 10.4. Logowanie do systemu
 ![Logowanie do systemu](images/loginStateDiagram.png)
 ## 10.5. Rejestracja użytkownika
 ![Rejestracja użytkownika](images/registrationStateDiagram.png)
 
-**UWAGA** Diagram rejestracji przedstawia sposób rejestracji dla zwykłego użytkownika. Wszelkie role specjalne (Zarządca/Administrator) są przypisywane ręcznie przez administratora
+**UWAGA** Diagram rejestracji przedstawia sposób rejestracji dla zwykłego użytkownika. Wszelkie role specjalne (*Zarządca*/*Administrator*) są przypisywane ręcznie przez *Administratora*
 
 
 # 11. Diagram klas
@@ -627,7 +629,7 @@ Aby uruchomić test, konieczne było utworzenie protez ("mocks") dla wykorzystan
 **Cel:** Sprawdzenie możliwości zalogowania dla użytkowników o różnych uprawnieniach
 
 **Warunki początkowe** 
-- W aplikacji istnieją aktywne konta użytkowników dla każdej roli tj. użytkownika, administratora i zarządcę.
+- W aplikacji istnieją aktywne konta użytkowników dla każdej roli tj. użytkownika, *Administratora* i *Zarządcę*.
 - Użytkownik znajduje się na ekranie powitalnym aplikacji
 
 | Krok                           | Rezultat                       |
@@ -664,7 +666,7 @@ Aby uruchomić test, konieczne było utworzenie protez ("mocks") dla wykorzystan
 **Uwagi:** powtórzyć dla każdej roli [user, manager, admin]
 
 ### 15.2.3. Rejestracja
-**Cel:** Sprawdzenie możliwości rejestracji gościa
+**Cel:** Sprawdzenie możliwości rejestracji *Gościa*
 
 **Warunki początkowe**
 - Wejście na stronę jako użytkownik niezarejestrowany w bazie.
@@ -754,14 +756,14 @@ Wymagać to może, odpowiednich kroków w zależności od konkretnej przeglądar
 4. Składanie rezerwacji
 5. Przeglądanie rezerwacji oraz usuwanie rezerwacji
 6. Wysyłanie wiadomości
-7. Funkcje dostępne dla zarządcę
+7. Funkcje dostępne dla *Zarządcę*
    1. Edycja pojazdów 
    2. Usuwanie pojazdów 
    3. Przeglądanie rezerwacji wszystkich użytkowników 
    4. Edycja rezerwacji 
    5. Usuwanie rezerwacji 
    6. Odczytywanie wiadomości
-8. Funkcje dostępne dla administratora
+8. Funkcje dostępne dla *Administratora*
    1. Zarządzanie użytkownikami
       1. Dodawanie użytkownika
       2. Edycja użytkownika
@@ -770,7 +772,7 @@ Wymagać to może, odpowiednich kroków w zależności od konkretnej przeglądar
 ## 18.1. Rejestrowanie użytkownika
 
 W celu rejestracji należy wejść na stronę aplikacji: https://ubuntu.llseremak.p3.tiktalik.io/car-rental  
-Po przekierowaniu do strony startowej należy kliknąć zakładkę **Sign Up** w głównym menu w celu przekierowania do formularza rejestracyjnego.
+Po przekierowaniu do strony startowej należy kliknąć zakładkę `Sign Up` w głównym menu w celu przekierowania do formularza rejestracyjnego.
 
 ![Strona startowa](images/landingPage.png)
 
@@ -793,7 +795,7 @@ Po wpisaniu prawidłowych danych rejestracyjnych zostanie utworzone nowe konto, 
 ## 18.2. Logowanie do systemu
 
 W celu zalogowania się do aplikacji należy wejść na główną stronę aplikacji, 
-a następnie kliknąć zakładkę **Sign In** w głównym menu, w celu przekierowania do formularza logowania.
+a następnie kliknąć zakładkę `Sign In` w głównym menu, w celu przekierowania do formularza logowania.
 Następnie należy wpisać prawidłowy login oraz hasło. 
 
 ![Logowanie do systemu](images/SingingIn.png)
@@ -840,7 +842,7 @@ Program pozwala również na anulowanie zamówienia za pomocą przycisku `Cancel
 Po naciśnięciu przycisku `View Details` uzyskamy dostęp do panelu pozwalającego na podgląd danych dotyczących tylko jednego wybranego zamówienia.
 Panel ten pozwala nam również na anulowanie zlecenia `Cancel Reservation` [1] oraz wygenerowanie pliku PDF z wszystkimi danymi tego zlecenia `Generate PDF` [1].
 
-**Uwaga**: Panel zawiera również funkcję `Edit` [3] pozwalającą na edytowanie zlecenia. Funkcja ta jest dostępna tylko dla Zarządcy lub Administratora.
+**Uwaga**: Panel zawiera również funkcję `Edit` [3] pozwalającą na edytowanie zlecenia. Funkcja ta jest dostępna tylko dla Zarządcy lub *Administratora*.
 
 ![Detale rezerwacji](images/reservationDetails.png)
 
@@ -855,7 +857,7 @@ W razie próby wysłania wiadomości jako **zalogowany użytkownik**, panel ten 
 
 ![Wysyłanie wiadomości jako użytkownik](images/sendingMessageUser.png)
 
-## 18.7. Funkcje dostępne dla zarządcę
+## 18.7. Funkcje dostępne dla *Zarządcę*
 
 Wszystkie funkcje przedstawione w tym rozdziale jest niedostępne dla zwykłego użytkownika. W celu ich obsługi przez osobę zarządzającą została stworzona rola zarządcy.
 
@@ -899,7 +901,7 @@ W celu usunięcia rezerwacji należy wejść w panel `Reservations` [1], a nast�
 
 ### 18.7.6 Odczytywanie i zarządzanie wiadomościami
 
-Zarządca ma możliwość odczytywania wiadomości od użytkowników dotyczących wynajmu. W celu dostania się do panelu wiadomości należy nacisnąć `Messages` [1], a następne z rozsuwanej listy wybrać `View Messages` [2].
+*Zarządca* ma możliwość odczytywania wiadomości od użytkowników dotyczących wynajmu. W celu dostania się do panelu wiadomości należy nacisnąć `Messages` [1], a następne z rozsuwanej listy wybrać `View Messages` [2].
 W przypadku chęci przeczytania pełnej treści wiadomości należy nacisnąć przycisk `View` [3]*, a w przypadku chęci usunięcia wiadomości należy nacisnąć przycisk `Delete` [4].
 
 
@@ -907,7 +909,7 @@ W przypadku chęci przeczytania pełnej treści wiadomości należy nacisnąć p
 
 ![Podgląd wiadomości](images/messagesView.png)
 
-## 18.8 Funkcje dostępne dla administratora
+## 18.8 Funkcje dostępne dla *Administratora*
 
 Administrator to specjalny użytkownik zawierający oprócz wszystkich funkcji poniżej dostęp dwóch specjalnych funkcji przeznaczonych tylko dla niego.
 
