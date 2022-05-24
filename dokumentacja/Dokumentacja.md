@@ -1,4 +1,3 @@
-# Wstęp
 Pliki źródłowe niniejszej dokumentacji w formacie Markdown są dostępne pod poniższym adresem:  
 https://github.com/lukaszse/car-rental/blob/master/dokumentacja/Dokumentacja.md
 
