@@ -1,5 +1,12 @@
+# Wstęp
+Pliki źródłowe niniejszej dokumentacji w formacie Markdown są dostępne pod poniższym adresem:  
+https://github.com/lukaszse/car-rental/blob/master/dokumentacja/Dokumentacja.md
+
+Działająca wersja MVP aplikacji dostępna jest pod adresem:  
+https://ubuntu.llseremak.p3.tiktalik.io/car-rental/home
+
 # 1. Cel projektu
-Celem projektu jest zaprojektowanie oraz implementacja aplikacji webowej wspomagającej procesy obsługi zleceń związanych z wypożyczaniem samochodów osobowych dla klientów indywidualnych.
+Celem projektu jest zaprojektowanie oraz implementacja aplikacji webowej (w wersji MVP) wspomagającej procesy obsługi zleceń związanych z wypożyczaniem samochodów osobowych dla klientów indywidualnych.
 Poprzez informatyzację wszystkich procesów obsługi klienta aplikacja zapewni szereg korzyści m.in.:
 * redukcję kosztów obsługi zamówień poprzez ich całkowitą automatyzację,
 * zwiększenie wydajności obsługi klientów,
@@ -16,6 +23,7 @@ Poprzez informatyzację wszystkich procesów obsługi klienta aplikacja zapewni 
 * **Thymeleaf** — silnik szablonów html<sup>6</sup>.
 * **H2** — baza danych SQL przechowująca dane w pliku lub w pamięci operacyjnej, stosowana do testów lub prostych aplikacji<sup>7</sup>.
 * **Spock** — framework do tworzenia testów jednostkowych, wykorzystujący język Groovy<sup>8</sup>.
+* **MVP** — (ang. Minimum Viable Product) - produkt o minimalnej funkcjonalności potrzebnej do wprowadzenia na rynek<sup>9</sup>.
 ----------------------------------------------------------------------------
 <sup>1</sup> https://pl.wikipedia.org/wiki/MTBF  
 <sup>2</sup> https://www.docker.com/  
@@ -25,12 +33,13 @@ Poprzez informatyzację wszystkich procesów obsługi klienta aplikacja zapewni 
 <sup>6</sup> https://www.thymeleaf.org/  
 <sup>7</sup> https://www.h2database.com/  
 <sup>8</sup> https://spockframework.org/  
+<sup>9</sup> https://www.biznesowerewolucje.com/mvp-minimum-viable-product-praktycznie/
+
 
 
 # 3. Szczegółowy opis wymagań
 ## 3.1. Wymagania funkcjonalne do zaimplementowania w wersji MVP
 
---------------------------------------
 System umożliwia:
 * wyszukiwanie dostępnych w określonym terminie samochodów, wg zadanych kryteriów takich jak:
     * marka,
@@ -83,6 +92,7 @@ System umożliwia:
 
 ## 3.4. Ograniczenia
 * System musi być instalowany z obrazu Dockera pobieranego online<sup>1</sup>.
+* Wszystkie podstrony aplikacji działające wyłącznie przez HTTPS
 * System musi być zgodny z ustawą o ochronie danych osobowych RODO.
 * System musi obsługiwać przeglądarki Chrome i Edge.
 * MVC zbudowane na podstawie plikową bazę danych zintegrowaną z aplikacją, aby wyeliminować konieczność tworzenia osobnej bazy danych.
@@ -110,13 +120,16 @@ pozwalających wspierających mechanizm wyszukiwania (filtrowania rekordów).
 
 
 # 4. Użytkownicy (Aktorzy/Role)
+
+## 4.1 Uprawnienia użytkowników
+W systemie funkcjonować będą użytkownicy o następujących rolach:
 1. *Administrator* (ang. Admin<sup>1</sup>)
 - posiada uprawnienia wszystkich użytkowników, a ponadto ma możliwość zarządzania *Użytkownika*mi oraz przypisywania użytkownikom określonej roli.
 2. *Zarządca* (ang. Manager<sup>1</sup>)
 - posiada uprawnienia *Użytkownika* oraz *Gościa* a ponadto:
   - posiada możliwość przeglądania wszystkich rezerwacji,
-  - posiada możliwość anulowania dowolnej rezerwacji,
-  - posiada możliwość modyfikacji dowolnej rezerwacji,
+  - posiada możliwość anulowania dowolnej rezerwacji (swojej lub innego użytkownika),
+  - posiada możliwość modyfikacji dowolnej rezerwacji (w imieniu siebie lub innego użytkownika),
   - posiada możliwość złożenia rezerwacji za *Użytkownika* (np. rezerwacja telefoniczna).
 3. *Użytkownik* (ang. User<sup>1</sup>)
 - posiada uprawnienia *Gościa*, a ponadto:
@@ -126,10 +139,19 @@ pozwalających wspierających mechanizm wyszukiwania (filtrowania rekordów).
   - posiada możliwość generowania faktur<sup>2</sup>.
 4. *Gość* (ang. Guest<sup>1</sup>)
 - posiada możliwość wyszukiwania pojazdów w wybranym terminie, spełniających wybrane kryteria.
-
-
+----------------------------
 <sup>1</sup> W związku z przewidywaną dwujęzycznością projektu, w diagramach dokumentacji zostały użyte określenia w stosunku do ról zarówno w języku polskim, jak i angielskim.  
 <sup>2</sup> Opcja generowania faktur nie jest zaimplementowana w wersji MVP. Będzie zaimplementowana w kolejnych wersjach aplikacji.
+
+
+## 4.2. Tworzenie użytkowników różnego typu
+
+Po zainstalowaniu aplikacji w systemie będą stworzone trzy podstawowe konta użytkowników (*Adminisrator*, *Użytkownik*, *Zarządca*).
+Po zainstalowaniu należy zmienić standardowe hasła użytkowników. Należy mieć na względzie, że zarządzanie użytkownikami możliwe jest tylko z poziomu administratora.
+W tym celu należy wykorzystać konto stworzone automatycznie podczas instalacji. Z tego konta można utworzyć dodatkowe konta wszystkich typów.
+
+Podczas rejestracji konta przez *Gościa* stworzone zostanie konto *Użytkownika*. Ewentualna zmiana roli możliwa jest wyłącznie przez konto administratora.
+
 
 # 5. Diagramy przypadków użycia (wybrane przykłady)
 ![Diagram Przypadków Użycia](./images/useCaseDiagramv2.png "Diagram Przypadków użycia")
@@ -171,7 +193,7 @@ Poniżej przedstawiono wybrane scenariusze przypadków użycia spośród wszystk
 
 ## 7.2. Model logiczny (ERD)
 W ramach normalizacji bazy danych została stworzona tabela `Address`.
-Tabele `Address` oraz `Invoice` ta nie występują w wersji MVP aplikacji. Zostanią one zaimplementowana w kolejnych wersjach.
+Tabele `Address` oraz `Invoice` ta nie występują w wersji MVP aplikacji. Zostania one zaimplementowana w kolejnych wersjach.
 
 ![Model logiczny](images/erd.png)
 
@@ -334,14 +356,25 @@ create table message (
 );
 ```
 
-# 13. System kontroli wersji oraz repozytorium
+## 12.3.5. Dane testowe
+Aplikacja w wersji MVP po zainstalowaniu posiada w bazie danej przykładowe dane testowe pozwalające na sprawdzenie działania aplikacji. Dane te można usunąć, po przekazaniu aplikacji do użytkowania.
+W celu zapisania danych w bazie wykorzystano mechanizm migracji Flyway. Kod służący do dodania danych testowych (wraz z kodem do stworzenia tabel) znajduje się w poniższej lokalizacji:
+https://github.com/lukaszse/car-rental/tree/master/src/main/resources/db/migration
 
-## 13.1. Wymagania wstępne
+# 13. Informacje dla developera
+
+## 13.1. Zastosowane technologie i wymagania wobec developera
+Aplikację napisano w języku Java w wersji 17 oraz z wykorzystaniem frameworku Spring Boot. W aplikacji wykorzystano także mechanizm szablonów Thymeleaf oraz elementy napisane w języku JavaScript.
+Podstawowa znajomość wszystkich tych technologii jest konieczna do rozpoczęcia pracy z kodem aplikacji.
+Przed rozpoczęciem pracy z kodem należy:
+1. Zainstalować środowisko OpenJDK 17.
+2. Zainstalować wybrane środowisko IDE (np. IntelliJ lub Eclipse).
+3. Zainstalować aplikację Docker.
+
+## 13.2. Korzystanie z repozytorium 
 Aby skorzystać z repozytorium, należy na lokalnej maszynie zainstalować aplikację Git do kontroli wersji.
 Aplikacja jest dostępna dla systemów Windows, Linux oraz MacOS:
 https://git-scm.com/
-
-## 13.2. Pobieranie repozytorium
 Kod źródłowy aplikacji Car-Rental znajduje się w repozytorium w serwisie GitHub:
 https://github.com/lukaszse/car-rental
 
@@ -350,9 +383,12 @@ W celu pobrania repozytorium użyj komendy:
 `git clone https://github.com/lukaszse/car-rental.git`
 
 ## 13.3. Uruchamianie aplikacji
-Aby uruchomić aplikację, należy zbudować plik jar. W tym celu należy użyć komendy:
-
+Aby uruchomić aplikację, należy zbudować plik jar. W tym celu należy użyć komendy:  
 `./mvnw clean install`
+
+plik jar zostanie stworzony w folderze `/target`. Plik jar można uruchomić przy pomocy komendy:  
+`java -jar nazwa_pliku.jar`
+
 
 ## 13.4. Konfiguracja
 W aplikacji skonfigurowano dwa profile **LOCAL** służący do uruchamiania aplikacji na lokalnym komputerze (z rozszerzonymi opcjami logowania, debbugowania oraz dostępem bez szyfrowania TSL) oraz **PROD** służący do uruchomienia aplikacji produkcyjnej na serwerze.
@@ -361,21 +397,13 @@ Szczegółowe konfiguracje dla środowisk znajdują się w plikach `application-
 
 # 13.5 Obraz Docker
 W głównym folderze aplikacji znajduje się plik `Dockerfile`, który służy do zbudowania obrazu z aktualnego pliku jar znajdującego się w folderze `target`.
-Aby zbudować obraz name użyć komendy:
+Aby zbudować obraz name użyć komendy:  
+`docker build -t nazwaObrazu .`  
 
-`docker build -t nazwaObrazu .`
-
-W celu zapisania obrazu w repozytorium zdalnym Docker'a (tak, aby był dostępny on online dla publicznie), należy użyć komendy:
+W celu zapisania obrazu w repozytorium zdalnym Docker'a (tak, aby był dostępny on online dla publicznie), należy użyć komendy:  
 `docker push nazwaObrazu`
 
-# 14. Implementacja
-## 14.1. Zastosowane technologie i wymagania wobec developera
-Aplikację napisano w języku Java w wersji 17 oraz z wykorzystaniem frameworku Spring Boot. W aplikacji wykorzystano także mechanizm szablonów Thymeleaf oraz elementy napisane w języku JavaScript.
-Podstawowa znajomość wszystkich tych technologii jest konieczna do rozpoczęcia pracy z kodem aplikacji.
-
-## 14.2. Wykorzystane algorytmy
-
-### 14.2.1. Algorytm sprawdzania dostępności samochodu w danym przedziale czasu
+## 13.6. Wybrane szczegóły implementacji - algorytm sprawdzania dostępności samochodu w danym przedziale czasu
 
 W aplikacji zastosowano mechanizm sprawdzania dostępności samochodu w danym przedziale czasu.
 Algorytm ten wykorzystywany jest w dwóch sytuacjach:
@@ -435,7 +463,7 @@ Niniejszy algorytm przedstawiono na poniższych schematach blokowych (zastosowan
 ![img.png](images/checkIfPeriodsOverlap.png)
 
 
-# 15. Testowanie
+# 14. Testowanie
 Podstawową formą testów aplikacji będą testy jednostkowe oraz
 integracyjne pisane na bieżąco, w trakcie powstawania kodu źródłowego, pisane
 przez zespół testerski.
@@ -446,11 +474,11 @@ uruchomiona pełna funkcjonalność aplikacji. Przypadki testowe będą zawiera�
 rezerwacji samochodów itd.
 Dodatkowo zostaną przeprowadzone testy wydajnościowe aplikacji dla
 określonej grupy wirtualnych użytkowników.
-## 15.1. Testy jednostkowe
+## 14.1. Testy jednostkowe
 W aplikacji wykorzystano testowy framework Spock oraz testy jednostkowe napisane w języku Groovy.
 Spock umożliwia między innymi tworzenie testów wykorzystujących koncepcję Data Driven Tests.
 
-### 15.1.1 Testowanie metody sprawdzającej dostępność samochodów
+### 14.1.1 Testowanie metody sprawdzającej dostępność samochodów
 Jak opisano w punkcie 14.2.1., w aplikacji zastosowano algorytm sprawdzania dostępności pojazdów, który znajduje się w klasie `AvailabilityService`.
 Algorytm ten wykorzystuje metodę `checkIfPeriodsOverlap`, która sprawdza, czy dwa okresy się pokrywają (okres 'TimePeriod' jest obiektem zawierającym dwie daty
 - datę "od" oraz datę "do").
@@ -488,7 +516,7 @@ Aby uruchomić test, konieczne było utworzenie protez ("mocks") dla wykorzystan
 ```
 Odnośnik do klasy testowej: https://github.com/lukaszse/car-rental/blob/master/src/test/groovy/org/lukaszse/carRental/service/AvailabilityServiceSpec.groovy
 
-### 15.1.2 Walidacja daty
+### 14.1.2 Walidacja daty
 W aplikacji wykorzystano mechanizm adnotacji do walidowania m.in. danych przychodzących z zewnątrz (z przeglądarki internetowej do serwera).
 Stworzono, także m.in. niestandardową adnotację `@ValidateTimePeriod` oraz walidator do sprawdzania poprawności wprowadzanych dat.
 Walidator stanowi odrębną klasę, z główną metodą `isValid`, która używa odpowiedniej logiki do zweryfikowania poprawności wprowadzonego okresu (TimePeriod).
@@ -517,7 +545,7 @@ Metoda testowa wykorzystuje protezy obiektów ("mocks"):
     ConstraintValidatorContext constraintValidatorContext = Mock()
 ```
 
-### 15.1.3 Testowanie metody obliczającej koszt całkowity rezerwacji
+### 14.1.3 Testowanie metody obliczającej koszt całkowity rezerwacji
 W aplikacji wykorzystano metodę statyczną `calculateTotalCost` służącą do obliczania kosztu całkowitego rezerwacji w danym przedziale czasowym, który został wybrany wcześniej przez użytkownika, i po cenie rezerwacji za dzień, określonej przez administrację serwisu.
 W celu sprawdzenia poprawności działania metody przygotowano test jednostkowy:
 
@@ -543,7 +571,7 @@ def "should check if data ranges equals correctly - test #no"() {
     }
 ```
 
-### 15.1.4 Testowanie metody zmieniającej hasło użytkownika
+### 14.1.4 Testowanie metody zmieniającej hasło użytkownika
 W klasie `UserService` znajduje się metoda `changePassword`, jest to metoda pomocnicza służąca do zmiany hasła użytkownika.
   Poniżej zamieszczono kod testu jednostkowego sprawdzającego poprawność działania metody:
 ```groovy
@@ -623,9 +651,9 @@ Aby uruchomić test, konieczne było utworzenie protez ("mocks") dla wykorzystan
     UserService userService = new UserService(userRepository)
 ```
 
-# 15.2 Przypadki testowe dla testów manualnych
+# 14.2 Przypadki testowe dla testów manualnych
 
-### 15.2.1. Logowanie do aplikacji
+### 14.2.1. Logowanie do aplikacji
 **Cel:** Sprawdzenie możliwości zalogowania dla użytkowników o różnych uprawnieniach
 
 **Warunki początkowe** 
@@ -643,7 +671,7 @@ Aby uruchomić test, konieczne było utworzenie protez ("mocks") dla wykorzystan
 **Szacowany czas:** 1 min. dla każdego logowania  
 **Uwagi:** powtórzyć dla każdej roli [user, manager, admin]
 
-### 15.2.2. Wyszukiwanie samochodu
+### 14.2.2. Wyszukiwanie samochodu
 **Cel:** Sprawdzenie możliwości wyszukania samochodu
 
 **Warunki początkowe**
@@ -665,7 +693,7 @@ Aby uruchomić test, konieczne było utworzenie protez ("mocks") dla wykorzystan
 **Szacowany czas:** 1 min. dla każdej roli + 2 min. na sprawdzenie danych w bazie.  
 **Uwagi:** powtórzyć dla każdej roli [user, manager, admin]
 
-### 15.2.3. Rejestracja
+### 14.2.3. Rejestracja
 **Cel:** Sprawdzenie możliwości rejestracji *Gościa*
 
 **Warunki początkowe**
@@ -683,7 +711,7 @@ Aby uruchomić test, konieczne było utworzenie protez ("mocks") dla wykorzystan
 **Szacowany czas:** 1 min.
 **Uwagi:** Brak
 
-### 15.2.4. Wysyłanie wiadomości przez niezalogowanego użytkownika
+### 14.2.4. Wysyłanie wiadomości przez niezalogowanego użytkownika
 **Cel:** Sprawdzenie możliwości wysłania wiadomości
 
 **Warunki początkowe**
@@ -701,53 +729,51 @@ Aby uruchomić test, konieczne było utworzenie protez ("mocks") dla wykorzystan
 **Szacowany czas:** 1 min  
 **Uwagi:** Brak
 
-# 16. Diagram głównych komponentów systemu
+# 15. Diagram głównych komponentów systemu
 ![Diagram komponentów](images/componentDiagram.png)
 Powyższy diagram komponentów przedstawia główne komponenty systemu z wyłączeniem bazy danych.
 
-# 17. Wdrożenie
-## 17.1. Diagramy wdrożenia
-### 17.1.1. Wdrożenie z wykorzystaniem kontenera Docker
+# 16. Wdrożenie
+## 16.1. Diagramy wdrożenia
+### 16.1.1. Wdrożenie z wykorzystaniem kontenera Docker
 ![Diagram wdrożenia](images/deploymentDiagram.png)
 
 **Uwaga** W wersji MVP aplikacja może wyświetlać się niepoprawnie na urządzeniach mobilnych, ze względu na brak skalowania tabel
 
-## 17.2. Wymagania systemowe
+## 16.2. Wymagania systemowe
 Aplikacja napisana została w wieloplatformowym języku Java. Działa na każdym systemie z systemem operacyjnym Windows, Linux czy MacOS.
 Poniżej przedstawiono szczegółowe wymagania systemowe.
 
 Wymagania systemowe:
 * System operacyjny Windows 10/11, MacOs, Linux oraz inne systemy z rodziny Unix.
-* Zainstalowana maszyna wirtualna Javy w wersji minimum 17.
-* Opcjonalnie zainstalowane oprogramowanie Docker. Zalecana wersja 20.10.10 lub wyższa.
+* Zainstalowana maszyna wirtualna Javy w wersji minimum 17 (JRE / JDK 17) w przypadku uruchamiania aplikacji z pliku jar.
+* Zainstalowane oprogramowanie Docker w przypadku uruchamiania aplikacji z obrazu docker. Zalecana wersja 20.10.10 lub wyższa.
 
-## 17.3. Instalacja z wykorzystaniem pliku jar
-Skopiować plik na serwer oraz uruchomić komendę:
-
+## 16.3. Instalacja z wykorzystaniem pliku jar
+Skopiować plik na serwer oraz uruchomić komendę:  
 `java -jar nazwa_pliku.jar`
 
-## 17.4. Instalacja z wykorzystaniem obrazu Docker
-Aby ściągnąć obraz Dockera zawierający aplikację, należy użyć kolejno komend:
-
+## 16.4. Instalacja z wykorzystaniem obrazu Docker
+Aby ściągnąć obraz Dockera zawierający aplikację, należy użyć kolejno komend:  
 `docker pull llseremak/car-rental`
-aby pobrać obraz, a następnie:
 
+Aby pobrać obraz, a następnie:  
 `docker run -d --restart unless-stopped -p 443:443 llseremak/car-rental`
 
 gdzie pierwszy port 443 to port, pod którym aplikacja będzie dostępna z zewnątrz kontenera (port 443 jest portem domyślnym da połączeń szyfrowanych z wykorzystaniem TSL)
 
-## 17.5. Dodatkowa konfiguracja z wykorzystaniem NGINX
+## 16.5. Dodatkowa konfiguracja z wykorzystaniem NGINX
 Przy pomocy NGINX można skonfigurować przekierowanie z portu, na którym działa aplikacja do określonego adresu url.
 Dokumentacja NGINX: http://nginx.org/en/docs/
 
-## 17.5. Bezpieczeństwo i certyfikat HTTPS
+## 16.5. Bezpieczeństwo i certyfikat HTTPS
 W wersji demonstracyjnej aplikacji wykorzystano niezarejestrowany certyfikat HTTPS. Gwarantuje on szyfrowanie danych przesyłanych z przeglądarki do serwera, jednak nie jest to certyfikat wydany przez Urząd Certyfikacji, wobec czego nie będzie traktowany przez przeglądarkę jako certyfikat zaufany.
 
 Wymagać to może, odpowiednich kroków w zależności od konkretnej przeglądarki. W większości przypadków konieczne będzie wybranie opcji zaawansowanych[1], w celu wyświetlenia możliwości otwarcia strony[2].
 
 ![Certyfikat niezaufany](images/notTrustedCert.png)
 
-# 18. Podręcznik użytkownika
+# 17. Podręcznik użytkownika
 
 **Spis treści**
 1. Rejestrowanie użytkownika
@@ -756,7 +782,7 @@ Wymagać to może, odpowiednich kroków w zależności od konkretnej przeglądar
 4. Składanie rezerwacji
 5. Przeglądanie rezerwacji oraz usuwanie rezerwacji
 6. Wysyłanie wiadomości
-7. Funkcje dostępne dla *Zarządcę*
+7. Funkcje dostępne dla *Zarządcy*
    1. Edycja pojazdów 
    2. Usuwanie pojazdów 
    3. Przeglądanie rezerwacji wszystkich użytkowników 
@@ -769,7 +795,10 @@ Wymagać to może, odpowiednich kroków w zależności od konkretnej przeglądar
       2. Edycja użytkownika
    2. Ustawienia administracyjne
 
-## 18.1. Rejestrowanie użytkownika
+## Wstęp
+Aby zapewnić odpowiednią czytelność strony, autorzy aplikacji skorzystali ze standardowej biblioteki stylów Bootstrap (https://getbootstrap.com/)
+
+## 17.1. Rejestrowanie użytkownika
 
 W celu rejestracji należy wejść na stronę aplikacji: https://ubuntu.llseremak.p3.tiktalik.io/car-rental  
 Po przekierowaniu do strony startowej należy kliknąć zakładkę `Sign Up` w głównym menu w celu przekierowania do formularza rejestracyjnego.
@@ -792,7 +821,7 @@ Po wpisaniu prawidłowych danych rejestracyjnych zostanie utworzone nowe konto, 
 
 ![Użytkownik utworzony](images/userCreated.png)
 
-## 18.2. Logowanie do systemu
+## 17.2. Logowanie do systemu
 
 W celu zalogowania się do aplikacji należy wejść na główną stronę aplikacji, 
 a następnie kliknąć zakładkę `Sign In` w głównym menu, w celu przekierowania do formularza logowania.
@@ -807,7 +836,7 @@ W przypadku wpisania błędnych danych użytkownik nie zostanie zalogowany, a na
 **Uwaga**: W wersji MVP na ekranie logowania znajdują się informację o danych do logowania do kont dla wszystkich
 typów użytkowników.
 
-## 18.3. Wyszukiwanie dostępnych pojazdów
+## 17.3. Wyszukiwanie dostępnych pojazdów
 Aby wyświetlić ekran wyszukiwania samochodów, należy kliknąć zakładkę `Cars` w górnym menu [1].
 Wstępnie zostaną wyświetlone wszystkie samochody. Aby wyszukać samochód dostępny w danym terminie, należy wprowadzić dwie daty `dateFrom` oraz `dateTo` [2].
 Po wpisaniu dat wyświetlone zostaną wszystkie samochody dostępne w danym terminie. Aby zawęzić wyszukiwania można użyć dodatkowych filtrów [3] w celu wprowadzenia marki oraz modelu samochodu.
@@ -818,7 +847,7 @@ numer strony znajdujący się pod wynikami wyszukiwania.
 
 **Uwaga:** W wersji MVP aplikacji nie zaimplementowano sortowania ani możliwości wyboru ilości stron do wyświetlenia na ekranie logowania. Funkcje te znajdą się w pełnej wersji aplikacji.
 
-## 18.4. Składanie rezerwacji
+## 17.4. Składanie rezerwacji
 
 W celu złożenia rezerwacji musimy posiadać konto w serwisie. Po rejestracji lub zalogowaniu (kroki 19.1 i 19.2) należy podobnie jak w kroku 19.3, kliknąć zakładkę `Cars` [1] dzięki której uzyskamy dostęp do pełnej listy pojazdów.
 W celu zarezerwowania pojazdu należy najpierw określić termin, w jakim chcielibyśmy dokonać rezerwacji [2].
@@ -830,7 +859,7 @@ Po dokładnym zapoznaniu się z danymi rezerwacji należy wcisnąć przycisk `Su
 
 ![Potwierdzenie rezerwacji](images/confirmReservation.png)
 
-## 18.5 Przeglądanie rezerwacji oraz usuwanie rezerwacji
+## 17.5 Przeglądanie rezerwacji oraz usuwanie rezerwacji
 
 Aby wyświetlić listę złożonych rezerwacji, należy po zalogowaniu lub rejestracji wejść w zakładkę `Reservations` [1].
 Wyświetlona zostanie lista rezerwacji złożonych na tym koncie, nazwa pojazdu, czas rezerwacji oraz jej koszt.
@@ -846,7 +875,7 @@ Panel ten pozwala nam również na anulowanie zlecenia `Cancel Reservation` [1] 
 
 ![Detale rezerwacji](images/reservationDetails.png)
 
-## 18.6 Wysyłanie wiadomości
+## 17.6 Wysyłanie wiadomości
 
 W celu wysłania wiadomości do administracji **jako użytkownik niezalogowany** należy nacisnąć w panel `Send Message` [1], a następnie uzupełnić formularz zgodnie z tytułami pól.
 Po uzupełnieniu formularza należy potwierdzić pole captcha w `verify` zabezpieczające przed spamem [2].
@@ -857,11 +886,11 @@ W razie próby wysłania wiadomości jako **zalogowany użytkownik**, panel ten 
 
 ![Wysyłanie wiadomości jako użytkownik](images/sendingMessageUser.png)
 
-## 18.7. Funkcje dostępne dla *Zarządcę*
+## 17.7. Funkcje dostępne dla *Zarządcę*
 
 Wszystkie funkcje przedstawione w tym rozdziale jest niedostępne dla zwykłego użytkownika. W celu ich obsługi przez osobę zarządzającą została stworzona rola zarządcy.
 
-### 18.7.1 Edycja pojazdów
+### 17.7.1 Edycja pojazdów
 
 W celu edycji danych pojazdu trzeba udać się do panelu `Cars` [1], a następnie kliknąć przycisk `Edit` [2] na wybranym pojeździe, który chcemy edytować.
 
@@ -871,19 +900,19 @@ Po wykonaniu tych kroków uzyskujemy widok edycji pojazdu. Aby edytować pojazd,
 
 ![Edycja pojazdu](images/editCar.png)
 
-### 18.7.2 Usuwanie pojazdów
+### 17.7.2 Usuwanie pojazdów
 
 W celu usunięcia pojazdu należy wejść w panel `Cars` [1], a następnie wcisnąć przycisk `Delete` na wybranym pojeździe [2]. 
 
 ![Usuwanie pojazdu](images/deleteCar.png)
 
-### 18.7.3 Przeglądanie rezerwacji wszystkich użytkowników 
+### 17.7.3 Przeglądanie rezerwacji wszystkich użytkowników 
 
 Aby wyświetlić listę wszystkich rezerwacji użytkowników, należy wejść w panel `Reservations` [1]. Na ekranie wyświetli się lista zarezerwowanych samochodów wraz z loginem użytkownika, który zarezerwował dany pojazd. 
 
 ![Lista rezerwacji pojazdów](images/reservationsListManager.png)
 
-### 18.7.4 Edycja rezerwacji 
+### 17.7.4 Edycja rezerwacji 
 
 W celu edycji danych rezerwacji trzeba udać się do panelu `Reservations` [1], a następnie kliknąć przycisk `Edit` [2] na wybranej rezerwacji,, którą chcemy edytować.
 
@@ -893,13 +922,13 @@ Uzyskujemy tym sposobem widok edycji rezerwacji. W celu edycji pojazdu należy u
 
 ![Edycja rezerwacji lista](images/editingReservationManager.png)
 
-### 18.7.5 Usuwanie rezerwacji 
+### 17.7.5 Usuwanie rezerwacji 
 
 W celu usunięcia rezerwacji należy wejść w panel `Reservations` [1], a następnie wcisnąć przycisk `Delete` na wybranej rezerwacji [2].
 
 ![Edycja rezerwacji lista](images/deleteReservationManager.png)
 
-### 18.7.6 Odczytywanie i zarządzanie wiadomościami
+### 17.7.6 Odczytywanie i zarządzanie wiadomościami
 
 *Zarządca* ma możliwość odczytywania wiadomości od użytkowników dotyczących wynajmu. W celu dostania się do panelu wiadomości należy nacisnąć `Messages` [1], a następne z rozsuwanej listy wybrać `View Messages` [2].
 W przypadku chęci przeczytania pełnej treści wiadomości należy nacisnąć przycisk `View` [3]*, a w przypadku chęci usunięcia wiadomości należy nacisnąć przycisk `Delete` [4].
@@ -909,32 +938,32 @@ W przypadku chęci przeczytania pełnej treści wiadomości należy nacisnąć p
 
 ![Podgląd wiadomości](images/messagesView.png)
 
-## 18.8 Funkcje dostępne dla *Administratora*
+## 17.8 Funkcje dostępne dla *Administratora*
 
 Administrator to specjalny użytkownik zawierający oprócz wszystkich funkcji poniżej dostęp dwóch specjalnych funkcji przeznaczonych tylko dla niego.
 
-### 18.8.1 Zarządzanie użytkownikami
+### 17.8.1 Zarządzanie użytkownikami
 
 W celu dostania się do panelu zarządzania użytkownikami należy nacisnąć przycisk `Settings` [1], a następnie z rozsuwanej listy `User Administration` [2].
 Panel ten pozwala nam na dodawanie (przycisk `Add User` [3], edycję (przycisk `Edit` [4]) oraz usuwanie użytkowników (przycisk `Delete` [5].
 
 ![Zarządzanie użytkownikami](images/userAdminList.png)
 
-#### 18.8.1.1 Dodawanie użytkownika
+#### 17.8.1.1 Dodawanie użytkownika
 
 Po wciśnięciu przycisku `Add User` uzyskujemy dostęp do formularza, w którym dodajemy dane nowego użytkownika oraz przypisujemy mu określoną rolę.  
 Wszelkie zmiany należy zatwierdzić przyciskiem `Submit` [1], natomiast w przypadku chęci wyczyszczenia formularza należy użyć przycisku `Reset` [2].
 
 ![Dodawanie użytkownika](images/addUserAdmin.png)
 
-#### 18.8.1.2 Edycja użytkownika
+#### 17.8.1.2 Edycja użytkownika
 
 Po użyciu przycisku `Edit` na wybranym użytkowniku wyświetla się formularz edycji, w którym możemy dokonać potrzebnych nam zmian.
 Każdą zmianę należy zatwierdzić przyciskiem `Submit` [1], natomiast w przypadku chęci wyczyszczenia formularza należy użyć przycisku `Reset` [2].
 
 ![Edycja użytkownika](images/editUserAdmin.png)
 
-### 18.8.2 Ustawienia administracyjne
+### 17.8.2 Ustawienia administracyjne
 
 **UWAGA**: Panel ustawień administracyjnych w wersji MVP jest wyłącznie pokazowy, wszelkie funkcje nie zostały jeszcze zaimplementowane.
 
