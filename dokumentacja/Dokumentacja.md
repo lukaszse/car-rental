@@ -114,8 +114,7 @@ Aplikacja zostanie zbudowana jako aplikacja monolityczna. Jednakże budowa syste
 
 ### 3.5.3. Architektura warstwy klienckiej (frontend)
 Frontend aplikacji zostanie stworzony z wykorzystaniem silnika szablonów Thymeleaf wspieranego przez Spring Boot. 
-Oprócz statycznych szablonów warstwa frontend będzie wyposażona w dynamiczne elementy obsługiwane za pomocą JavaScript (AJAX), które zostaną wykorzystane m.in. do budowania dynamicznych tablic
-pozwalających wspierających mechanizm wyszukiwania (filtrowania rekordów).
+Oprócz statycznych szablonów warstwa frontend będzie wyposażona w dynamiczne elementy obsługiwane za pomocą JavaScript (AJAX), które zostaną wykorzystane m.in. do budowania dynamicznych tablic wspierających mechanizm wyszukiwania (filtrowania rekordów).
 
 
 # 4. Użytkownicy (Aktorzy/Role)
